@@ -8,13 +8,32 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital@400;700&display=swap');
        
+        :root {
+            --neon-blue: #22d3ee;
+        }
+       
+        * {
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+       
+        @keyframes neonGlow {
+            0%, 100% { text-shadow: 0 0 10px #22d3ee, 0 0 25px #22d3ee, 0 0 50px #67e8f9; }
+            50% { text-shadow: 0 0 20px #22d3ee, 0 0 45px #22d3ee, 0 0 80px #67e8f9; }
+        }
+       
         .neon-text {
             animation: neonGlow 3s ease-in-out infinite;
         }
        
-        @keyframes neonGlow {
-            0%, 100% { text-shadow: 0 0 10px #22d3ee, 0 0 25px #22d3ee, 0 0 45px #67e8f9; }
-            50% { text-shadow: 0 0 20px #22d3ee, 0 0 50px #22d3ee, 0 0 70px #67e8f9; }
+        .hero-bg {
+            background: radial-gradient(circle at 50% 30%, #0a0a0a 0%, #000000 60%, #0a1428 100%);
+            background-size: 100% 300%;
+            background-image:
+                linear-gradient(to bottom, transparent 50%, rgba(34, 211, 238, 0.18) 50%),
+                radial-gradient(circle at 50% 30%, #22d3ee 0%, transparent 70%);
+            min-height: 100dvh;
         }
        
         .owner-room {
@@ -30,12 +49,12 @@
 <body class="bg-zinc-950 text-white font-sans overflow-x-hidden">
 
     <!-- NAVBAR -->
-    <nav class="bg-zinc-900/90 backdrop-blur-xl border-b border-cyan-400/30 sticky top-0 z-50">
+    <nav class="bg-zinc-900/95 backdrop-blur-xl border-b border-cyan-400/40 sticky top-0 z-50">
         <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
             <div onclick="openOwnerRoom()" class="flex items-center gap-x-3 cursor-pointer">
-                <div class="w-9 h-9 bg-gradient-to-br from-cyan-400 to-violet-500 rounded-2xl flex items-center justify-center text-2xl rotate-12 shadow-inner">📼</div>
+                <div class="w-9 h-9 bg-gradient-to-br from-cyan-400 to-sky-400 rounded-2xl flex items-center justify-center text-2xl rotate-12 shadow-[0_0_15px_#22d3ee]">📼</div>
                 <div>
-                    <h1 class="text-3xl font-bold tracking-[-2px] neon-text">PERONG</h1>
+                    <h1 class="text-3xl font-bold tracking-[-2px] neon-text text-cyan-300">PERONG</h1>
                     <p class="text-[10px] text-cyan-300 -mt-1 tracking-[3px] font-medium">ARCHIVE • CLASSIFIED</p>
                 </div>
             </div>
@@ -64,23 +83,23 @@
         </div>
     </div>
 
-    <!-- HERO -->
-    <div id="home-view" class="hero-bg flex items-center relative min-h-screen">
+    <!-- HERO - Strong Neon Blue -->
+    <div id="home-view" class="hero-bg flex items-center relative">
         <div class="max-w-screen-2xl mx-auto px-5 pt-16 pb-20">
             <div class="max-w-2xl">
-                <div class="inline-flex items-center gap-x-2 bg-white/10 text-cyan-300 text-sm font-medium px-6 py-3 rounded-3xl mb-6 backdrop-blur-md border border-cyan-400/30">
+                <div class="inline-flex items-center gap-x-2 bg-white/10 text-cyan-300 text-sm font-medium px-6 py-3 rounded-3xl mb-6 backdrop-blur-md border border-cyan-400/40">
                     <div class="animate-pulse w-3 h-3 bg-cyan-400 rounded-full"></div>
                     LIVE • LEVEL 7 CLEARANCE REQUIRED
                 </div>
                
                 <h1 class="text-5xl sm:text-6xl md:text-7xl font-bold leading-none tracking-[-4px] mb-6">
-                    SCOTT BRADLY<br>PERONG<br><span class="neon-text text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-cyan-200 to-violet-400">CASE FILES</span>
+                    SCOTT BRADLY<br>PERONG<br><span class="neon-text text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-300 to-blue-400">CASE FILES</span>
                 </h1>
                
-                <p class="text-xl md:text-2xl text-zinc-400 max-w-lg mb-10">A secure digital vault documenting every anomaly, every lead, every truth.</p>
+                <p class="text-xl md:text-2xl text-zinc-300 max-w-lg mb-10">A secure digital vault documenting every anomaly, every lead, every truth.</p>
                
                 <button onclick="navigateTo('files')"
-                        class="bg-white text-zinc-950 hover:bg-cyan-300 font-semibold text-lg px-10 py-6 rounded-3xl flex items-center gap-x-3 shadow-xl shadow-cyan-500/50 w-full sm:w-auto justify-center">
+                        class="bg-white text-zinc-950 hover:bg-cyan-300 font-semibold text-lg px-10 py-6 rounded-3xl flex items-center gap-x-3 shadow-xl shadow-cyan-500/60 w-full sm:w-auto justify-center">
                     BROWSE ALL FILES
                     <span class="text-3xl">→</span>
                 </button>
@@ -100,9 +119,9 @@
     <!-- FILE MODAL -->
     <div onclick="if(event.target.id === 'file-modal')hideFileModal()" id="file-modal" 
          class="hidden fixed inset-0 bg-black/90 backdrop-blur-xl z-[9999] flex items-center justify-center p-4">
-        <div onclick="event.stopImmediatePropagation()" class="w-full max-w-2xl bg-zinc-900 rounded-3xl overflow-hidden border border-cyan-400/40">
+        <div onclick="event.stopImmediatePropagation()" class="w-full max-w-2xl bg-zinc-900 rounded-3xl overflow-hidden border border-cyan-400/50">
             <div class="px-6 py-5 border-b flex justify-between items-center bg-zinc-900">
-                <div id="modal-file-title" class="text-2xl md:text-3xl font-semibold"></div>
+                <div id="modal-file-title" class="text-2xl md:text-3xl font-semibold text-cyan-200"></div>
                 <button onclick="hideFileModal()" class="text-4xl text-zinc-400 hover:text-white">×</button>
             </div>
             <div id="modal-file-content" class="p-6 md:p-8 text-zinc-200 leading-relaxed text-[17px] max-h-[65vh] overflow-auto whitespace-pre-wrap"></div>
@@ -111,12 +130,12 @@
 
     <!-- OWNER ROOM -->
     <div id="owner-room" class="hidden fixed inset-0 bg-black/95 backdrop-blur-3xl z-[99999] flex items-center justify-center p-4">
-        <div onclick="event.stopImmediatePropagation()" class="owner-room w-full max-w-lg bg-zinc-950 border border-cyan-400/60 rounded-3xl overflow-hidden">
-            <div class="bg-gradient-to-r from-cyan-900 to-blue-900 px-8 py-6 flex justify-between items-center">
+        <div onclick="event.stopImmediatePropagation()" class="owner-room w-full max-w-lg bg-zinc-950 border border-cyan-400/70 rounded-3xl overflow-hidden">
+            <div class="bg-gradient-to-r from-cyan-950 to-blue-950 px-8 py-6 flex justify-between items-center border-b border-cyan-400/40">
                 <div class="flex items-center gap-4">
                     <div class="text-5xl">👑</div>
                     <div>
-                        <h2 class="text-4xl font-bold neon-text">OWNER ROOM</h2>
+                        <h2 class="text-4xl font-bold neon-text text-cyan-200">OWNER ROOM</h2>
                         <p class="text-cyan-300">X & Y • Supreme Access</p>
                     </div>
                 </div>
@@ -127,15 +146,15 @@
                 <div onclick="exportArchive()" class="bg-zinc-900 hover:bg-zinc-800 border border-cyan-400/40 rounded-3xl p-6 cursor-pointer flex gap-4 items-center">
                     <span class="text-4xl">📤</span>
                     <div>
-                        <div class="font-semibold">Export Full Archive</div>
-                        <div class="text-sm text-zinc-400">Download all data</div>
+                        <div class="font-semibold text-cyan-200">Export Full Archive</div>
+                        <div class="text-sm text-zinc-400">Download all classified data</div>
                     </div>
                 </div>
 
                 <div onclick="toggleSubjectStatus()" class="bg-zinc-900 hover:bg-zinc-800 border border-cyan-400/40 rounded-3xl p-6 cursor-pointer flex gap-4 items-center">
                     <span class="text-4xl">🔄</span>
                     <div>
-                        <div class="font-semibold">Toggle Subject Status</div>
+                        <div class="font-semibold text-cyan-200">Toggle Subject Status</div>
                         <div class="text-sm text-zinc-400">Active ↔ Hidden</div>
                     </div>
                 </div>
@@ -143,13 +162,13 @@
                 <div onclick="viewSecretLog()" class="bg-zinc-900 hover:bg-zinc-800 border border-cyan-400/40 rounded-3xl p-6 cursor-pointer flex gap-4 items-center">
                     <span class="text-4xl">📜</span>
                     <div>
-                        <div class="font-semibold">View Classified Log</div>
-                        <div class="text-sm text-zinc-400">2112 Protocol</div>
+                        <div class="font-semibold text-cyan-200">View Classified Log</div>
+                        <div class="text-sm text-zinc-400">2112 Protocol Entries</div>
                     </div>
                 </div>
             </div>
 
-            <div class="text-center text-xs text-cyan-300/50 pb-6">
+            <div class="text-center text-xs text-cyan-300/50 pb-8">
                 Owner Code: XY • All actions logged
             </div>
         </div>
@@ -257,10 +276,9 @@ Multiple witness testimonies and documented incidents.
             }
         }
 
-        // Owner Room - Requires XY
         function openOwnerRoom() {
-            const input = prompt("Enter Owner Access Code:");
-            if (input && input.toUpperCase() === "XY") {
+            const code = prompt("Enter Owner Access Code:");
+            if (code && code.toUpperCase() === "XY") {
                 document.getElementById('owner-room').classList.remove('hidden');
                 document.getElementById('owner-room').classList.add('flex');
             } else {
@@ -328,7 +346,7 @@ Multiple witness testimonies and documented incidents.
         function init() {
             loadFiles();
             navigateTo('home');
-            console.log('%cPERONG ARCHIVE LOADED • Owner Room code: XY • Neon blue restored', 'color:#22d3ee');
+            console.log('%cPERONG ARCHIVE LOADED • Neon blue scheme applied • Owner code: XY', 'color:#22d3ee');
         }
 
         window.onload = init;
