@@ -18,7 +18,7 @@
         }
        
         .hero-bg {
-            background: radial-gradient(circle at 50% 30%, #0a0a0a 0%, #000000 50%, #0a1a2f 100%);
+            background: radial-gradient(circle at 50% 30%, #0a0a0a 0%, #000000 40%, #0a1f3a 100%);
             min-height: 100dvh;
         }
        
@@ -27,7 +27,7 @@
         }
        
         @keyframes modalPop {
-            0% { transform: scale(0.75); opacity: 0; }
+            0% { transform: scale(0.8); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
     </style>
@@ -114,7 +114,7 @@
         </div>
     </div>
 
-    <!-- OWNER ROOM - WITH ALL THE GOOD STUFF -->
+    <!-- OWNER ROOM -->
     <div id="owner-room" class="hidden fixed inset-0 bg-black/95 backdrop-blur-3xl z-[99999] flex items-center justify-center p-4">
         <div onclick="event.stopImmediatePropagation()" class="owner-room w-full max-w-lg bg-zinc-950 border border-cyan-400/70 rounded-3xl overflow-hidden">
             
@@ -154,11 +154,12 @@
                     </div>
                 </div>
 
-                <div onclick="selfDestructSimulation()" class="bg-zinc-900 hover:bg-red-950/60 border border-red-400/50 rounded-3xl p-6 cursor-pointer flex gap-4 items-center">
+                <!-- Nuke Wipe Simulation -->
+                <div onclick="selfDestructSimulation()" class="bg-zinc-900 hover:bg-red-950/70 border border-red-500/50 rounded-3xl p-6 cursor-pointer flex gap-4 items-center">
                     <span class="text-4xl">☢️</span>
                     <div>
                         <div class="font-semibold text-red-400">EMERGENCY WIPE</div>
-                        <div class="text-sm text-zinc-400">Simulated data destruction</div>
+                        <div class="text-sm text-zinc-400">Simulate nuke detonation</div>
                     </div>
                 </div>
             </div>
@@ -305,10 +306,22 @@ Multiple witness testimonies and documented incidents.
             showToast('2112 LOG: Activity confirmed near Weddington');
         }
 
+        // Nuke Explosion Simulation
         function selfDestructSimulation() {
-            if (confirm("SIMULATE EMERGENCY WIPE?")) {
-                showToast('SIMULATED WIPE EXECUTED • All traces removed (demo only)', 'error');
-            }
+            if (!confirm("SIMULATE NUKE DETONATION?")) return;
+
+            const body = document.body;
+            body.style.transition = "all 0.3s";
+            body.style.backgroundColor = "#991b1b";
+            
+            setTimeout(() => {
+                body.style.backgroundColor = "#450a0a";
+            }, 300);
+
+            setTimeout(() => {
+                body.style.backgroundColor = "#1e2937";
+                showToast('☢️ NUKE DETONATED • All traces erased (simulation)', 'error');
+            }, 800);
         }
 
         function verifyCode() {
@@ -333,7 +346,7 @@ Multiple witness testimonies and documented incidents.
 
         function showToast(msg, type = 'success') {
             const t = document.getElementById('toast');
-            document.getElementById('toast-text').innerHTML = type === 'success' ? `✅ ${msg}` : `⛔ ${msg}`;
+            document.getElementById('toast-text').innerHTML = type === 'success' ? `✅ ${msg}` : `☢️ ${msg}`;
             t.style.backgroundColor = type === 'success' ? '#10b981' : '#ef4444';
             t.classList.remove('hidden');
             setTimeout(() => t.classList.add('hidden'), 2800);
@@ -347,7 +360,7 @@ Multiple witness testimonies and documented incidents.
         function init() {
             loadFiles();
             navigateTo('home');
-            console.log('%cPERONG ARCHIVE LOADED • Neon blue theme applied • Owner code: XY', 'color:#22d3ee');
+            console.log('%cPERONG ARCHIVE LOADED • Neon blue background fixed • Owner code: XY', 'color:#22d3ee');
         }
 
         window.onload = init;
