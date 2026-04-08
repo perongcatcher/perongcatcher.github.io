@@ -8,14 +8,8 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital@400;700&display=swap');
        
-        :root {
-            --tw-color-primary: #22d3ee;
-        }
-       
-        * {
-            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-            transition-duration: 150ms;
+        .neon-text {
+            animation: neonGlow 3s ease-in-out infinite;
         }
        
         @keyframes neonGlow {
@@ -23,16 +17,12 @@
             50% { text-shadow: 0 0 20px #22d3ee, 0 0 50px #22d3ee, 0 0 70px #67e8f9; }
         }
        
-        .neon-text {
-            animation: neonGlow 3s ease-in-out infinite;
-        }
-       
         .owner-room {
-            animation: modalPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
        
         @keyframes modalPop {
-            0% { transform: scale(0.75); opacity: 0; }
+            0% { transform: scale(0.8); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
     </style>
@@ -42,10 +32,10 @@
     <!-- NAVBAR -->
     <nav class="bg-zinc-900/90 backdrop-blur-xl border-b border-cyan-400/30 sticky top-0 z-50">
         <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-            <div onclick="openOwnerRoom()" class="flex items-center gap-x-3 cursor-pointer group relative">
+            <div onclick="openOwnerRoom()" class="flex items-center gap-x-3 cursor-pointer">
                 <div class="w-9 h-9 bg-gradient-to-br from-cyan-400 to-violet-500 rounded-2xl flex items-center justify-center text-2xl rotate-12 shadow-inner">📼</div>
                 <div>
-                    <h1 class="text-3xl font-bold tracking-[-2px] neon-text group-hover:text-cyan-200">PERONG</h1>
+                    <h1 class="text-3xl font-bold tracking-[-2px] neon-text">PERONG</h1>
                     <p class="text-[10px] text-cyan-300 -mt-1 tracking-[3px] font-medium">ARCHIVE • CLASSIFIED</p>
                 </div>
             </div>
@@ -119,12 +109,10 @@
         </div>
     </div>
 
-    <!-- OWNER ROOM (requires code XY) -->
+    <!-- OWNER ROOM -->
     <div id="owner-room" class="hidden fixed inset-0 bg-black/95 backdrop-blur-3xl z-[99999] flex items-center justify-center p-4">
-        <div onclick="event.stopImmediatePropagation()" 
-             class="owner-room w-full max-w-lg bg-zinc-950 border border-cyan-400/60 rounded-3xl overflow-hidden">
-            
-            <div class="bg-gradient-to-r from-cyan-950 to-blue-950 px-8 py-6 flex justify-between items-center border-b border-cyan-400/30">
+        <div onclick="event.stopImmediatePropagation()" class="owner-room w-full max-w-lg bg-zinc-950 border border-cyan-400/60 rounded-3xl overflow-hidden">
+            <div class="bg-gradient-to-r from-cyan-900 to-blue-900 px-8 py-6 flex justify-between items-center">
                 <div class="flex items-center gap-4">
                     <div class="text-5xl">👑</div>
                     <div>
@@ -135,42 +123,34 @@
                 <button onclick="closeOwnerRoom()" class="text-5xl text-zinc-400 hover:text-white">×</button>
             </div>
 
-            <div class="p-8 space-y-6">
-                <div onclick="exportArchive()" class="bg-zinc-900 hover:bg-zinc-800 border border-cyan-400/30 rounded-3xl p-6 cursor-pointer flex items-center gap-4">
+            <div class="p-8 space-y-5">
+                <div onclick="exportArchive()" class="bg-zinc-900 hover:bg-zinc-800 border border-cyan-400/40 rounded-3xl p-6 cursor-pointer flex gap-4 items-center">
                     <span class="text-4xl">📤</span>
                     <div>
-                        <div class="font-semibold text-lg">Export Full Archive</div>
-                        <div class="text-sm text-zinc-400">Download all classified data</div>
+                        <div class="font-semibold">Export Full Archive</div>
+                        <div class="text-sm text-zinc-400">Download all data</div>
                     </div>
                 </div>
 
-                <div onclick="toggleSubjectStatus()" class="bg-zinc-900 hover:bg-zinc-800 border border-cyan-400/30 rounded-3xl p-6 cursor-pointer flex items-center gap-4">
+                <div onclick="toggleSubjectStatus()" class="bg-zinc-900 hover:bg-zinc-800 border border-cyan-400/40 rounded-3xl p-6 cursor-pointer flex gap-4 items-center">
                     <span class="text-4xl">🔄</span>
                     <div>
-                        <div class="font-semibold text-lg">Toggle Subject Status</div>
-                        <div class="text-sm text-zinc-400">Switch between Active / Hidden</div>
+                        <div class="font-semibold">Toggle Subject Status</div>
+                        <div class="text-sm text-zinc-400">Active ↔ Hidden</div>
                     </div>
                 </div>
 
-                <div onclick="viewSecretLog()" class="bg-zinc-900 hover:bg-zinc-800 border border-cyan-400/30 rounded-3xl p-6 cursor-pointer flex items-center gap-4">
+                <div onclick="viewSecretLog()" class="bg-zinc-900 hover:bg-zinc-800 border border-cyan-400/40 rounded-3xl p-6 cursor-pointer flex gap-4 items-center">
                     <span class="text-4xl">📜</span>
                     <div>
-                        <div class="font-semibold text-lg">View Classified Log</div>
-                        <div class="text-sm text-zinc-400">2112 Protocol Entries</div>
-                    </div>
-                </div>
-
-                <div onclick="selfDestructSimulation()" class="bg-zinc-900 hover:bg-red-950/40 border border-red-400/30 rounded-3xl p-6 cursor-pointer flex items-center gap-4">
-                    <span class="text-4xl">☢️</span>
-                    <div>
-                        <div class="font-semibold text-lg text-red-400">Emergency Protocol</div>
-                        <div class="text-sm text-zinc-400">Simulated data wipe</div>
+                        <div class="font-semibold">View Classified Log</div>
+                        <div class="text-sm text-zinc-400">2112 Protocol</div>
                     </div>
                 </div>
             </div>
 
-            <div class="text-center text-[10px] text-cyan-300/40 pb-8">
-                OWNER ACCESS ONLY • CODE: XY
+            <div class="text-center text-xs text-cyan-300/50 pb-6">
+                Owner Code: XY • All actions logged
             </div>
         </div>
     </div>
@@ -277,14 +257,14 @@ Multiple witness testimonies and documented incidents.
             }
         }
 
-        // Owner Room - Requires code XY
+        // Owner Room - Requires XY
         function openOwnerRoom() {
-            const code = prompt("Enter Owner Access Code:");
-            if (code && code.toUpperCase() === "XY") {
+            const input = prompt("Enter Owner Access Code:");
+            if (input && input.toUpperCase() === "XY") {
                 document.getElementById('owner-room').classList.remove('hidden');
                 document.getElementById('owner-room').classList.add('flex');
             } else {
-                alert("ACCESS DENIED • Incorrect Owner Code");
+                alert("ACCESS DENIED");
             }
         }
 
@@ -301,21 +281,15 @@ Multiple witness testimonies and documented incidents.
             link.download = 'perong-full-archive.json';
             link.href = URL.createObjectURL(blob);
             link.click();
-            showToast('Archive exported successfully');
+            showToast('Archive exported');
         }
 
         function toggleSubjectStatus() {
-            showToast('Subject status changed to: Under Enhanced Surveillance');
+            showToast('Subject status updated → Enhanced Surveillance');
         }
 
         function viewSecretLog() {
-            showToast('CLASSIFIED 2112 LOG: Perong activity confirmed • Multiple reports verified');
-        }
-
-        function selfDestructSimulation() {
-            if (confirm("SIMULATE EMERGENCY WIPE?")) {
-                showToast('SIMULATED WIPE EXECUTED • All traces removed (demo only)', 'error');
-            }
+            showToast('2112 LOG: Activity confirmed near Weddington');
         }
 
         function verifyCode() {
@@ -354,7 +328,7 @@ Multiple witness testimonies and documented incidents.
         function init() {
             loadFiles();
             navigateTo('home');
-            console.log('%cPERONG ARCHIVE LOADED • Owner Room code: XY', 'color:#22d3ee');
+            console.log('%cPERONG ARCHIVE LOADED • Owner Room code: XY • Neon blue restored', 'color:#22d3ee');
         }
 
         window.onload = init;
