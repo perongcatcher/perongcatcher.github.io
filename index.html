@@ -99,7 +99,6 @@
 
                 <p class="text-xl text-zinc-400 mb-10">Secure digital vault • Access restricted</p>
 
-                <!-- BROWSE BUTTON -->
                 <button onclick="navigateTo('files')" 
                         class="clickable w-full md:w-auto bg-white text-zinc-950 hover:bg-cyan-300 font-semibold text-lg px-12 py-6 rounded-3xl flex items-center justify-center gap-3 shadow-2xl active:scale-95">
                     BROWSE ALL FILES
@@ -109,7 +108,7 @@
         </div>
     </div>
 
-    <!-- FILES VIEW - ONLY YOUR FILE -->
+    <!-- FILES VIEW - ONLY ONE FILE -->
     <div id="files-view" class="max-w-screen-2xl mx-auto px-5 py-12 hidden">
         <div class="mb-10">
             <h2 class="text-4xl font-semibold tracking-tight">CASE FILES</h2>
@@ -128,7 +127,7 @@
                 <div id="modal-file-title" class="text-2xl font-semibold"></div>
                 <button onclick="hideFileModal()" class="text-4xl text-zinc-400 hover:text-white leading-none clickable">×</button>
             </div>
-            <div id="modal-file-content" class="p-6 sm:p-8 text-zinc-200 leading-relaxed text-[17px] max-h-[65vh] overflow-auto whitespace-pre-wrap">
+            <div id="modal-file-content" class="p-6 sm:p-8 text-zinc-200 leading-relaxed text-[17px] max-h-[65vh] overflow-auto">
             </div>
         </div>
     </div>
@@ -161,7 +160,7 @@
     <script>
         let files = [];
 
-        // ONLY YOUR REQUESTED FILE
+        // ONLY THIS ONE FILE - AS REQUESTED
         function seedFiles() {
             return [{
                 id: 1,
@@ -176,23 +175,29 @@ Employer: Weddington Middle School
 Reported Incidents: Multiple allegations of sexual harassment, inappropriate touching, and predatory behavior toward students (2025–Present).
 
 1. Executive Summary of Allegations
-Multiple victims, parents, and community members have reported that Mr. Perong engages in "grooming" behavior and inappropriate physical contact during P.E. classes and extracurricular coaching.
+Multiple victims, parents, and community members have reported that Mr. Perong engages in "grooming" behavior and inappropriate physical contact during P.E. classes and extracurricular coaching. Reports suggest a pattern where Perong singles out students, makes unwelcome sexual comments, and engages in inappropriate, unconsented touch, often masked as physical instruction.
 
 2. Pattern of Behavior
-• Physical Harassment: Touching students on the legs, waist, and shoulders, making sexual comments.
-• Grooming: Overly familiar interactions with specific students.
-• Verbal Harassment: Suggestive remarks during class.
+Reports to school authorities indicate the following behaviors:
+• Physical Harassment: Touching students on the legs, waist, and shoulders, and making sexual comments to students.
+• Grooming: "Overly familiar" interactions with specific students, often separating them from the group, and creating a culture of silence.
+• Verbal Harassment: Making suggestive remarks during class.
 
 3. Administrative Failures
-School administration has ignored multiple reports since 2023 and allegedly failed to report to law enforcement or CPS.
+Weddington Middle School administration has failed to take action despite receiving multiple reports of this behavior.
+• Ignored Warnings: Parents and peers have reported that Mr. Perong's behavior was known to administration as far back as 2023.
+• Failure to Report: School officials have allegedly failed to report these incidents to law enforcement or child protective services.
+• Active Concealment: The school is accused of treating reports as "misunderstandings" or "inadvertent contact" to protect the coach and school reputation.
 
-4. Evidence & Documentation
-Multiple student and parent testimonies. Dates and incidents documented.
+4. Evidence & Documentation Status
+• Witness Testimonies: Multiple former and current students have corroborated the claims.
+• Documentation: Parents have reported documenting dates, times, and specific descriptions of incidents.
+• Potential Evidence: There are concerns that digital evidence might be present on school-issued or personal devices.
 
 5. Recommended Actions
-• Immediate suspension and administrative leave
-• Report to local police and Child Protective Services
-• Independent Title IX investigation`
+• Immediate Suspension: Place Mr. Perong on administrative leave while an external investigation is conducted.
+• Law Enforcement Referral: Immediately report the allegations to local police and Child Protective Services (CPS) for sexual abuse of a minor investigation.
+• External Investigation: Initiate a Title IX investigation by an independent third party to avoid school administration conflicts of interest.`
             }];
         }
 
@@ -223,7 +228,12 @@ Multiple student and parent testimonies. Dates and incidents documented.
             if (!file) return;
 
             document.getElementById('modal-file-title').textContent = file.title;
-            document.getElementById('modal-file-content').innerHTML = file.content.replace(/\n/g, '<br><br>');
+            document.getElementById('modal-file-content').innerHTML = `
+                <div class="whitespace-pre-wrap leading-relaxed">${file.content.replace(/\n/g, '<br><br>')}</div>
+                <div class="mt-10 p-4 bg-black/60 rounded-2xl text-xs font-mono border border-dashed border-cyan-300/30">
+                    FILE ID: #${file.id} • ${file.date} • ${file.status.toUpperCase()}
+                </div>
+            `;
             
             document.getElementById('file-modal').classList.remove('hidden');
             document.getElementById('file-modal').classList.add('flex');
@@ -236,7 +246,6 @@ Multiple student and parent testimonies. Dates and incidents documented.
         }
 
         function navigateTo(view) {
-            // Hide all main views
             document.getElementById('home-view').classList.add('hidden');
             document.getElementById('files-view').classList.add('hidden');
 
@@ -247,7 +256,7 @@ Multiple student and parent testimonies. Dates and incidents documented.
                 renderFiles();
             }
 
-            // Update mobile bottom nav highlight
+            // Update mobile nav
             document.querySelectorAll('.fixed.bottom-0 a').forEach(a => a.classList.remove('text-cyan-300'));
             const active = document.getElementById(`mnav-${view}`);
             if (active) active.classList.add('text-cyan-300');
@@ -288,11 +297,11 @@ Multiple student and parent testimonies. Dates and incidents documented.
             showToast("Code 2112 copied");
         }
 
-        // Initialize the site
+        // Initialize
         function init() {
             loadFiles();
             navigateTo('home');
-            console.log('%cPERONG ARCHIVE LOADED • Only WM-2026-0407-MP file included • Mobile optimized', 'color:#22d3ee');
+            console.log('%cPERONG ARCHIVE LOADED • ONLY #WM-2026-0407-MP FILE INCLUDED', 'color:#22d3ee');
         }
 
         window.onload = init;
