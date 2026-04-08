@@ -8,8 +8,14 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital@400;700&display=swap');
        
-        .neon-text {
-            animation: neonGlow 3s ease-in-out infinite;
+        :root {
+            --tw-color-primary: #22d3ee;
+        }
+       
+        * {
+            transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
         }
        
         @keyframes neonGlow {
@@ -17,13 +23,17 @@
             50% { text-shadow: 0 0 20px #22d3ee, 0 0 50px #22d3ee, 0 0 70px #67e8f9; }
         }
        
+        .neon-text {
+            animation: neonGlow 3s ease-in-out infinite;
+        }
+       
         .owner-room {
             animation: modalPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
        
         @keyframes modalPop {
-            0% { transform: scale(0.7) rotate(-3deg); opacity: 0; }
-            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+            0% { transform: scale(0.75); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
     </style>
 </head>
@@ -32,10 +42,10 @@
     <!-- NAVBAR -->
     <nav class="bg-zinc-900/90 backdrop-blur-xl border-b border-cyan-400/30 sticky top-0 z-50">
         <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-x-3">
+            <div onclick="openOwnerRoom()" class="flex items-center gap-x-3 cursor-pointer group relative">
                 <div class="w-9 h-9 bg-gradient-to-br from-cyan-400 to-violet-500 rounded-2xl flex items-center justify-center text-2xl rotate-12 shadow-inner">📼</div>
                 <div>
-                    <h1 class="text-3xl font-bold tracking-[-2px] neon-text">PERONG</h1>
+                    <h1 class="text-3xl font-bold tracking-[-2px] neon-text group-hover:text-cyan-200">PERONG</h1>
                     <p class="text-[10px] text-cyan-300 -mt-1 tracking-[3px] font-medium">ARCHIVE • CLASSIFIED</p>
                 </div>
             </div>
@@ -79,7 +89,8 @@
                
                 <p class="text-xl md:text-2xl text-zinc-400 max-w-lg mb-10">A secure digital vault documenting every anomaly, every lead, every truth.</p>
                
-                <button onclick="navigateTo('files')" class="bg-white text-zinc-950 hover:bg-cyan-300 font-semibold text-lg px-10 py-6 rounded-3xl flex items-center gap-x-3 shadow-xl shadow-cyan-500/50 w-full sm:w-auto justify-center">
+                <button onclick="navigateTo('files')"
+                        class="bg-white text-zinc-950 hover:bg-cyan-300 font-semibold text-lg px-10 py-6 rounded-3xl flex items-center gap-x-3 shadow-xl shadow-cyan-500/50 w-full sm:w-auto justify-center">
                     BROWSE ALL FILES
                     <span class="text-3xl">→</span>
                 </button>
@@ -97,7 +108,8 @@
     </div>
 
     <!-- FILE MODAL -->
-    <div onclick="if(event.target.id === 'file-modal')hideFileModal()" id="file-modal" class="hidden fixed inset-0 bg-black/90 backdrop-blur-xl z-[9999] flex items-center justify-center p-4">
+    <div onclick="if(event.target.id === 'file-modal')hideFileModal()" id="file-modal" 
+         class="hidden fixed inset-0 bg-black/90 backdrop-blur-xl z-[9999] flex items-center justify-center p-4">
         <div onclick="event.stopImmediatePropagation()" class="w-full max-w-2xl bg-zinc-900 rounded-3xl overflow-hidden border border-cyan-400/40">
             <div class="px-6 py-5 border-b flex justify-between items-center bg-zinc-900">
                 <div id="modal-file-title" class="text-2xl md:text-3xl font-semibold"></div>
@@ -107,13 +119,14 @@
         </div>
     </div>
 
-    <!-- OWNER ROOM - NOW REQUIRES CODE "XY" -->
+    <!-- OWNER ROOM (requires code XY) -->
     <div id="owner-room" class="hidden fixed inset-0 bg-black/95 backdrop-blur-3xl z-[99999] flex items-center justify-center p-4">
-        <div onclick="event.stopImmediatePropagation()" class="owner-room w-full max-w-2xl bg-zinc-950 border border-cyan-400/60 rounded-3xl overflow-hidden">
+        <div onclick="event.stopImmediatePropagation()" 
+             class="owner-room w-full max-w-lg bg-zinc-950 border border-cyan-400/60 rounded-3xl overflow-hidden">
             
-            <div class="bg-gradient-to-r from-cyan-950 to-violet-950 px-8 py-6 flex justify-between items-center">
+            <div class="bg-gradient-to-r from-cyan-950 to-blue-950 px-8 py-6 flex justify-between items-center border-b border-cyan-400/30">
                 <div class="flex items-center gap-4">
-                    <div class="text-5xl">🔐</div>
+                    <div class="text-5xl">👑</div>
                     <div>
                         <h2 class="text-4xl font-bold neon-text">OWNER ROOM</h2>
                         <p class="text-cyan-300">X & Y • Supreme Access</p>
@@ -122,55 +135,47 @@
                 <button onclick="closeOwnerRoom()" class="text-5xl text-zinc-400 hover:text-white">×</button>
             </div>
 
-            <div class="p-8">
-                <!-- Chatroom -->
-                <div class="mb-8">
-                    <div class="flex items-center gap-2 mb-4">
-                        <span class="text-cyan-400 text-xl">💬</span>
-                        <span class="font-medium text-lg">SECURE CHAT • X & Y ONLY</span>
-                    </div>
-                    <div id="chat-messages" class="h-64 bg-zinc-900 border border-cyan-400/30 rounded-2xl p-4 overflow-auto space-y-3 text-sm"></div>
-                    <div class="flex mt-3 gap-2">
-                        <input id="chat-input" type="text" placeholder="Type message..." 
-                               class="flex-1 bg-zinc-900 border border-cyan-400/30 rounded-2xl px-5 py-3 focus:border-cyan-400 outline-none"
-                               onkeydown="if(event.key==='Enter') sendChatMessage()">
-                        <button onclick="sendChatMessage()" class="bg-cyan-400 hover:bg-cyan-300 text-zinc-950 px-8 rounded-2xl font-semibold">SEND</button>
+            <div class="p-8 space-y-6">
+                <div onclick="exportArchive()" class="bg-zinc-900 hover:bg-zinc-800 border border-cyan-400/30 rounded-3xl p-6 cursor-pointer flex items-center gap-4">
+                    <span class="text-4xl">📤</span>
+                    <div>
+                        <div class="font-semibold text-lg">Export Full Archive</div>
+                        <div class="text-sm text-zinc-400">Download all classified data</div>
                     </div>
                 </div>
 
-                <!-- Tools Grid -->
-                <div class="grid grid-cols-2 gap-4">
-                    <div onclick="exportArchive()" class="tool-btn bg-zinc-900 hover:bg-zinc-800 border border-cyan-400/30 rounded-3xl p-6 cursor-pointer text-center">
-                        <div class="text-4xl mb-3">📤</div>
-                        <div class="font-semibold">Export Archive</div>
-                        <div class="text-xs text-zinc-400 mt-1">Download everything</div>
+                <div onclick="toggleSubjectStatus()" class="bg-zinc-900 hover:bg-zinc-800 border border-cyan-400/30 rounded-3xl p-6 cursor-pointer flex items-center gap-4">
+                    <span class="text-4xl">🔄</span>
+                    <div>
+                        <div class="font-semibold text-lg">Toggle Subject Status</div>
+                        <div class="text-sm text-zinc-400">Switch between Active / Hidden</div>
                     </div>
-                    
-                    <div onclick="toggleSubjectStatus()" class="tool-btn bg-zinc-900 hover:bg-zinc-800 border border-cyan-400/30 rounded-3xl p-6 cursor-pointer text-center">
-                        <div class="text-4xl mb-3">🔄</div>
-                        <div class="font-semibold">Toggle Status</div>
-                        <div class="text-xs text-zinc-400 mt-1">Active / Hidden</div>
+                </div>
+
+                <div onclick="viewSecretLog()" class="bg-zinc-900 hover:bg-zinc-800 border border-cyan-400/30 rounded-3xl p-6 cursor-pointer flex items-center gap-4">
+                    <span class="text-4xl">📜</span>
+                    <div>
+                        <div class="font-semibold text-lg">View Classified Log</div>
+                        <div class="text-sm text-zinc-400">2112 Protocol Entries</div>
                     </div>
-                    
-                    <div onclick="viewSecretLog()" class="tool-btn bg-zinc-900 hover:bg-zinc-800 border border-cyan-400/30 rounded-3xl p-6 cursor-pointer text-center">
-                        <div class="text-4xl mb-3">📜</div>
-                        <div class="font-semibold">Classified Log</div>
-                        <div class="text-xs text-zinc-400 mt-1">2112 Entries</div>
-                    </div>
-                    
-                    <div onclick="selfDestructSimulation()" class="tool-btn bg-zinc-900 hover:bg-red-950/50 border border-red-400/30 rounded-3xl p-6 cursor-pointer text-center">
-                        <div class="text-4xl mb-3">☢️</div>
-                        <div class="font-semibold text-red-400">Emergency Wipe</div>
-                        <div class="text-xs text-zinc-400 mt-1">Simulated only</div>
+                </div>
+
+                <div onclick="selfDestructSimulation()" class="bg-zinc-900 hover:bg-red-950/40 border border-red-400/30 rounded-3xl p-6 cursor-pointer flex items-center gap-4">
+                    <span class="text-4xl">☢️</span>
+                    <div>
+                        <div class="font-semibold text-lg text-red-400">Emergency Protocol</div>
+                        <div class="text-sm text-zinc-400">Simulated data wipe</div>
                     </div>
                 </div>
             </div>
-            
-            <div class="text-center text-[10px] text-cyan-300/40 pb-6">X & Y ONLY • ALL ACTIONS LOGGED</div>
+
+            <div class="text-center text-[10px] text-cyan-300/40 pb-8">
+                OWNER ACCESS ONLY • CODE: XY
+            </div>
         </div>
     </div>
 
-    <!-- CODE ENTRY MODAL (for normal nuke) -->
+    <!-- CODE MODAL -->
     <div id="code-modal" class="hidden fixed inset-0 bg-black/90 backdrop-blur-3xl z-[10000] flex items-center justify-center p-4">
         <div onclick="event.stopImmediatePropagation()" class="w-full max-w-md bg-zinc-900 rounded-3xl p-8">
             <div class="text-center">
@@ -188,13 +193,13 @@
     </div>
 
     <!-- TOAST -->
-    <div id="toast" onclick="this.classList.add('hidden')" class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-sm px-8 py-4 rounded-3xl shadow-2xl z-[11000]">
+    <div id="toast" onclick="this.classList.add('hidden')" 
+         class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-sm px-8 py-4 rounded-3xl shadow-2xl z-[11000]">
         <span id="toast-text"></span>
     </div>
 
     <script>
         let files = [];
-        let chatHistory = [];
 
         function seedFiles() {
             return [{
@@ -272,13 +277,12 @@ Multiple witness testimonies and documented incidents.
             }
         }
 
-        // ==================== OWNER ROOM ====================
+        // Owner Room - Requires code XY
         function openOwnerRoom() {
-            const code = prompt("Enter Owner Code to access restricted area:");
+            const code = prompt("Enter Owner Access Code:");
             if (code && code.toUpperCase() === "XY") {
                 document.getElementById('owner-room').classList.remove('hidden');
                 document.getElementById('owner-room').classList.add('flex');
-                loadChatMessages();
             } else {
                 alert("ACCESS DENIED • Incorrect Owner Code");
             }
@@ -290,60 +294,27 @@ Multiple witness testimonies and documented incidents.
             room.classList.remove('flex');
         }
 
-        function sendChatMessage() {
-            const input = document.getElementById('chat-input');
-            const msg = input.value.trim();
-            if (!msg) return;
-
-            const sender = Math.random() > 0.5 ? "X" : "Y";
-            chatHistory.push({
-                sender: sender,
-                message: msg,
-                time: new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
-            });
-
-            loadChatMessages();
-            input.value = '';
-        }
-
-        function loadChatMessages() {
-            const container = document.getElementById('chat-messages');
-            container.innerHTML = '';
-            chatHistory.forEach(m => {
-                container.innerHTML += `
-                <div class="flex ${m.sender === 'X' ? 'justify-start' : 'justify-end'} chat-message">
-                    <div class="${m.sender === 'X' ? 'bg-cyan-900/80' : 'bg-violet-900/80'} rounded-2xl px-4 py-2 max-w-[85%]">
-                        <span class="text-xs opacity-75">${m.sender}</span>
-                        <p>${m.message}</p>
-                        <span class="text-[10px] opacity-50">${m.time}</span>
-                    </div>
-                </div>`;
-            });
-            container.scrollTop = container.scrollHeight;
-        }
-
         function exportArchive() {
-            const data = JSON.stringify(files, null, 2);
-            const blob = new Blob([data], {type: 'application/json'});
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'perong-complete-archive.json';
-            a.click();
-            showToast('Full archive exported');
+            const dataStr = JSON.stringify(files, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const link = document.createElement('a');
+            link.download = 'perong-full-archive.json';
+            link.href = URL.createObjectURL(blob);
+            link.click();
+            showToast('Archive exported successfully');
         }
 
         function toggleSubjectStatus() {
-            showToast('Subject status updated → Now under Level 9 Surveillance');
+            showToast('Subject status changed to: Under Enhanced Surveillance');
         }
 
         function viewSecretLog() {
-            showToast('2112 LOG: Perong last seen near Weddington • Multiple reports confirmed • X & Y clearance only');
+            showToast('CLASSIFIED 2112 LOG: Perong activity confirmed • Multiple reports verified');
         }
 
         function selfDestructSimulation() {
-            if (confirm("SIMULATE EMERGENCY WIPE? (This is only a simulation)")) {
-                showToast('SIMULATED WIPE COMPLETE • All traces erased (demo)', 'error');
+            if (confirm("SIMULATE EMERGENCY WIPE?")) {
+                showToast('SIMULATED WIPE EXECUTED • All traces removed (demo only)', 'error');
             }
         }
 
@@ -372,7 +343,7 @@ Multiple witness testimonies and documented incidents.
             document.getElementById('toast-text').innerHTML = type === 'success' ? `✅ ${msg}` : `⛔ ${msg}`;
             t.style.backgroundColor = type === 'success' ? '#10b981' : '#ef4444';
             t.classList.remove('hidden');
-            setTimeout(() => t.classList.add('hidden'), 3000);
+            setTimeout(() => t.classList.add('hidden'), 2800);
         }
 
         function copyAccessHint() {
@@ -383,7 +354,7 @@ Multiple witness testimonies and documented incidents.
         function init() {
             loadFiles();
             navigateTo('home');
-            console.log('%cPERONG ARCHIVE LOADED • Owner Room requires code: XY', 'color:#22d3ee');
+            console.log('%cPERONG ARCHIVE LOADED • Owner Room code: XY', 'color:#22d3ee');
         }
 
         window.onload = init;
