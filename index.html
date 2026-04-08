@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>PERONG ARCHIVE • CLASSIFIED</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -34,29 +34,20 @@
         
         .hero-bg {
             background: radial-gradient(circle at 50% 30%, #0a0a0a 0%, #000000 70%);
+            min-height: 100dvh;
         }
         
-        .card-hover:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 25px -5px rgb(34 211 238 / 0.2);
+        .clickable {
+            cursor: pointer;
+            touch-action: manipulation;
         }
         
-        .mobile-bottom-nav {
-            display: none;
-        }
-        
-        @media (max-width: 768px) {
-            .mobile-bottom-nav {
-                display: flex;
-            }
-            .hero-text {
-                font-size: 2.75rem;
-                line-height: 1.1;
-            }
+        button, a {
+            -webkit-tap-highlight-color: transparent;
         }
     </style>
 </head>
-<body class="bg-zinc-950 text-white font-sans overflow-x-hidden min-h-screen">
+<body class="bg-zinc-950 text-white font-sans overflow-x-hidden">
 
     <!-- NAVBAR -->
     <nav class="bg-zinc-900/95 backdrop-blur-xl border-b border-white/10 sticky top-0 z-50">
@@ -69,24 +60,11 @@
                 </div>
             </div>
 
-            <!-- Desktop Nav -->
-            <div class="hidden md:flex items-center gap-8 text-sm font-medium">
-                <a onclick="navigateTo('home')" class="hover:text-cyan-300 cursor-pointer" id="nav-home">OVERVIEW</a>
-                <a onclick="navigateTo('files')" class="hover:text-cyan-300 cursor-pointer" id="nav-files">CASE FILES</a>
-                <a onclick="navigateTo('timeline')" class="hover:text-cyan-300 cursor-pointer" id="nav-timeline">TIMELINE</a>
-                <a onclick="navigateTo('vault')" class="hover:text-cyan-300 cursor-pointer" id="nav-vault">VAULT</a>
-                
-                <div id="admin-badge" onclick="if(isAdmin) toggleAdminPanel()" class="hidden items-center gap-2 bg-emerald-500/10 text-emerald-400 text-xs px-4 h-8 rounded-3xl border border-emerald-400/30 cursor-pointer">
-                    <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
-                    ADMIN
-                </div>
-            </div>
-
             <div class="flex items-center gap-3">
-                <div onclick="copyAccessHint()" class="hidden sm:block text-xs font-mono px-3 py-2 bg-white/5 hover:bg-white/10 rounded-3xl border border-white/10 cursor-pointer">
+                <div onclick="copyAccessHint()" class="hidden sm:block text-xs font-mono px-3 py-2 bg-white/5 hover:bg-white/10 rounded-3xl border border-white/10 cursor-pointer clickable">
                     SECURE ●
                 </div>
-                <div onclick="openCodeModal()" class="nuke-btn w-12 h-12 bg-red-600 hover:bg-red-700 rounded-3xl flex items-center justify-center cursor-pointer shadow-2xl border border-red-400/50 active:scale-95">
+                <div onclick="openCodeModal()" class="nuke-btn w-12 h-12 bg-red-600 hover:bg-red-700 rounded-3xl flex items-center justify-center cursor-pointer shadow-2xl border border-red-400/50 active:scale-95 clickable">
                     <span class="text-4xl">☢️</span>
                 </div>
             </div>
@@ -94,42 +72,36 @@
     </nav>
 
     <!-- MOBILE BOTTOM NAV -->
-    <div class="mobile-bottom-nav fixed bottom-0 left-0 right-0 bg-zinc-900/95 backdrop-blur-xl border-t border-white/10 z-50 md:hidden">
+    <div class="fixed bottom-0 left-0 right-0 bg-zinc-900/95 backdrop-blur-xl border-t border-white/10 z-50 md:hidden">
         <div class="flex text-xs">
-            <a onclick="navigateTo('home')" class="flex-1 py-3 flex flex-col items-center text-cyan-300" id="mnav-home">
+            <a onclick="navigateTo('home')" class="flex-1 py-3 flex flex-col items-center text-cyan-300 clickable" id="mnav-home">
                 <span class="text-2xl mb-0.5">🏠</span> Home
             </a>
-            <a onclick="navigateTo('files')" class="flex-1 py-3 flex flex-col items-center" id="mnav-files">
+            <a onclick="navigateTo('files')" class="flex-1 py-3 flex flex-col items-center clickable" id="mnav-files">
                 <span class="text-2xl mb-0.5">📁</span> Files
-            </a>
-            <a onclick="navigateTo('timeline')" class="flex-1 py-3 flex flex-col items-center" id="mnav-timeline">
-                <span class="text-2xl mb-0.5">📅</span> Timeline
-            </a>
-            <a onclick="navigateTo('vault')" class="flex-1 py-3 flex flex-col items-center" id="mnav-vault">
-                <span class="text-2xl mb-0.5">🔐</span> Vault
             </a>
         </div>
     </div>
 
     <!-- HERO -->
-    <div id="home-view" class="hero-bg min-h-screen flex items-center relative">
-        <div class="max-w-screen-2xl mx-auto px-5 pt-16 pb-20 md:pt-0">
+    <div id="home-view" class="hero-bg flex items-center relative">
+        <div class="max-w-screen-2xl mx-auto px-5 pt-20 pb-24">
             <div class="max-w-xl">
                 <div class="inline-flex items-center gap-2 bg-white/10 px-5 py-3 rounded-3xl text-sm mb-8">
                     <div class="w-3 h-3 bg-cyan-400 rounded-full animate-pulse"></div>
                     LIVE • LEVEL 7 CLEARANCE
                 </div>
 
-                <h1 class="hero-text text-5xl md:text-7xl font-bold leading-none tracking-[-3px] mb-6">
+                <h1 class="text-5xl md:text-7xl font-bold leading-none tracking-[-3px] mb-6">
                     SCOTT BRADLY<br>PERONG<br>
                     <span class="neon-text text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-violet-400">CASE FILES</span>
                 </h1>
 
                 <p class="text-xl text-zinc-400 mb-10">Secure digital vault • Access restricted</p>
 
-                <!-- FIXED BUTTON -->
+                <!-- BROWSE BUTTON -->
                 <button onclick="navigateTo('files')" 
-                        class="w-full md:w-auto bg-white text-zinc-950 hover:bg-cyan-300 font-semibold text-lg px-12 py-6 rounded-3xl flex items-center justify-center gap-3 shadow-2xl">
+                        class="clickable w-full md:w-auto bg-white text-zinc-950 hover:bg-cyan-300 font-semibold text-lg px-12 py-6 rounded-3xl flex items-center justify-center gap-3 shadow-2xl active:scale-95">
                     BROWSE ALL FILES
                     <span class="text-3xl">→</span>
                 </button>
@@ -137,7 +109,7 @@
         </div>
     </div>
 
-    <!-- FILES VIEW -->
+    <!-- FILES VIEW - ONLY YOUR FILE -->
     <div id="files-view" class="max-w-screen-2xl mx-auto px-5 py-12 hidden">
         <div class="mb-10">
             <h2 class="text-4xl font-semibold tracking-tight">CASE FILES</h2>
@@ -147,37 +119,16 @@
         <div id="files-grid" class="grid grid-cols-1 gap-6"></div>
     </div>
 
-    <!-- TIMELINE VIEW -->
-    <div id="timeline-view" class="max-w-screen-2xl mx-auto px-5 py-12 hidden">
-        <h2 class="text-4xl font-semibold tracking-tight mb-8">PERONG TIMELINE</h2>
-        <p class="text-zinc-400">Full timeline available in Secure Vault.</p>
-    </div>
-
-    <!-- VAULT VIEW -->
-    <div id="vault-view" class="max-w-screen-2xl mx-auto px-5 py-20 hidden text-center">
-        <div class="max-w-md mx-auto">
-            <div class="text-8xl mb-8">🔐</div>
-            <h2 class="text-4xl font-semibold mb-4">SECURE VAULT</h2>
-            <p class="text-zinc-400 mb-10">Enter the code to unlock restricted access.</p>
-            <button onclick="openCodeModal()" 
-                    class="w-full sm:w-auto px-10 py-5 bg-white/10 hover:bg-white/20 rounded-3xl text-lg">
-                INITIATE VAULT ACCESS ☢️
-            </button>
-        </div>
-    </div>
-
-    <!-- FILE MODAL -->
+    <!-- FILE DETAIL MODAL -->
     <div id="file-modal" onclick="if(event.target.id === 'file-modal') hideFileModal()" 
          class="hidden fixed inset-0 bg-black/90 backdrop-blur-2xl z-[9999] flex items-center justify-center p-4">
         <div onclick="event.stopImmediatePropagation()" 
              class="w-full max-w-2xl bg-zinc-900 rounded-3xl overflow-hidden border border-cyan-400/30">
-            
-            <div class="px-6 py-5 border-b flex items-center justify-between bg-zinc-900 sticky top-0">
+            <div class="px-6 py-5 border-b flex items-center justify-between bg-zinc-900">
                 <div id="modal-file-title" class="text-2xl font-semibold"></div>
-                <button onclick="hideFileModal()" class="text-4xl text-zinc-400 hover:text-white leading-none">×</button>
+                <button onclick="hideFileModal()" class="text-4xl text-zinc-400 hover:text-white leading-none clickable">×</button>
             </div>
-            
-            <div id="modal-file-content" class="p-6 sm:p-8 text-zinc-200 leading-relaxed text-[17px] max-h-[65vh] overflow-auto">
+            <div id="modal-file-content" class="p-6 sm:p-8 text-zinc-200 leading-relaxed text-[17px] max-h-[65vh] overflow-auto whitespace-pre-wrap">
             </div>
         </div>
     </div>
@@ -190,14 +141,12 @@
                 <div class="text-7xl mb-6">☢️</div>
                 <h3 class="text-2xl font-bold mb-3">NUKE PROTOCOL</h3>
                 <p class="text-zinc-400 mb-8">Enter code to unlock editing</p>
-                
                 <input id="code-input" type="password" maxlength="4" 
                        onkeydown="if(event.key === 'Enter') verifyCode()" 
                        class="block w-full text-center text-5xl font-mono bg-zinc-950 border border-red-400/50 focus:border-red-400 rounded-3xl py-6 outline-none">
-                
                 <div class="mt-8 grid grid-cols-2 gap-3">
-                    <button onclick="hideCodeModal()" class="py-4 rounded-3xl border border-white/20">CANCEL</button>
-                    <button onclick="verifyCode()" class="py-4 bg-red-600 hover:bg-red-700 rounded-3xl">UNLOCK</button>
+                    <button onclick="hideCodeModal()" class="py-4 rounded-3xl border border-white/20 clickable">CANCEL</button>
+                    <button onclick="verifyCode()" class="py-4 bg-red-600 hover:bg-red-700 rounded-3xl clickable">UNLOCK</button>
                 </div>
             </div>
         </div>
@@ -211,10 +160,8 @@
 
     <script>
         let files = [];
-        let isAdmin = false;
-        let currentFilter = 'all';
 
-        // Your exact case file
+        // ONLY YOUR REQUESTED FILE
         function seedFiles() {
             return [{
                 id: 1,
@@ -250,8 +197,7 @@ Multiple student and parent testimonies. Dates and incidents documented.
         }
 
         function loadFiles() {
-            const saved = localStorage.getItem('perongCaseFiles');
-            files = saved ? JSON.parse(saved) : seedFiles();
+            files = seedFiles();
         }
 
         function renderFiles() {
@@ -260,7 +206,7 @@ Multiple student and parent testimonies. Dates and incidents documented.
 
             files.forEach(file => {
                 grid.innerHTML += `
-                <div onclick="showFile(${file.id})" class="card-hover bg-zinc-900 border border-white/10 rounded-3xl p-6 cursor-pointer">
+                <div onclick="showFile(${file.id})" class="clickable bg-zinc-900 border border-white/10 rounded-3xl p-6 cursor-pointer active:scale-[0.98]">
                     <div class="flex justify-between items-start mb-4">
                         <span class="font-mono text-xs text-cyan-300">${file.date}</span>
                         <span class="bg-emerald-400 text-emerald-950 text-xs px-4 py-1 rounded-3xl font-bold">${file.status}</span>
@@ -277,12 +223,8 @@ Multiple student and parent testimonies. Dates and incidents documented.
             if (!file) return;
 
             document.getElementById('modal-file-title').textContent = file.title;
-            document.getElementById('modal-file-content').innerHTML = `
-                <div class="whitespace-pre-wrap leading-relaxed">${file.content.replace(/\n/g, '<br><br>')}</div>
-                <div class="mt-10 p-4 bg-black/60 rounded-2xl text-xs font-mono border border-dashed border-cyan-300/30">
-                    FILE ID: #${file.id} • ${file.date} • ${file.status}
-                </div>
-            `;
+            document.getElementById('modal-file-content').innerHTML = file.content.replace(/\n/g, '<br><br>');
+            
             document.getElementById('file-modal').classList.remove('hidden');
             document.getElementById('file-modal').classList.add('flex');
         }
@@ -294,35 +236,26 @@ Multiple student and parent testimonies. Dates and incidents documented.
         }
 
         function navigateTo(view) {
-            // Hide all views
+            // Hide all main views
             document.getElementById('home-view').classList.add('hidden');
             document.getElementById('files-view').classList.add('hidden');
-            document.getElementById('timeline-view').classList.add('hidden');
-            document.getElementById('vault-view').classList.add('hidden');
 
-            // Show selected view
             if (view === 'home') {
                 document.getElementById('home-view').classList.remove('hidden');
             } else if (view === 'files') {
                 document.getElementById('files-view').classList.remove('hidden');
                 renderFiles();
-            } else if (view === 'timeline') {
-                document.getElementById('timeline-view').classList.remove('hidden');
-            } else if (view === 'vault') {
-                document.getElementById('vault-view').classList.remove('hidden');
             }
 
-            // Update mobile nav
-            document.querySelectorAll('.mobile-bottom-nav a').forEach(a => a.classList.remove('text-cyan-300'));
-            const activeMobile = document.getElementById(`mnav-${view}`);
-            if (activeMobile) activeMobile.classList.add('text-cyan-300');
+            // Update mobile bottom nav highlight
+            document.querySelectorAll('.fixed.bottom-0 a').forEach(a => a.classList.remove('text-cyan-300'));
+            const active = document.getElementById(`mnav-${view}`);
+            if (active) active.classList.add('text-cyan-300');
         }
 
         function verifyCode() {
             if (document.getElementById('code-input').value.trim() === '2112') {
-                isAdmin = true;
                 hideCodeModal();
-                document.getElementById('admin-badge').classList.remove('hidden');
                 showToast('ADMIN MODE ENABLED');
             } else {
                 showToast('ACCESS DENIED', 'error');
@@ -333,7 +266,7 @@ Multiple student and parent testimonies. Dates and incidents documented.
         function openCodeModal() {
             document.getElementById('code-modal').classList.remove('hidden');
             document.getElementById('code-modal').classList.add('flex');
-            setTimeout(() => document.getElementById('code-input').focus(), 300);
+            setTimeout(() => document.getElementById('code-input').focus(), 100);
         }
 
         function hideCodeModal() {
@@ -347,7 +280,7 @@ Multiple student and parent testimonies. Dates and incidents documented.
             document.getElementById('toast-text').innerHTML = type === 'success' ? `✅ ${msg}` : `⛔ ${msg}`;
             toast.style.backgroundColor = type === 'success' ? '#10b981' : '#ef4444';
             toast.classList.remove('hidden');
-            setTimeout(() => toast.classList.add('hidden'), 3000);
+            setTimeout(() => toast.classList.add('hidden'), 2800);
         }
 
         function copyAccessHint() {
@@ -355,11 +288,11 @@ Multiple student and parent testimonies. Dates and incidents documented.
             showToast("Code 2112 copied");
         }
 
-        // Initialize
+        // Initialize the site
         function init() {
             loadFiles();
-            navigateTo('home');   // Start on home page
-            console.log('%cPERONG ARCHIVE LOADED - Mobile optimized', 'color:#22d3ee');
+            navigateTo('home');
+            console.log('%cPERONG ARCHIVE LOADED • Only WM-2026-0407-MP file included • Mobile optimized', 'color:#22d3ee');
         }
 
         window.onload = init;
