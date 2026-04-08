@@ -7,36 +7,58 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital@400;700&display=swap');
-        
+       
+        :root {
+            --tw-color-primary: #22d3ee;
+        }
+       
         * {
             transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
             transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
-            transition-duration: 200ms;
+            transition-duration: 150ms;
         }
-        
-        .neon-text {
-            animation: neonGlow 3s ease-in-out infinite;
-        }
-        
+       
         @keyframes neonGlow {
             0%, 100% { text-shadow: 0 0 10px #22d3ee, 0 0 20px #22d3ee; }
             50% { text-shadow: 0 0 30px #22d3ee, 0 0 40px #22d3ee; }
         }
-        
+       
+        .neon-text {
+            animation: neonGlow 3s ease-in-out infinite;
+        }
+       
+        @keyframes nukePulse {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.8); }
+            70% { box-shadow: 0 0 0 30px rgba(239, 68, 68, 0); }
+        }
+       
         .nuke-btn {
             animation: nukePulse 2s infinite;
         }
-        
-        @keyframes nukePulse {
-            0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
-            70% { box-shadow: 0 0 0 25px rgba(239, 68, 68, 0); }
-        }
-        
+       
         .hero-bg {
             background: radial-gradient(circle at 50% 30%, #0a0a0a 0%, #000000 70%);
+            background-size: 100% 300%;
+            background-image:
+                linear-gradient(to bottom, transparent 50%, rgba(34, 211, 238, 0.08) 50%),
+                radial-gradient(circle at 50% 30%, #22d3ee 0%, transparent 70%);
             min-height: 100dvh;
         }
-        
+       
+        .card-hover {
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+       
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 25px 50px -12px rgb(34 211 238);
+        }
+       
+        .cursive {
+            font-family: 'Playfair Display', cursive;
+            font-style: italic;
+        }
+       
         .clickable {
             cursor: pointer;
             touch-action: manipulation;
@@ -45,27 +67,42 @@
         button, a {
             -webkit-tap-highlight-color: transparent;
         }
+
+        @media (max-width: 768px) {
+            .hero-text {
+                font-size: 2.8rem;
+                line-height: 1.05;
+            }
+        }
     </style>
 </head>
 <body class="bg-zinc-950 text-white font-sans overflow-x-hidden">
 
     <!-- NAVBAR -->
-    <nav class="bg-zinc-900/95 backdrop-blur-xl border-b border-white/10 sticky top-0 z-50">
-        <div class="max-w-screen-2xl mx-auto px-4 py-4 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <div class="w-9 h-9 bg-gradient-to-br from-cyan-400 to-violet-500 rounded-2xl flex items-center justify-center text-2xl rotate-12">📼</div>
+    <nav class="bg-zinc-900/90 backdrop-blur-xl border-b border-white/10 sticky top-0 z-50">
+        <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+            <div class="flex items-center gap-x-3">
+                <div class="w-9 h-9 bg-gradient-to-br from-cyan-400 to-violet-500 rounded-2xl flex items-center justify-center text-2xl rotate-12 shadow-inner">📼</div>
                 <div>
-                    <h1 class="text-3xl font-bold tracking-tighter neon-text">PERONG</h1>
-                    <p class="text-[10px] text-cyan-300 -mt-1 tracking-widest">ARCHIVE • CLASSIFIED</p>
+                    <h1 class="text-3xl font-bold tracking-[-2px] neon-text">PERONG</h1>
+                    <p class="text-[10px] text-cyan-300 -mt-1 tracking-[3px] font-medium">ARCHIVE • CLASSIFIED</p>
                 </div>
             </div>
 
-            <div class="flex items-center gap-3">
-                <div onclick="copyAccessHint()" class="hidden sm:block text-xs font-mono px-3 py-2 bg-white/5 hover:bg-white/10 rounded-3xl border border-white/10 cursor-pointer clickable">
-                    SECURE ●
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center gap-x-8 text-sm font-medium">
+                <a onclick="navigateTo('home')" class="hover:text-cyan-300 cursor-pointer clickable" id="nav-home">OVERVIEW</a>
+                <a onclick="navigateTo('files')" class="hover:text-cyan-300 cursor-pointer clickable" id="nav-files">CASE FILES</a>
+            </div>
+
+            <div class="flex items-center gap-x-4">
+                <div onclick="copyAccessHint()" class="hidden sm:flex text-xs font-mono px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-3xl border border-white/10 cursor-pointer clickable">
+                    <span class="text-cyan-300">SECURE</span>
+                    <span class="text-amber-300">●</span>
                 </div>
-                <div onclick="openCodeModal()" class="nuke-btn w-12 h-12 bg-red-600 hover:bg-red-700 rounded-3xl flex items-center justify-center cursor-pointer shadow-2xl border border-red-400/50 active:scale-95 clickable">
-                    <span class="text-4xl">☢️</span>
+                
+                <div onclick="openCodeModal()" class="nuke-btn w-12 h-12 sm:w-14 sm:h-14 bg-red-600 hover:bg-red-700 rounded-3xl flex items-center justify-center cursor-pointer shadow-2xl border border-red-400/50 active:scale-95 clickable">
+                    <div class="text-4xl drop-shadow-[0_0_15px_#f00]">☢️</div>
                 </div>
             </div>
         </div>
@@ -73,34 +110,33 @@
 
     <!-- MOBILE BOTTOM NAV -->
     <div class="fixed bottom-0 left-0 right-0 bg-zinc-900/95 backdrop-blur-xl border-t border-white/10 z-50 md:hidden">
-        <div class="flex text-xs">
-            <a onclick="navigateTo('home')" class="flex-1 py-3 flex flex-col items-center text-cyan-300 clickable" id="mnav-home">
-                <span class="text-2xl mb-0.5">🏠</span> Home
+        <div class="flex justify-around py-2 text-xs">
+            <a onclick="navigateTo('home')" class="flex flex-col items-center py-1 text-cyan-300 clickable" id="mnav-home">
+                <span class="text-xl">🏠</span><span>Home</span>
             </a>
-            <a onclick="navigateTo('files')" class="flex-1 py-3 flex flex-col items-center clickable" id="mnav-files">
-                <span class="text-2xl mb-0.5">📁</span> Files
+            <a onclick="navigateTo('files')" class="flex flex-col items-center py-1 clickable" id="mnav-files">
+                <span class="text-xl">📁</span><span>Files</span>
             </a>
         </div>
     </div>
 
     <!-- HERO -->
     <div id="home-view" class="hero-bg flex items-center relative">
-        <div class="max-w-screen-2xl mx-auto px-5 pt-20 pb-24">
-            <div class="max-w-xl">
-                <div class="inline-flex items-center gap-2 bg-white/10 px-5 py-3 rounded-3xl text-sm mb-8">
-                    <div class="w-3 h-3 bg-cyan-400 rounded-full animate-pulse"></div>
-                    LIVE • LEVEL 7 CLEARANCE
+        <div class="max-w-screen-2xl mx-auto px-5 pt-16 pb-20 md:pt-0">
+            <div class="max-w-2xl">
+                <div class="inline-flex items-center gap-x-2 bg-white/10 text-cyan-300 text-sm font-medium px-6 py-3 rounded-3xl mb-6 backdrop-blur-md">
+                    <div class="animate-pulse w-3 h-3 bg-cyan-400 rounded-full"></div>
+                    LIVE • LEVEL 7 CLEARANCE REQUIRED
                 </div>
-
-                <h1 class="text-5xl md:text-7xl font-bold leading-none tracking-[-3px] mb-6">
-                    SCOTT BRADLY<br>PERONG<br>
-                    <span class="neon-text text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-violet-400">CASE FILES</span>
+               
+                <h1 class="hero-text text-5xl sm:text-6xl md:text-7xl md:text-8xl font-bold leading-none tracking-[-4px] mb-6">
+                    SCOTT BRADLY<br>PERONG<br><span class="neon-text text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 to-violet-400">CASE FILES</span>
                 </h1>
-
-                <p class="text-xl text-zinc-400 mb-10">Secure digital vault • Access restricted</p>
-
-                <button onclick="navigateTo('files')" 
-                        class="clickable w-full md:w-auto bg-white text-zinc-950 hover:bg-cyan-300 font-semibold text-lg px-12 py-6 rounded-3xl flex items-center justify-center gap-3 shadow-2xl active:scale-95">
+               
+                <p class="text-xl md:text-2xl text-zinc-400 max-w-lg mb-10">A secure digital vault documenting every anomaly, every lead, every truth.</p>
+               
+                <button onclick="navigateTo('files')"
+                        class="clickable bg-white text-zinc-950 hover:bg-cyan-300 font-semibold text-lg px-10 py-6 rounded-3xl flex items-center gap-x-3 shadow-xl shadow-cyan-500/30 w-full sm:w-auto justify-center">
                     BROWSE ALL FILES
                     <span class="text-3xl">→</span>
                 </button>
@@ -108,59 +144,64 @@
         </div>
     </div>
 
-    <!-- FILES VIEW - ONLY ONE FILE -->
+    <!-- FILES VIEW - ONLY YOUR FILE -->
     <div id="files-view" class="max-w-screen-2xl mx-auto px-5 py-12 hidden">
-        <div class="mb-10">
-            <h2 class="text-4xl font-semibold tracking-tight">CASE FILES</h2>
-            <p class="text-zinc-400">Subject: Scott Bradley Perong • Weddington Middle School</p>
+        <div class="flex justify-between items-baseline mb-10">
+            <div>
+                <h2 class="text-4xl md:text-5xl font-semibold tracking-tight">ALL CASE FILES</h2>
+                <p class="text-zinc-400">Subject: Scott Bradley Perong • Last updated moments ago</p>
+            </div>
         </div>
-        
+       
         <div id="files-grid" class="grid grid-cols-1 gap-6"></div>
     </div>
 
     <!-- FILE DETAIL MODAL -->
-    <div id="file-modal" onclick="if(event.target.id === 'file-modal') hideFileModal()" 
-         class="hidden fixed inset-0 bg-black/90 backdrop-blur-2xl z-[9999] flex items-center justify-center p-4">
+    <div onclick="if(event.target.id === 'file-modal')hideFileModal()" id="file-modal" 
+         class="hidden fixed inset-0 bg-black/90 backdrop-blur-xl z-[9999] flex items-center justify-center p-4">
         <div onclick="event.stopImmediatePropagation()" 
-             class="w-full max-w-2xl bg-zinc-900 rounded-3xl overflow-hidden border border-cyan-400/30">
-            <div class="px-6 py-5 border-b flex items-center justify-between bg-zinc-900">
-                <div id="modal-file-title" class="text-2xl font-semibold"></div>
-                <button onclick="hideFileModal()" class="text-4xl text-zinc-400 hover:text-white leading-none clickable">×</button>
+             class="modal-content w-full max-w-2xl bg-zinc-900 rounded-3xl max-h-[92vh] overflow-hidden border border-cyan-400/30">
+            <div class="px-6 py-5 border-b flex items-center justify-between sticky top-0 bg-zinc-900">
+                <div id="modal-file-title" class="text-2xl md:text-3xl font-semibold"></div>
+                <button onclick="hideFileModal()" class="text-4xl leading-none text-zinc-400 hover:text-white clickable">×</button>
             </div>
-            <div id="modal-file-content" class="p-6 sm:p-8 text-zinc-200 leading-relaxed text-[17px] max-h-[65vh] overflow-auto">
+           
+            <div id="modal-file-content" class="px-6 py-8 text-zinc-300 leading-relaxed text-[17px] max-h-[65vh] overflow-auto">
             </div>
         </div>
     </div>
 
     <!-- CODE MODAL -->
-    <div id="code-modal" onclick="if(event.target.id==='code-modal')hideCodeModal()" 
+    <div onclick="if(event.target.id === 'code-modal')hideCodeModal()" id="code-modal" 
          class="hidden fixed inset-0 bg-black/90 backdrop-blur-3xl z-[10000] flex items-center justify-center p-4">
-        <div onclick="event.stopImmediatePropagation()" class="w-full max-w-sm bg-zinc-900 rounded-3xl p-8">
-            <div class="text-center">
-                <div class="text-7xl mb-6">☢️</div>
-                <h3 class="text-2xl font-bold mb-3">NUKE PROTOCOL</h3>
-                <p class="text-zinc-400 mb-8">Enter code to unlock editing</p>
-                <input id="code-input" type="password" maxlength="4" 
-                       onkeydown="if(event.key === 'Enter') verifyCode()" 
-                       class="block w-full text-center text-5xl font-mono bg-zinc-950 border border-red-400/50 focus:border-red-400 rounded-3xl py-6 outline-none">
-                <div class="mt-8 grid grid-cols-2 gap-3">
-                    <button onclick="hideCodeModal()" class="py-4 rounded-3xl border border-white/20 clickable">CANCEL</button>
-                    <button onclick="verifyCode()" class="py-4 bg-red-600 hover:bg-red-700 rounded-3xl clickable">UNLOCK</button>
-                </div>
+        <div onclick="event.stopImmediatePropagation()" class="modal-content w-full max-w-md bg-zinc-900 rounded-3xl p-8">
+            <div class="flex justify-center mb-6">
+                <div class="text-7xl">☢️</div>
+            </div>
+            <h3 class="text-center text-3xl font-bold mb-2 tracking-widest">NUKE PROTOCOL</h3>
+            <p class="text-center text-zinc-400 mb-8">Enter the hidden code to unlock editing</p>
+           
+            <input id="code-input" type="password" maxlength="4"
+                   onkeydown="if(event.key === 'Enter') verifyCode()"
+                   class="w-full text-center text-5xl font-mono bg-zinc-950 border border-red-400/30 focus:border-red-400 rounded-3xl py-8 outline-none text-white">
+           
+            <div class="mt-8 flex gap-4">
+                <button onclick="hideCodeModal()" class="flex-1 py-6 rounded-3xl font-medium border border-white/10 clickable">CANCEL</button>
+                <button onclick="verifyCode()" class="flex-1 py-6 bg-red-600 hover:bg-red-700 rounded-3xl font-semibold clickable">UNLOCK ACCESS</button>
             </div>
         </div>
     </div>
 
     <!-- TOAST -->
     <div id="toast" onclick="this.classList.add('hidden')" 
-         class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-sm px-8 py-4 rounded-3xl shadow-2xl z-[11000]">
+         class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-sm font-medium px-8 py-4 rounded-3xl shadow-2xl z-[11000]">
         <span id="toast-text"></span>
     </div>
 
     <script>
         let files = [];
 
-        // ONLY THIS ONE FILE - AS REQUESTED
+        // ONLY YOUR REQUESTED FILE
         function seedFiles() {
             return [{
                 id: 1,
@@ -175,29 +216,24 @@ Employer: Weddington Middle School
 Reported Incidents: Multiple allegations of sexual harassment, inappropriate touching, and predatory behavior toward students (2025–Present).
 
 1. Executive Summary of Allegations
-Multiple victims, parents, and community members have reported that Mr. Perong engages in "grooming" behavior and inappropriate physical contact during P.E. classes and extracurricular coaching. Reports suggest a pattern where Perong singles out students, makes unwelcome sexual comments, and engages in inappropriate, unconsented touch, often masked as physical instruction.
+Multiple victims, parents, and community members have reported that Mr. Perong engages in "grooming" behavior and inappropriate physical contact during P.E. classes and extracurricular coaching.
 
 2. Pattern of Behavior
-Reports to school authorities indicate the following behaviors:
 • Physical Harassment: Touching students on the legs, waist, and shoulders, and making sexual comments to students.
-• Grooming: "Overly familiar" interactions with specific students, often separating them from the group, and creating a culture of silence.
+• Grooming: "Overly familiar" interactions with specific students, often separating them from the group.
 • Verbal Harassment: Making suggestive remarks during class.
 
 3. Administrative Failures
-Weddington Middle School administration has failed to take action despite receiving multiple reports of this behavior.
-• Ignored Warnings: Parents and peers have reported that Mr. Perong's behavior was known to administration as far back as 2023.
-• Failure to Report: School officials have allegedly failed to report these incidents to law enforcement or child protective services.
-• Active Concealment: The school is accused of treating reports as "misunderstandings" or "inadvertent contact" to protect the coach and school reputation.
+Weddington Middle School administration has failed to take action despite receiving multiple reports of this behavior. Ignored Warnings date back to 2023. Reports were allegedly dismissed or concealed.
 
 4. Evidence & Documentation Status
 • Witness Testimonies: Multiple former and current students have corroborated the claims.
 • Documentation: Parents have reported documenting dates, times, and specific descriptions of incidents.
-• Potential Evidence: There are concerns that digital evidence might be present on school-issued or personal devices.
 
 5. Recommended Actions
-• Immediate Suspension: Place Mr. Perong on administrative leave while an external investigation is conducted.
-• Law Enforcement Referral: Immediately report the allegations to local police and Child Protective Services (CPS) for sexual abuse of a minor investigation.
-• External Investigation: Initiate a Title IX investigation by an independent third party to avoid school administration conflicts of interest.`
+• Immediate Suspension: Place Mr. Perong on administrative leave.
+• Law Enforcement Referral: Immediately report to local police and Child Protective Services (CPS).
+• External Investigation: Initiate a Title IX investigation by an independent third party.`
             }];
         }
 
@@ -210,16 +246,17 @@ Weddington Middle School administration has failed to take action despite receiv
             grid.innerHTML = '';
 
             files.forEach(file => {
-                grid.innerHTML += `
-                <div onclick="showFile(${file.id})" class="clickable bg-zinc-900 border border-white/10 rounded-3xl p-6 cursor-pointer active:scale-[0.98]">
+                const html = `
+                <div onclick="showFile(${file.id})" class="card-hover clickable bg-zinc-900 border border-white/10 rounded-3xl p-6 cursor-pointer">
                     <div class="flex justify-between items-start mb-4">
-                        <span class="font-mono text-xs text-cyan-300">${file.date}</span>
-                        <span class="bg-emerald-400 text-emerald-950 text-xs px-4 py-1 rounded-3xl font-bold">${file.status}</span>
+                        <div class="font-mono text-xs text-cyan-300">${file.date}</div>
+                        <span class="bg-emerald-400 text-emerald-950 text-xs px-4 h-6 flex items-center rounded-3xl font-bold">${file.status}</span>
                     </div>
                     <h4 class="text-2xl font-semibold mb-3">${file.title}</h4>
                     <p class="text-zinc-400 line-clamp-4">${file.summary}</p>
-                    <div class="mt-6 text-xs text-cyan-300/70">Made by X & Y</div>
+                    <div class="mt-6 cursive text-cyan-300/70 text-xs">Made by X &amp; Y</div>
                 </div>`;
+                grid.innerHTML += html;
             });
         }
 
@@ -230,11 +267,10 @@ Weddington Middle School administration has failed to take action despite receiv
             document.getElementById('modal-file-title').textContent = file.title;
             document.getElementById('modal-file-content').innerHTML = `
                 <div class="whitespace-pre-wrap leading-relaxed">${file.content.replace(/\n/g, '<br><br>')}</div>
-                <div class="mt-10 p-4 bg-black/60 rounded-2xl text-xs font-mono border border-dashed border-cyan-300/30">
-                    FILE ID: #${file.id} • ${file.date} • ${file.status.toUpperCase()}
+                <div class="mt-10 text-xs font-mono bg-black/60 p-4 rounded-2xl border border-dashed border-cyan-300/30">
+                    FILE ID: #${file.id} • ENCRYPTION: QUANTUM-LOCKED
                 </div>
             `;
-            
             document.getElementById('file-modal').classList.remove('hidden');
             document.getElementById('file-modal').classList.add('flex');
         }
@@ -249,14 +285,13 @@ Weddington Middle School administration has failed to take action despite receiv
             document.getElementById('home-view').classList.add('hidden');
             document.getElementById('files-view').classList.add('hidden');
 
-            if (view === 'home') {
-                document.getElementById('home-view').classList.remove('hidden');
-            } else if (view === 'files') {
+            if (view === 'home') document.getElementById('home-view').classList.remove('hidden');
+            else if (view === 'files') {
                 document.getElementById('files-view').classList.remove('hidden');
                 renderFiles();
             }
 
-            // Update mobile nav
+            // Mobile nav highlight
             document.querySelectorAll('.fixed.bottom-0 a').forEach(a => a.classList.remove('text-cyan-300'));
             const active = document.getElementById(`mnav-${view}`);
             if (active) active.classList.add('text-cyan-300');
@@ -265,7 +300,7 @@ Weddington Middle School administration has failed to take action despite receiv
         function verifyCode() {
             if (document.getElementById('code-input').value.trim() === '2112') {
                 hideCodeModal();
-                showToast('ADMIN MODE ENABLED');
+                showToast('🔥 NUKE PROTOCOL ACTIVATED • FULL ACCESS GRANTED');
             } else {
                 showToast('ACCESS DENIED', 'error');
                 document.getElementById('code-input').value = '';
@@ -275,7 +310,7 @@ Weddington Middle School administration has failed to take action despite receiv
         function openCodeModal() {
             document.getElementById('code-modal').classList.remove('hidden');
             document.getElementById('code-modal').classList.add('flex');
-            setTimeout(() => document.getElementById('code-input').focus(), 100);
+            document.getElementById('code-input').focus();
         }
 
         function hideCodeModal() {
@@ -284,24 +319,22 @@ Weddington Middle School administration has failed to take action despite receiv
             modal.classList.remove('flex');
         }
 
-        function showToast(msg, type = 'success') {
+        function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
-            document.getElementById('toast-text').innerHTML = type === 'success' ? `✅ ${msg}` : `⛔ ${msg}`;
+            document.getElementById('toast-text').innerHTML = type === 'success' ? `✅ ${message}` : `⛔ ${message}`;
             toast.style.backgroundColor = type === 'success' ? '#10b981' : '#ef4444';
             toast.classList.remove('hidden');
             setTimeout(() => toast.classList.add('hidden'), 2800);
         }
 
         function copyAccessHint() {
-            navigator.clipboard.writeText("2112");
-            showToast("Code 2112 copied");
+            navigator.clipboard.writeText('2112').then(() => showToast('Hidden code copied'));
         }
 
-        // Initialize
         function init() {
             loadFiles();
             navigateTo('home');
-            console.log('%cPERONG ARCHIVE LOADED • ONLY #WM-2026-0407-MP FILE INCLUDED', 'color:#22d3ee');
+            console.log('%cPERONG ARCHIVE LOADED • Original cyber style restored • Only #WM-2026-0407-MP file', 'color:#22d3ee');
         }
 
         window.onload = init;
