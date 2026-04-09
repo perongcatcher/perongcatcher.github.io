@@ -30,12 +30,6 @@
                 0 0 32px var(--neon-blue);
         }
         
-        .neon-pink-text {
-            text-shadow: 
-                0 0 8px var(--neon-pink),
-                0 0 16px var(--neon-pink);
-        }
-        
         .neon-glow {
             box-shadow: 
                 0 0 15px var(--neon-blue),
@@ -68,7 +62,6 @@
             animation: scan 6s linear infinite;
             pointer-events: none;
             opacity: 0.25;
-            z-index: 1;
         }
         
         @keyframes scan {
@@ -93,14 +86,13 @@
     </style>
 </head>
 <body class="bg-[#0a0a1f] text-[#e0f8ff] overflow-x-hidden">
-    <!-- Subtle vignette overlay -->
     <div class="vignette"></div>
 
     <!-- NAVBAR -->
     <nav class="fixed top-0 left-0 right-0 z-50 border-b border-[#00f0ff]/20 bg-[#0a0a1f]/90 backdrop-blur-xl">
         <div class="max-w-screen-2xl mx-auto px-8 py-5 flex items-center justify-between">
             <div class="flex items-center gap-x-4">
-                <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-[#00f0ff] via-[#ff00aa] to-[#fffc00] flex items-center justify-center text-black font-bold text-2xl neon-glow flex-shrink-0">
+                <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-[#00f0ff] via-[#ff00aa] to-[#fffc00] flex items-center justify-center text-black font-bold text-2xl neon-glow">
                     P
                 </div>
                 <div>
@@ -112,11 +104,10 @@
             <div class="hidden md:flex items-center gap-x-10 text-sm uppercase tracking-widest">
                 <a onclick="navigateToSection('files-section')" class="hover:text-[#fffc00] transition-colors cursor-pointer">ARCHIVES</a>
                 <a onclick="showStatus()" class="hover:text-[#fffc00] transition-colors cursor-pointer">SYSTEM</a>
-                <button onclick="showPasswordModal()" 
+                <button onclick="showOwnerRoom()" 
                         class="px-6 py-2.5 border border-[#ff00aa]/50 hover:border-[#fffc00] rounded-3xl flex items-center gap-x-2 text-[#fffc00] hover:bg-[#fffc00]/10 transition-all">
                     <i class="fa-solid fa-lock"></i>
                     <span>OWNER ROOM</span>
-                    <span class="font-mono bg-[#fffc00]/10 px-2 py-0.5 rounded text-xs">2112</span>
                 </button>
             </div>
             
@@ -163,22 +154,15 @@
                         BROWSE ARCHIVES
                     </button>
                     
-                    <button onclick="showPasswordModal()" 
+                    <button onclick="showOwnerRoom()" 
                             class="px-10 py-6 border-2 border-[#fffc00] text-[#fffc00] font-medium rounded-3xl text-lg flex items-center gap-x-3 hover:bg-[#fffc00]/10 transition-all">
                         <i class="fa-solid fa-key"></i>
                         ENTER OWNER ROOM
                     </button>
                 </div>
-                
-                <div class="mt-16 text-xs font-mono flex items-center gap-x-8 text-[#00f0ff]/60">
-                    <div>EST. 2112</div>
-                    <div>NO BREACHES • EVER</div>
-                    <div>DUAL OWNER PROTOCOL ACTIVE</div>
-                </div>
             </div>
         </div>
         
-        <!-- Floating neon orb -->
         <div class="absolute right-12 bottom-20 hidden lg:block">
             <div class="relative w-80 h-80">
                 <div class="absolute inset-0 bg-[#00f0ff] rounded-full blur-[120px] opacity-30"></div>
@@ -205,7 +189,7 @@
         </div>
         
         <div id="files-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            <!-- JS populated -->
+            <!-- Populated by JS -->
         </div>
     </section>
 
@@ -247,45 +231,15 @@
         </div>
     </div>
 
-    <!-- PASSWORD MODAL -->
-    <div id="password-modal" onclick="if(event.target.id==='password-modal')hidePasswordModal()" 
-         class="hidden fixed inset-0 bg-black/95 z-[300] flex items-center justify-center p-6">
-        <div onclick="event.stopImmediatePropagation()" 
-             class="w-full max-w-md bg-[#12122b] border border-[#ff00aa] rounded-3xl p-10">
-            <div class="text-center">
-                <div class="mx-auto w-20 h-20 rounded-2xl bg-gradient-to-br from-[#ff00aa] to-[#fffc00] flex items-center justify-center text-4xl mb-8">
-                    🔑
-                </div>
-                <h3 class="title-font text-3xl mb-2 neon-pink-text">OWNER ROOM</h3>
-                <p class="text-[#fffc00]/80 text-sm">Enter override code for X &amp; Y access</p>
-            </div>
-            
-            <input id="code-input" maxlength="4" 
-                   onkeydown="if(event.key==='Enter')checkCode()"
-                   class="block w-full mt-10 bg-black border border-[#ff00aa]/50 focus:border-[#fffc00] text-center text-6xl tracking-widest font-mono text-[#fffc00] py-8 rounded-3xl outline-none"
-                   placeholder="••••">
-            
-            <div id="password-error" class="hidden text-red-400 text-center mt-6 text-sm"></div>
-            
-            <div class="grid grid-cols-2 gap-4 mt-12">
-                <button onclick="hidePasswordModal()" 
-                        class="py-6 text-[#00f0ff] border border-[#00f0ff]/30 rounded-3xl hover:bg-white/5">CANCEL</button>
-                <button onclick="checkCode()" 
-                        class="py-6 bg-gradient-to-r from-[#ff00aa] to-[#fffc00] text-black font-semibold rounded-3xl">UNLOCK VAULT</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- OWNER ROOM -->
+    <!-- OWNER ROOM (No password required) -->
     <div id="owner-modal" onclick="if(event.target.id==='owner-modal')hideOwnerModal()" 
          class="hidden fixed inset-0 bg-black/95 z-[400] flex items-center justify-center p-6">
         <div onclick="event.stopImmediatePropagation()" 
              class="w-full max-w-6xl bg-[#12122b] border border-[#fffc00] rounded-3xl overflow-hidden">
             
-            <!-- Header -->
             <div class="px-10 py-8 border-b border-[#fffc00]/30 flex items-center justify-between bg-gradient-to-r from-black to-transparent">
                 <div class="flex items-center gap-x-6">
-                    <span class="px-6 py-2 bg-[#fffc00]/10 text-[#fffc00] text-xs tracking-widest rounded-3xl">CODE 2112 • ACCESS GRANTED</span>
+                    <span class="px-6 py-2 bg-[#fffc00]/10 text-[#fffc00] text-xs tracking-widest rounded-3xl">OWNER ACCESS GRANTED</span>
                     <div class="title-font text-4xl neon-text text-white">OWNER ROOM • X &amp; Y</div>
                 </div>
                 <button onclick="hideOwnerModal()" class="text-5xl text-[#ff00aa] hover:scale-110 transition">×</button>
@@ -355,7 +309,7 @@
                                 <div class="text-xs mt-2 text-[#ff00aa]/70">TACTICAL</div>
                             </div>
                         </div>
-                        <div class="text-center text-[10px] text-[#00f0ff]/50 mt-10">DUAL SIGNATURE CONFIRMED • 2112 PROTOCOL</div>
+                        <div class="text-center text-[10px] text-[#00f0ff]/50 mt-10">DUAL CONTROL ACTIVE</div>
                     </div>
                 </div>
             </div>
@@ -435,7 +389,6 @@
                 grid.appendChild(card)
             })
             
-            // Placeholder card
             const placeholder = document.createElement('div')
             placeholder.className = `border border-dashed border-[#00f0ff]/30 rounded-3xl p-7 flex flex-col items-center justify-center text-center h-full min-h-[280px] text-[#00f0ff]/40`
             placeholder.innerHTML = `
@@ -464,41 +417,14 @@
             m.classList.remove('flex')
         }
         
-        function showPasswordModal() {
-            const m = document.getElementById('password-modal')
-            m.classList.remove('hidden')
-            m.classList.add('flex')
-            setTimeout(() => document.getElementById('code-input').focus(), 100)
-        }
-        
-        function hidePasswordModal() {
-            const m = document.getElementById('password-modal')
-            m.classList.add('hidden')
-            m.classList.remove('flex')
-            document.getElementById('code-input').value = ''
-            document.getElementById('password-error').classList.add('hidden')
-        }
-        
-        function checkCode() {
-            const code = document.getElementById('code-input').value.trim()
-            const err = document.getElementById('password-error')
-            
-            if (code === "2112") {
-                hidePasswordModal()
-                setTimeout(showOwnerRoom, 300)
-            } else {
-                err.textContent = "INVALID OVERRIDE CODE"
-                err.classList.remove('hidden')
-            }
-        }
-        
         function showOwnerRoom() {
             const m = document.getElementById('owner-modal')
             m.classList.remove('hidden')
             m.classList.add('flex')
             
-            // Reset terminal
-            document.getElementById('terminal-output').innerHTML = `<div class="text-emerald-400">Welcome back, Owner X. All systems nominal.</div>`
+            document.getElementById('terminal-output').innerHTML = `
+                <div class="text-emerald-400">Connection established. Welcome back, Owner X.</div>
+            `
         }
         
         function hideOwnerModal() {
@@ -551,26 +477,23 @@
         }
         
         function toggleMobileMenu() {
-            alert("Mobile menu would expand here in a full build. All core features remain the same.")
+            alert("Mobile menu would expand here in a full build.")
         }
         
         function navigateToSection(section) {
             document.getElementById(section).scrollIntoView({ behavior: "smooth" })
         }
         
-        // Initialize everything
         function init() {
             renderFiles()
             
-            // Keyboard escape support
             document.addEventListener('keydown', (e) => {
                 if (e.key === "Escape") {
-                    const modals = ['file-modal', 'password-modal', 'owner-modal']
+                    const modals = ['file-modal', 'owner-modal']
                     for (let id of modals) {
                         const m = document.getElementById(id)
                         if (!m.classList.contains('hidden')) {
                             if (id === 'file-modal') hideFileModal()
-                            else if (id === 'password-modal') hidePasswordModal()
                             else if (id === 'owner-modal') hideOwnerModal()
                             return
                         }
@@ -578,7 +501,7 @@
                 }
             })
             
-            console.log('%cPERONG Neon Archive — Sleek Edition Ready', 'color:#00f0ff; font-family:monospace')
+            console.log('%cPERONG Neon Archive — Clean Edition Ready', 'color:#00f0ff; font-family:monospace')
         }
         
         window.onload = init
