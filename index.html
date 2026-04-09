@@ -180,15 +180,15 @@
         <div class="flex items-end justify-between mb-12">
             <div>
                 <div class="uppercase text-xs tracking-[4px] text-[#ff00aa]">SECURE STORAGE</div>
-                <h2 class="title-font text-6xl tracking-tight neon-text">Active Archive</h2>
+                <h2 class="title-font text-6xl tracking-tight neon-text">CLASSIFIED FILE</h2>
             </div>
-            <div class="text-right font-mono text-sm">
-                1 FILE • CLASSIFIED
+            <div class="text-right font-mono text-sm text-[#fffc00]">
+                1 FILE • OMEGA CLEARANCE
             </div>
         </div>
         
         <div id="files-grid" class="max-w-2xl mx-auto">
-            <!-- Only one file card -->
+            <!-- Only the WM-2026-0407-MP file -->
         </div>
     </section>
 
@@ -225,7 +225,7 @@
         </div>
     </div>
 
-    <!-- PASSWORD MODAL (Hidden - no hints) -->
+    <!-- PASSWORD MODAL (No hints) -->
     <div id="password-modal" onclick="if(event.target.id==='password-modal')hidePasswordModal()" 
          class="hidden fixed inset-0 bg-black/95 z-[300] flex items-center justify-center p-6">
         <div onclick="event.stopImmediatePropagation()" 
@@ -338,7 +338,7 @@
     </div>
 
     <script>
-        // Only one file - the WM-2026-0407-MP case file
+        // The only file on the site - fully detailed WM-2026-0407-MP
         const singleFile = {
             id: 1,
             icon: "fa-solid fa-file-lines",
@@ -347,21 +347,43 @@
             badge: "CASE FILE",
             summary: "Scott Bradley Perong — Physical Education Coach. Classified observation file.",
             content: `<div class="space-y-8">
-                <div class="border-l-4 border-[#ff00aa] pl-6">
-                    <p class="text-lg">SUBJECT: Scott Bradley Perong</p>
-                    <p class="text-[#fffc00]">Physical Education Coach • Monroe, North Carolina</p>
+                <div>
+                    <h3 class="text-[#fffc00] text-2xl mb-1">WM-2026-0407-MP</h3>
+                    <p class="text-sm text-[#00f0ff]/70">SUBJECT: Scott Bradley Perong</p>
+                    <p class="text-sm text-[#fffc00]">Physical Education Coach • Monroe, North Carolina</p>
                 </div>
-                
-                <p>Subject exhibits exceptional physical resilience under neon conditioning protocols. Training logs show anomalous performance metrics during night sessions.</p>
-                
-                <div class="bg-black/70 p-6 rounded-2xl border border-red-400/30 text-xs font-mono leading-relaxed">
-                    STATUS: UNDER OBSERVATION<br>
-                    PRIORITY: OMEGA<br>
-                    ACCESS: OWNER X &amp; Y ONLY<br><br>
-                    [REDACTED] — Subject has been exposed to experimental neon protocols. Further monitoring required.
+
+                <div class="bg-black/70 p-6 rounded-2xl border-l-4 border-red-400">
+                    <p class="mb-4">Subject exhibits exceptional physical resilience under neon conditioning protocols. Training logs show anomalous performance metrics during night sessions.</p>
+                    
+                    <div class="font-mono text-xs leading-relaxed text-[#fffc00]/90">
+                        STATUS: UNDER OBSERVATION<br>
+                        PRIORITY: OMEGA<br>
+                        LOCATION: Monroe, NC<br>
+                        ACCESS: OWNER X &amp; Y ONLY<br><br>
+                        [REDACTED] — Subject has been exposed to experimental neon protocols. Further monitoring required.
+                    </div>
                 </div>
-                
-                <p class="text-[#00f0ff]/70 text-sm">This file is strictly restricted. Do not distribute.</p>
+
+                <div class="grid grid-cols-2 gap-6 text-sm">
+                    <div class="bg-[#0a0a1f] p-5 rounded-2xl">
+                        <div class="text-[#00f0ff]/60 text-xs mb-1">OBSERVATION START</div>
+                        <div class="font-mono">2026-04-07</div>
+                    </div>
+                    <div class="bg-[#0a0a1f] p-5 rounded-2xl">
+                        <div class="text-[#00f0ff]/60 text-xs mb-1">LAST ACCESS</div>
+                        <div class="font-mono">JUST NOW • OWNER X</div>
+                    </div>
+                </div>
+
+                <div class="italic text-[#fffc00]/80 border-l-2 border-[#fffc00] pl-5">
+                    “The neon never fades. The vault remembers everything.”
+                </div>
+
+                <p class="text-[#00f0ff]/70 text-sm pt-4 border-t border-[#00f0ff]/20">
+                    This file is strictly restricted to Owner Room clearance. 
+                    Any unauthorized distribution will trigger neon purge protocol.
+                </p>
             </div>`
         }
         
@@ -370,7 +392,7 @@
             grid.innerHTML = ''
             
             const card = document.createElement('div')
-            card.className = `file-card border border-[#00f0ff]/20 rounded-3xl p-8 cursor-pointer group max-w-2xl mx-auto`
+            card.className = `file-card border border-[#00f0ff]/20 rounded-3xl p-8 cursor-pointer group`
             card.innerHTML = `
                 <div class="flex justify-between items-start">
                     <i class="${singleFile.icon} text-6xl text-[#00f0ff]/80 group-hover:text-[#fffc00] transition-colors"></i>
