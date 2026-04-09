@@ -9,9 +9,9 @@
             --neon-blue: #00f0ff;
             --neon-yellow: #fffc00;
         }
-        
+
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         body {
             font-family: 'Courier New', monospace;
             background: #0a0a1f;
@@ -20,20 +20,20 @@
             height: 100vh;
             position: relative;
         }
-        
+
         canvas#matrix {
             position: fixed;
             top: 0; left: 0;
             width: 100%; height: 100%;
             z-index: -1;
-            opacity: 0.18;
+            opacity: 0.15;
         }
-        
+
         header {
             position: fixed;
             top: 0; left: 0; right: 0;
             height: 70px;
-            background: rgba(10, 10, 31, 0.96);
+            background: rgba(10, 10, 31, 0.95);
             border-bottom: 3px solid var(--neon-yellow);
             display: flex;
             align-items: center;
@@ -41,7 +41,7 @@
             z-index: 1000;
             box-shadow: 0 0 30px var(--neon-blue);
         }
-        
+
         .logo {
             font-size: 28px;
             font-weight: bold;
@@ -49,13 +49,13 @@
             text-shadow: 0 0 10px var(--neon-yellow), 0 0 30px var(--neon-blue);
             color: var(--neon-yellow);
         }
-        
+
         nav {
             margin-left: auto;
             display: flex;
             gap: 40px;
         }
-        
+
         nav a {
             color: var(--neon-blue);
             text-decoration: none;
@@ -64,21 +64,19 @@
             letter-spacing: 3px;
             transition: all 0.3s;
         }
-        
+
         nav a:hover, nav a.active {
             color: var(--neon-yellow);
             text-shadow: 0 0 15px var(--neon-yellow);
         }
-        
+
         main {
             margin-top: 70px;
             padding: 40px;
-            height: calc(100vh - 70px - 320px);
+            height: calc(100vh - 70px - 80px);
             overflow-y: auto;
-            position: relative;
-            z-index: 10;
         }
-        
+
         .content-panel {
             background: rgba(15, 15, 45, 0.9);
             border: 2px solid var(--neon-blue);
@@ -86,57 +84,64 @@
             padding: 35px;
             box-shadow: 0 0 40px var(--neon-blue);
         }
-        
+
         h1 {
             font-size: 48px;
             text-shadow: 0 0 20px var(--neon-yellow);
             margin-bottom: 20px;
             letter-spacing: 6px;
         }
-        
-        .hero { text-align: center; padding: 80px 20px; }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 25px;
-        }
-        
-        th, td {
-            padding: 16px 20px;
-            border-bottom: 1px solid rgba(0, 240, 255, 0.3);
-            text-align: left;
-        }
-        
-        th {
-            color: var(--neon-yellow);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        
-        tr:hover { background: rgba(255, 252, 0, 0.08); }
-        
-        .terminal {
+
+        /* Terminal Button */
+        #terminal-btn {
             position: fixed;
-            bottom: 0; left: 0; right: 0;
-            height: 320px;
+            bottom: 30px;
+            right: 30px;
+            background: transparent;
+            border: 3px solid var(--neon-yellow);
+            color: var(--neon-yellow);
+            padding: 14px 28px;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            z-index: 1001;
+            box-shadow: 0 0 25px var(--neon-yellow);
+            transition: all 0.3s;
+        }
+
+        #terminal-btn:hover {
+            background: var(--neon-yellow);
+            color: #0a0a1f;
+            box-shadow: 0 0 40px var(--neon-yellow);
+        }
+
+        /* Terminal Window (Hidden by default) */
+        #terminal-window {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 380px;
             background: rgba(5, 5, 25, 0.98);
-            border-top: 4px solid var(--neon-yellow);
-            box-shadow: 0 -10px 50px var(--neon-blue);
-            display: flex;
+            border-top: 5px solid var(--neon-yellow);
+            box-shadow: 0 -15px 60px var(--neon-blue);
+            display: none;
             flex-direction: column;
             z-index: 2000;
         }
-        
+
         .terminal-header {
             background: #000;
             color: var(--neon-yellow);
-            padding: 10px 20px;
-            font-size: 14px;
+            padding: 12px 25px;
+            font-size: 15px;
             letter-spacing: 2px;
-            border-bottom: 2px solid var(--neon-blue);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
-        
+
         #terminal-output {
             flex: 1;
             padding: 20px;
@@ -145,14 +150,15 @@
             line-height: 1.6;
             background: #000;
         }
-        
+
         .prompt-line {
             display: flex;
             align-items: center;
-            padding: 0 20px 20px;
+            padding: 0 25px 20px;
             color: var(--neon-yellow);
+            font-size: 16px;
         }
-        
+
         #terminal-input {
             flex: 1;
             background: transparent;
@@ -162,7 +168,31 @@
             font-family: 'Courier New', monospace;
             font-size: 16px;
         }
-        
+
+        /* Password Screen */
+        #password-screen {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(10, 10, 31, 0.98);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        #password-input {
+            background: #000;
+            border: 2px solid var(--neon-blue);
+            color: var(--neon-yellow);
+            padding: 15px 20px;
+            font-size: 18px;
+            width: 280px;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+        }
+
         .shoutbox {
             position: fixed;
             top: 100px;
@@ -175,37 +205,10 @@
             font-weight: bold;
             border: 4px solid var(--neon-blue);
             box-shadow: 0 0 60px var(--neon-yellow);
-            z-index: 3000;
+            z-index: 4000;
             display: none;
             border-radius: 6px;
             letter-spacing: 3px;
-        }
-        
-        .glitch { animation: glitch 0.4s linear infinite; }
-        
-        @keyframes glitch {
-            0% { transform: translate(0); }
-            20% { transform: translate(-3px, 3px); }
-            40% { transform: translate(3px, -3px); }
-            60% { transform: translate(-3px, 3px); }
-            100% { transform: translate(0); }
-        }
-        
-        button {
-            background: transparent;
-            border: 2px solid var(--neon-yellow);
-            color: var(--neon-yellow);
-            padding: 10px 24px;
-            font-family: 'Courier New', monospace;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        button:hover {
-            background: var(--neon-yellow);
-            color: #0a0a1f;
         }
     </style>
 </head>
@@ -220,20 +223,26 @@
             <a href="#" onclick="loadPage('vault'); return false;" id="nav-vault">VAULT</a>
             <a href="#" onclick="loadPage('lore'); return false;" id="nav-lore">LORE</a>
         </nav>
-        <div style="margin-left:auto;">
-            <button onclick="fakeGitHubSync()">PULL FROM GITHUB</button>
-        </div>
     </header>
 
     <main id="main-content"></main>
 
-    <!-- Shoutbox -->
-    <div id="shoutbox" class="shoutbox"></div>
+    <!-- Terminal Access Button -->
+    <button id="terminal-btn" onclick="showPasswordScreen()">ACCESS TERMINAL</button>
 
-    <!-- Terminal -->
-    <div class="terminal">
+    <!-- Password Screen -->
+    <div id="password-screen">
+        <h2 style="color:#fffc00; letter-spacing:4px;">TERMINAL ACCESS REQUIRED</h2>
+        <input type="password" id="password-input" placeholder="ENTER PASSWORD" maxlength="4">
+        <button onclick="checkPassword()" style="padding:12px 40px; font-size:16px;">UNLOCK</button>
+        <p style="color:#ff5555; margin-top:20px;" id="password-error"></p>
+    </div>
+
+    <!-- Terminal Window -->
+    <div id="terminal-window">
         <div class="terminal-header">
-            NEON TERMINAL v0.8 — CONNECTED TO PERONG GITHUB REPO
+            <span>PERONG NEON TERMINAL // PROTOCOL v2112</span>
+            <span onclick="hideTerminal()" style="cursor:pointer; color:#ff5555;">[CLOSE]</span>
         </div>
         <div id="terminal-output"></div>
         <div class="prompt-line">
@@ -242,22 +251,25 @@
         </div>
     </div>
 
+    <!-- Shoutbox -->
+    <div id="shoutbox" class="shoutbox"></div>
+
     <script>
-        // Matrix Rain
+        // Matrix Rain Background
         const canvas = document.getElementById('matrix');
         const ctx = canvas.getContext('2d');
         let drops = [];
-        let fontSize = 14;
-        const chars = "01ネオンPERONG0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ$@#%&*";
+        const fontSize = 14;
+        const chars = "01ネオンPERONGABCDEFGHIJKLMNOPQRSTUVWXYZ$@#";
 
-        function resize() {
+        function resizeCanvas() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             drops = Array(Math.floor(canvas.width / fontSize)).fill(1);
         }
 
-        function draw() {
-            ctx.fillStyle = 'rgba(10,10,31,0.08)';
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(10,10,31,0.07)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = '#00f0ff';
             ctx.font = `${fontSize}px monospace`;
@@ -265,51 +277,41 @@
             for (let i = 0; i < drops.length; i++) {
                 const text = chars[Math.floor(Math.random() * chars.length)];
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                
                 if (Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
             }
         }
 
-        // Pages
+        // Pages Content
         const pages = {
             origin: `<div class="content-panel">
-                        <div class="hero">
+                        <div style="text-align:center; padding:80px 20px;">
                             <h1>PERONG NEON VAULT</h1>
-                            <p style="font-size:22px; max-width:800px; margin:30px auto;">
-                                Official GitHub Pages mirror of Perong's files.<br>
-                                Neon Blue + Neon Yellow theme • Matrix Terminal included.
+                            <p style="font-size:22px; max-width:800px; margin:40px auto;">
+                                GitHub Pages Mirror of Perong's Files<br>
+                                Neon Blue & Neon Yellow Protocol Active
                             </p>
-                            <button onclick="launchConfetti()" style="font-size:18px;padding:16px 50px;margin-top:30px;">ENTER THE GRID</button>
+                            <button onclick="launchConfetti()" style="font-size:18px; padding:16px 50px;">IGNITE THE GRID</button>
                         </div>
                     </div>`,
 
             vault: `<div class="content-panel">
                         <h1>THE VAULT — PERONG FILES</h1>
-                        <p><strong>Repository:</strong> perong/neon-vault • Branch: main • Live GitHub mirror</p>
-                        <table>
-                            <thead><tr><th>File</th><th>Type</th><th>Size</th><th>Last Updated</th><th>Action</th></tr></thead>
+                        <p><strong>GitHub Repo:</strong> perong/neon-vault • Live Mirror</p>
+                        <!-- Add your real files here later -->
+                        <table style="width:100%; margin-top:30px; border-collapse:collapse;">
+                            <thead><tr><th>File</th><th>Type</th><th>Size</th><th>Last Updated</th></tr></thead>
                             <tbody>
-                                <tr><td>README.md</td><td>markdown</td><td>12 KB</td><td>2026-04-08</td><td><button onclick="alert('Opened on GitHub (demo)')">VIEW</button></td></tr>
-                                <tr><td>neon-core.js</td><td>javascript</td><td>312 KB</td><td>2026-04-07</td><td><button onclick="alert('Opened on GitHub (demo)')">VIEW</button></td></tr>
-                                <tr><td>matrix-rain.frag</td><td>glsl</td><td>18 KB</td><td>2026-04-06</td><td><button onclick="alert('Opened on GitHub (demo)')">VIEW</button></td></tr>
-                                <tr><td>perong.bio</td><td>text</td><td>4 KB</td><td>2026-04-05</td><td><button onclick="alert('Opened on GitHub (demo)')">VIEW</button></td></tr>
+                                <tr><td>README.md</td><td>markdown</td><td>12 KB</td><td>2026-04-08</td></tr>
+                                <tr><td>neon-core.js</td><td>javascript</td><td>312 KB</td><td>2026-04-07</td></tr>
                             </tbody>
                         </table>
                     </div>`,
 
             lore: `<div class="content-panel">
-                        <h1>EXTRA LORE & INFO</h1>
-                        <p>This website is hosted directly on GitHub Pages (.github.io).<br>
-                        You can now access it at: <strong>https://yourusername.github.io/perong-neon-vault</strong></p>
-                        <br>
-                        <p>All terminal commands work perfectly. Try typing:</p>
-                        <ul style="margin-left:30px; line-height:1.8;">
-                            <li><strong>!help</strong> — full command list</li>
-                            <li><strong>!go vault</strong> — jump to files</li>
-                            <li><strong>!confetti</strong> — celebration</li>
-                            <li><strong>!glitch</strong> — visual distortion</li>
-                        </ul>
+                        <h1>LORE & EXTRA INFO</h1>
+                        <p>This site is hosted on GitHub Pages.<br>
+                        Terminal is protected with password <strong>2112</strong>.</p>
                     </div>`
         };
 
@@ -319,63 +321,90 @@
             document.getElementById(`nav-${page}`).classList.add('active');
         }
 
-        // Terminal
-        function addLine(text, color = '#00f0ff') {
+        // Password System
+        function showPasswordScreen() {
+            document.getElementById('password-screen').style.display = 'flex';
+            document.getElementById('password-input').focus();
+        }
+
+        function checkPassword() {
+            const input = document.getElementById('password-input').value.trim();
+            const error = document.getElementById('password-error');
+
+            if (input === "2112") {
+                document.getElementById('password-screen').style.display = 'none';
+                document.getElementById('terminal-window').style.display = 'flex';
+                document.getElementById('terminal-input').focus();
+                addTerminalLine("ACCESS GRANTED. WELCOME TO THE NEON GRID.", "#fffc00");
+            } else {
+                error.textContent = "ACCESS DENIED. INCORRECT PASSWORD.";
+                setTimeout(() => error.textContent = "", 2000);
+            }
+        }
+
+        function hideTerminal() {
+            document.getElementById('terminal-window').style.display = 'none';
+        }
+
+        // Terminal Functions
+        function addTerminalLine(text, color = '#00f0ff') {
             const output = document.getElementById('terminal-output');
-            const div = document.createElement('div');
-            div.style.color = color;
-            div.textContent = text;
-            output.appendChild(div);
+            const line = document.createElement('div');
+            line.style.color = color;
+            line.textContent = text;
+            output.appendChild(line);
             output.scrollTop = output.scrollHeight;
         }
 
-        function processCommand(input) {
-            const cmd = input.trim();
-            if (!cmd.startsWith('!')) return;
+        function processCommand(cmd) {
+            if (!cmd.startsWith('!')) {
+                addTerminalLine("Commands must start with !", "#ff5555");
+                return;
+            }
 
-            addLine(`> ${cmd}`, '#fffc00');
+            addTerminalLine(`> ${cmd}`, "#fffc00");
 
-            const [command, ...args] = cmd.slice(1).split(' ');
-            const argStr = args.join(' ');
+            const [command, ...argsArr] = cmd.slice(1).split(" ");
+            const args = argsArr.join(" ");
 
             switch (command.toLowerCase()) {
-                case 'help':
-                    addLine('Available Commands:', '#fffc00');
-                    addLine('!help, !go [origin|vault|lore], !search [query], !calc [expression]');
-                    addLine('!fact, !shout [message], !coinflip, !theme [neon|matrix]');
-                    addLine('!status, !clear, !glitch, !confetti, !tilt');
+                case "help":
+                    addTerminalLine("Available Commands:", "#fffc00");
+                    addTerminalLine("!help, !go [origin|vault|lore], !fact, !shout [msg], !coinflip, !glitch, !confetti, !status, !clear");
                     break;
-                case 'go':
-                    if (['origin','home'].includes(argStr.toLowerCase())) loadPage('origin');
-                    else if (['vault','files'].includes(argStr.toLowerCase())) loadPage('vault');
-                    else if (['lore','extra','info'].includes(argStr.toLowerCase())) loadPage('lore');
-                    else addLine('Unknown page. Try: origin, vault, lore', '#ff0000');
+                case "go":
+                    const target = args.toLowerCase();
+                    if (["origin", "home"].includes(target)) loadPage("origin");
+                    else if (["vault", "files"].includes(target)) loadPage("vault");
+                    else if (["lore", "extra"].includes(target)) loadPage("lore");
+                    else addTerminalLine("Unknown page.", "#ff5555");
                     break;
-                case 'fact':
-                    const facts = ["Perong once broke GitHub trending with neon code.", "This site runs entirely on GitHub Pages.", "Neon blue + yellow is the official color of the underground grid."];
-                    addLine(facts[Math.floor(Math.random()*facts.length)], '#fffc00');
+                case "fact":
+                    const facts = ["Perong runs on pure neon energy.", "2112 is the access code for a reason.", "This terminal is hidden for your protection."];
+                    addTerminalLine(facts[Math.floor(Math.random() * facts.length)], "#fffc00");
                     break;
-                case 'shout':
-                    showShout(argStr || "HELLO FROM THE GRID");
+                case "shout":
+                    showShout(args || "NEON GRID ONLINE");
                     break;
-                case 'coinflip':
-                    addLine(Math.random() > 0.5 ? "HEADS" : "TAILS", '#fffc00');
+                case "coinflip":
+                    addTerminalLine(Math.random() > 0.5 ? "HEADS" : "TAILS", "#fffc00");
                     break;
-                case 'glitch':
+                case "glitch":
                     document.getElementById('main-content').classList.add('glitch');
-                    setTimeout(() => document.getElementById('main-content').classList.remove('glitch'), 1500);
+                    setTimeout(() => document.getElementById('main-content').classList.remove('glitch'), 1200);
+                    addTerminalLine("GLITCH EFFECT ACTIVATED", "#ff5555");
                     break;
-                case 'confetti':
+                case "confetti":
                     launchConfetti();
                     break;
-                case 'clear':
+                case "status":
+                    addTerminalLine("GitHub Pages: ONLINE | Password Protection: ENABLED | Theme: Neon Blue + Yellow", "#fffc00");
+                    break;
+                case "clear":
                     document.getElementById('terminal-output').innerHTML = '';
                     break;
-                case 'status':
-                    addLine('GitHub Pages Status: ONLINE • Latency: 12ms • Theme: Neon Blue + Yellow', '#fffc00');
-                    break;
                 default:
-                    addLine('Unknown command. Type !help', '#ff0000');
+                    addTerminalLine("Unknown command. Type !help", "#ff5555");
             }
         }
 
@@ -383,52 +412,47 @@
             const box = document.getElementById('shoutbox');
             box.textContent = msg.toUpperCase();
             box.style.display = 'block';
-            setTimeout(() => box.style.display = 'none', 3000);
+            setTimeout(() => box.style.display = 'none', 2800);
         }
 
         function launchConfetti() {
-            for (let i = 0; i < 80; i++) {
+            for (let i = 0; i < 100; i++) {
                 setTimeout(() => {
                     const c = document.createElement('div');
-                    c.textContent = '◆';
+                    c.textContent = ['🟦','🟨','◆'][Math.floor(Math.random()*3)];
                     c.style.position = 'fixed';
-                    c.style.left = Math.random() * 100 + 'vw';
-                    c.style.top = '-30px';
-                    c.style.fontSize = '20px';
-                    c.style.color = Math.random() > 0.5 ? '#00f0ff' : '#fffc00';
-                    c.style.zIndex = 9999;
+                    c.style.left = Math.random()*100 + 'vw';
+                    c.style.top = '-40px';
+                    c.style.fontSize = '22px';
+                    c.style.zIndex = 99999;
                     document.body.appendChild(c);
-                    c.animate([{transform:'translateY(120vh) rotate(720deg)'}, {transform:'translateY(120vh) rotate(0deg)'}], {duration: 2500, easing:'ease-out'});
-                    setTimeout(() => c.remove(), 3000);
-                }, i * 8);
+                    c.animate([{transform: 'translateY(120vh) rotate(900deg)'}, {transform: 'translateY(120vh) rotate(0deg)'}], {duration: 3000});
+                    setTimeout(() => c.remove(), 3200);
+                }, i * 6);
             }
         }
 
-        function fakeGitHubSync() {
-            addLine('PULLING LATEST FROM GITHUB...', '#fffc00');
-            setTimeout(() => addLine('✅ SYNC COMPLETE — No new commits', '#fffc00'), 900);
-        }
-
-        // Init
+        // Initialize
         window.onload = () => {
-            resize();
-            window.addEventListener('resize', resize);
-            setInterval(draw, 35);
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            setInterval(drawMatrix, 35);
 
             loadPage('origin');
 
-            const input = document.getElementById('terminal-input');
-            input.focus();
-
-            input.addEventListener('keydown', e => {
-                if (e.key === 'Enter' && input.value.trim() !== '') {
-                    processCommand(input.value);
-                    input.value = '';
+            // Terminal input
+            const termInput = document.getElementById('terminal-input');
+            termInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && termInput.value.trim() !== '') {
+                    processCommand(termInput.value);
+                    termInput.value = '';
                 }
             });
 
-            addLine('PERONG NEON VAULT — GitHub Pages Edition ONLINE', '#fffc00');
-            addLine('Type !help for commands', '#fffc00');
+            // Allow pressing Enter on password field
+            document.getElementById('password-input').addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') checkPassword();
+            });
         };
     </script>
 </body>
