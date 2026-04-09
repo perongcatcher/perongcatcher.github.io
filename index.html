@@ -2,368 +2,863 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>PERONG ARCHIVE • CLASSIFIED</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PERONG // NEON VAULT</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Playfair+Display:ital@400;700&display=swap');
-       
-        .neon-text {
-            animation: neonGlow 3s ease-in-out infinite;
+        :root {
+            --neon-blue: #00f0ff;
+            --neon-yellow: #fffc00;
         }
-       
-        @keyframes neonGlow {
-            0%, 100% { text-shadow: 0 0 10px #22d3ee, 0 0 30px #22d3ee, 0 0 60px #67e8f9; }
-            50% { text-shadow: 0 0 20px #22d3ee, 0 0 50px #22d3ee, 0 0 90px #67e8f9; }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
-       
-        .hero-bg {
-            background: radial-gradient(circle at 50% 30%, #0a0a0a 0%, #000000 40%, #0a1f3a 100%);
-            min-height: 100dvh;
+        
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0a0a1f;
+            color: var(--neon-blue);
+            overflow: hidden;
+            height: 100vh;
+            position: relative;
         }
-       
-        .owner-room {
-            animation: modalPop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        
+        canvas#matrix {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.15;
         }
-       
-        @keyframes modalPop {
-            0% { transform: scale(0.8); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+        
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 70px;
+            background: rgba(10, 10, 31, 0.95);
+            border-bottom: 3px solid var(--neon-yellow);
+            display: flex;
+            align-items: center;
+            padding: 0 30px;
+            z-index: 1000;
+            box-shadow: 0 0 30px var(--neon-blue);
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            letter-spacing: 4px;
+            text-shadow: 
+                0 0 10px var(--neon-yellow),
+                0 0 20px var(--neon-yellow),
+                0 0 40px var(--neon-blue);
+            color: var(--neon-yellow);
+        }
+        
+        .logo::after {
+            content: " // GITHUB MIRROR";
+            font-size: 12px;
+            letter-spacing: 2px;
+            color: var(--neon-blue);
+            margin-left: 10px;
+            vertical-align: super;
+        }
+        
+        nav {
+            margin-left: auto;
+            display: flex;
+            gap: 40px;
+        }
+        
+        nav a {
+            color: var(--neon-blue);
+            text-decoration: none;
+            font-size: 18px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            transition: all 0.3s;
+            text-shadow: 0 0 10px var(--neon-blue);
+        }
+        
+        nav a:hover {
+            color: var(--neon-yellow);
+            text-shadow: 
+                0 0 15px var(--neon-yellow),
+                0 0 30px var(--neon-yellow);
+            transform: translateY(-2px);
+        }
+        
+        .nav-active {
+            color: var(--neon-yellow) !important;
+            text-shadow: 
+                0 0 15px var(--neon-yellow),
+                0 0 30px var(--neon-yellow);
+        }
+        
+        main {
+            margin-top: 70px;
+            margin-bottom: 320px;
+            padding: 40px 40px 20px;
+            height: calc(100vh - 70px - 320px);
+            overflow-y: auto;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .content-panel {
+            background: rgba(15, 15, 45, 0.85);
+            border: 2px solid var(--neon-blue);
+            border-radius: 8px;
+            padding: 30px;
+            box-shadow: 
+                0 0 20px var(--neon-blue),
+                0 0 40px rgba(0, 240, 255, 0.3);
+            min-height: 100%;
+        }
+        
+        h1 {
+            font-size: 42px;
+            text-shadow: 
+                0 0 10px var(--neon-yellow),
+                0 0 20px var(--neon-blue);
+            margin-bottom: 20px;
+            letter-spacing: 6px;
+        }
+        
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+        }
+        
+        .hero p {
+            font-size: 22px;
+            max-width: 800px;
+            margin: 0 auto;
+            text-shadow: 0 0 15px var(--neon-blue);
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        
+        th, td {
+            padding: 16px 20px;
+            text-align: left;
+            border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+        }
+        
+        th {
+            color: var(--neon-yellow);
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 2px;
+        }
+        
+        tr:hover {
+            background: rgba(255, 252, 0, 0.1);
+        }
+        
+        .file-icon {
+            color: var(--neon-blue);
+            margin-right: 10px;
+        }
+        
+        .terminal {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 320px;
+            background: rgba(5, 5, 25, 0.98);
+            border-top: 4px solid var(--neon-yellow);
+            box-shadow: 
+                0 -10px 40px var(--neon-blue),
+                inset 0 0 60px rgba(0, 240, 255, 0.4);
+            display: flex;
+            flex-direction: column;
+            z-index: 2000;
+        }
+        
+        .terminal-header {
+            background: #000;
+            color: var(--neon-yellow);
+            padding: 8px 20px;
+            font-size: 14px;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid var(--neon-blue);
+        }
+        
+        .terminal-header::before {
+            content: "● ● ●";
+            color: #ff0000;
+            font-size: 10px;
+            letter-spacing: 4px;
+        }
+        
+        #terminal-output {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--neon-blue);
+            background: #000;
+        }
+        
+        #terminal-output div {
+            margin-bottom: 6px;
+            white-space: pre-wrap;
+        }
+        
+        .prompt-line {
+            display: flex;
+            align-items: center;
+            padding: 0 20px 20px;
+            font-size: 16px;
+            color: var(--neon-yellow);
+        }
+        
+        .prompt-line span {
+            margin-right: 8px;
+        }
+        
+        #terminal-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            outline: none;
+            color: var(--neon-blue);
+            font-family: 'Courier New', monospace;
+            font-size: 16px;
+        }
+        
+        .shoutbox {
+            position: fixed;
+            top: 90px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(255, 252, 0, 0.95);
+            color: #000;
+            padding: 15px 40px;
+            font-size: 22px;
+            font-weight: bold;
+            border: 3px solid var(--neon-blue);
+            box-shadow: 
+                0 0 40px var(--neon-yellow),
+                0 0 80px var(--neon-blue);
+            z-index: 3000;
+            display: none;
+            align-items: center;
+            gap: 15px;
+            border-radius: 8px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            animation: shoutPop 0.4s ease;
+        }
+        
+        @keyframes shoutPop {
+            0% { transform: translateX(-50%) scale(0.6); }
+            70% { transform: translateX(-50%) scale(1.1); }
+            100% { transform: translateX(-50%) scale(1); }
+        }
+        
+        .glitch {
+            animation: glitchAnim 0.4s linear infinite;
+        }
+        
+        @keyframes glitchAnim {
+            0% { transform: translate(0); }
+            20% { transform: translate(-4px, 4px); }
+            40% { transform: translate(4px, -4px); }
+            60% { transform: translate(-4px, 4px); }
+            80% { transform: translate(4px, -4px); }
+            100% { transform: translate(0); }
+        }
+        
+        .stat {
+            display: inline-block;
+            background: rgba(10, 10, 40, 0.8);
+            border: 1px solid var(--neon-blue);
+            padding: 8px 20px;
+            margin: 10px;
+            border-radius: 4px;
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+        
+        button {
+            background: transparent;
+            border: 2px solid var(--neon-yellow);
+            color: var(--neon-yellow);
+            padding: 10px 24px;
+            font-family: 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px var(--neon-yellow);
+        }
+        
+        button:hover {
+            background: var(--neon-yellow);
+            color: #0a0a1f;
+            box-shadow: 0 0 30px var(--neon-yellow);
         }
     </style>
 </head>
-<body class="bg-zinc-950 text-white font-sans overflow-x-hidden">
+<body>
+    <!-- Matrix Rain Background -->
+    <canvas id="matrix"></canvas>
 
-    <!-- NAVBAR -->
-    <nav class="bg-zinc-900/90 backdrop-blur-xl border-b border-cyan-400/40 sticky top-0 z-50">
-        <div class="max-w-screen-2xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
-            <div onclick="openOwnerRoom()" class="flex items-center gap-x-3 cursor-pointer">
-                <div class="w-9 h-9 bg-gradient-to-br from-cyan-400 to-sky-400 rounded-2xl flex items-center justify-center text-2xl rotate-12 shadow-[0_0_20px_#22d3ee]">📼</div>
-                <div>
-                    <h1 class="text-3xl font-bold tracking-[-2px] neon-text text-cyan-300">PERONG</h1>
-                    <p class="text-[10px] text-cyan-300 -mt-1 tracking-[3px] font-medium">ARCHIVE • CLASSIFIED</p>
-                </div>
-            </div>
-
-            <div class="flex items-center gap-x-4">
-                <div onclick="copyAccessHint()" class="hidden sm:flex text-xs font-mono px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-3xl border border-amber-400/30 cursor-pointer">
-                    <span class="text-cyan-300">SECURE</span>
-                    <span class="text-amber-400">●</span>
-                </div>
-                <div onclick="openCodeModal()" class="nuke-btn w-12 h-12 sm:w-14 sm:h-14 bg-red-600 hover:bg-red-700 rounded-3xl flex items-center justify-center cursor-pointer shadow-2xl border border-red-400/50 active:scale-95">
-                    <div class="text-4xl drop-shadow-[0_0_15px_#f00]">☢️</div>
-                </div>
-            </div>
+    <!-- Header -->
+    <header>
+        <div class="logo">PERONG</div>
+        <nav>
+            <a href="#" onclick="loadPage('origin'); return false;" id="nav-origin">ORIGIN</a>
+            <a href="#" onclick="loadPage('vault'); return false;" id="nav-vault">VAULT</a>
+            <a href="#" onclick="loadPage('lore'); return false;" id="nav-lore">LORE</a>
+        </nav>
+        <div style="margin-left: auto; display: flex; align-items: center; gap: 15px; font-size: 14px;">
+            <div class="stat">GITHUB SYNC: <span style="color: #fffc00;">LIVE</span></div>
+            <button onclick="fakeGitHubSync()">PULL FROM GITHUB</button>
         </div>
-    </nav>
+    </header>
 
-    <!-- MOBILE BOTTOM NAV -->
-    <div class="fixed bottom-0 left-0 right-0 bg-zinc-900/95 backdrop-blur-xl border-t border-cyan-400/20 z-50 md:hidden">
-        <div class="flex justify-around py-2 text-xs">
-            <a onclick="navigateTo('home')" class="flex flex-col items-center py-1 text-cyan-300" id="mnav-home">
-                <span class="text-xl">🏠</span><span>Home</span>
-            </a>
-            <a onclick="navigateTo('files')" class="flex flex-col items-center py-1" id="mnav-files">
-                <span class="text-xl">📁</span><span>Files</span>
-            </a>
-        </div>
+    <!-- Main Content -->
+    <main id="main-content">
+        <!-- Dynamically loaded by JS -->
+    </main>
+
+    <!-- Shoutbox -->
+    <div id="shoutbox" class="shoutbox">
+        <span id="shout-text"></span>
+        <span style="font-size: 28px;">📣</span>
     </div>
 
-    <!-- HERO - Neon Blue Background -->
-    <div id="home-view" class="hero-bg flex items-center relative">
-        <div class="max-w-screen-2xl mx-auto px-5 pt-16 pb-20">
-            <div class="max-w-2xl">
-                <div class="inline-flex items-center gap-x-2 bg-white/10 text-cyan-300 text-sm font-medium px-6 py-3 rounded-3xl mb-6 backdrop-blur-md border border-cyan-400/40">
-                    <div class="animate-pulse w-3 h-3 bg-cyan-400 rounded-full"></div>
-                    LIVE • LEVEL 7 CLEARANCE REQUIRED
-                </div>
-               
-                <h1 class="text-5xl sm:text-6xl md:text-7xl font-bold leading-none tracking-[-4px] mb-6">
-                    SCOTT BRADLY<br>PERONG<br><span class="neon-text text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-sky-300 to-blue-400">CASE FILES</span>
-                </h1>
-               
-                <p class="text-xl md:text-2xl text-zinc-300 max-w-lg mb-10">A secure digital vault documenting every anomaly, every lead, every truth.</p>
-               
-                <button onclick="navigateTo('files')"
-                        class="bg-white text-zinc-950 hover:bg-cyan-300 font-semibold text-lg px-10 py-6 rounded-3xl flex items-center gap-x-3 shadow-xl shadow-cyan-500/70 w-full sm:w-auto justify-center">
-                    BROWSE ALL FILES
-                    <span class="text-3xl">→</span>
-                </button>
-            </div>
+    <!-- Terminal -->
+    <div class="terminal">
+        <div class="terminal-header">
+            NEON TERMINAL // MATRIX PROTOCOL v0.1 • CONNECTED TO PERONG GRID
         </div>
-    </div>
-
-    <!-- FILES VIEW -->
-    <div id="files-view" class="max-w-screen-2xl mx-auto px-5 py-12 hidden">
-        <div class="mb-10">
-            <h2 class="text-4xl md:text-5xl font-semibold tracking-tight">ALL CASE FILES</h2>
-            <p class="text-cyan-300">Subject: Scott Bradley Perong • Weddington Middle School</p>
+        <div id="terminal-output"></div>
+        <div class="prompt-line">
+            <span>guest@perong-neon:~$</span>
+            <input type="text" id="terminal-input" autocomplete="off" spellcheck="false">
         </div>
-        <div id="files-grid" class="grid grid-cols-1 gap-6"></div>
-    </div>
-
-    <!-- FILE MODAL -->
-    <div onclick="if(event.target.id === 'file-modal')hideFileModal()" id="file-modal" 
-         class="hidden fixed inset-0 bg-black/90 backdrop-blur-xl z-[9999] flex items-center justify-center p-4">
-        <div onclick="event.stopImmediatePropagation()" class="w-full max-w-2xl bg-zinc-900 rounded-3xl overflow-hidden border border-cyan-400/50">
-            <div class="px-6 py-5 border-b flex justify-between items-center bg-zinc-900">
-                <div id="modal-file-title" class="text-2xl md:text-3xl font-semibold"></div>
-                <button onclick="hideFileModal()" class="text-4xl text-zinc-400 hover:text-white">×</button>
-            </div>
-            <div id="modal-file-content" class="p-6 md:p-8 text-zinc-200 leading-relaxed text-[17px] max-h-[65vh] overflow-auto whitespace-pre-wrap"></div>
-        </div>
-    </div>
-
-    <!-- OWNER ROOM -->
-    <div id="owner-room" class="hidden fixed inset-0 bg-black/95 backdrop-blur-3xl z-[99999] flex items-center justify-center p-4">
-        <div onclick="event.stopImmediatePropagation()" class="owner-room w-full max-w-lg bg-zinc-950 border border-cyan-400/70 rounded-3xl overflow-hidden">
-            
-            <div class="bg-gradient-to-r from-cyan-900 to-blue-900 px-8 py-6 flex justify-between items-center">
-                <div class="flex items-center gap-4">
-                    <div class="text-5xl">👑</div>
-                    <div>
-                        <h2 class="text-4xl font-bold neon-text text-cyan-200">OWNER ROOM</h2>
-                        <p class="text-cyan-300">X & Y • Supreme Access</p>
-                    </div>
-                </div>
-                <button onclick="closeOwnerRoom()" class="text-5xl text-zinc-400 hover:text-white">×</button>
-            </div>
-
-            <div class="p-8 space-y-5">
-                <div onclick="exportArchive()" class="bg-zinc-900 hover:bg-zinc-800 border border-cyan-400/40 rounded-3xl p-6 cursor-pointer flex gap-4 items-center">
-                    <span class="text-4xl">📤</span>
-                    <div>
-                        <div class="font-semibold text-cyan-200">Export Full Archive</div>
-                        <div class="text-sm text-zinc-400">Download all classified data</div>
-                    </div>
-                </div>
-
-                <div onclick="toggleSubjectStatus()" class="bg-zinc-900 hover:bg-zinc-800 border border-cyan-400/40 rounded-3xl p-6 cursor-pointer flex gap-4 items-center">
-                    <span class="text-4xl">🔄</span>
-                    <div>
-                        <div class="font-semibold text-cyan-200">Toggle Subject Status</div>
-                        <div class="text-sm text-zinc-400">Active ↔ Hidden</div>
-                    </div>
-                </div>
-
-                <div onclick="viewSecretLog()" class="bg-zinc-900 hover:bg-zinc-800 border border-cyan-400/40 rounded-3xl p-6 cursor-pointer flex gap-4 items-center">
-                    <span class="text-4xl">📜</span>
-                    <div>
-                        <div class="font-semibold text-cyan-200">View Classified Log</div>
-                        <div class="text-sm text-zinc-400">2112 Protocol Entries</div>
-                    </div>
-                </div>
-
-                <!-- Nuke Wipe Simulation -->
-                <div onclick="selfDestructSimulation()" class="bg-zinc-900 hover:bg-red-950/70 border border-red-500/50 rounded-3xl p-6 cursor-pointer flex gap-4 items-center">
-                    <span class="text-4xl">☢️</span>
-                    <div>
-                        <div class="font-semibold text-red-400">EMERGENCY WIPE</div>
-                        <div class="text-sm text-zinc-400">Simulate nuke detonation</div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="text-center text-xs text-cyan-300/50 pb-8">
-                Owner Code: XY • All actions logged
-            </div>
-        </div>
-    </div>
-
-    <!-- CODE MODAL -->
-    <div id="code-modal" class="hidden fixed inset-0 bg-black/90 backdrop-blur-3xl z-[10000] flex items-center justify-center p-4">
-        <div onclick="event.stopImmediatePropagation()" class="w-full max-w-md bg-zinc-900 rounded-3xl p-8">
-            <div class="text-center">
-                <div class="text-7xl mb-6">☢️</div>
-                <h3 class="text-3xl font-bold mb-2 text-amber-300">NUKE PROTOCOL</h3>
-                <p class="text-zinc-400 mb-8">Enter code</p>
-                <input id="code-input" type="password" maxlength="4" onkeydown="if(event.key==='Enter') verifyCode()" 
-                       class="w-full text-center text-5xl font-mono bg-zinc-950 border border-red-400/50 focus:border-amber-400 rounded-3xl py-8 outline-none">
-                <div class="mt-8 flex gap-4">
-                    <button onclick="hideCodeModal()" class="flex-1 py-6 rounded-3xl border border-white/10">CANCEL</button>
-                    <button onclick="verifyCode()" class="flex-1 py-6 bg-red-600 hover:bg-red-700 rounded-3xl font-semibold">UNLOCK</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- TOAST -->
-    <div id="toast" onclick="this.classList.add('hidden')" 
-         class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-emerald-600 text-white text-sm px-8 py-4 rounded-3xl shadow-2xl z-[11000]">
-        <span id="toast-text"></span>
     </div>
 
     <script>
-        let files = [];
-
-        function seedFiles() {
-            return [{
-                id: 1,
-                title: "#WM-2026-0407-MP",
-                date: "2026-04-07",
-                status: "Active",
-                summary: "Multiple allegations of sexual harassment, inappropriate touching, and predatory behavior toward students (2025–Present).",
-                content: `Subject Name: Scott Bradley Perong
-Position: Physical Education/Gym Coach
-Employer: Weddington Middle School
-
-Reported Incidents: Multiple allegations of sexual harassment, inappropriate touching, and predatory behavior toward students (2025–Present).
-
-1. Executive Summary of Allegations
-Multiple victims, parents, and community members have reported that Mr. Perong engages in "grooming" behavior and inappropriate physical contact during P.E. classes and extracurricular coaching.
-
-2. Pattern of Behavior
-• Physical Harassment: Touching students on the legs, waist, and shoulders, making sexual comments.
-• Grooming: Overly familiar interactions with specific students.
-• Verbal Harassment: Suggestive remarks during class.
-
-3. Administrative Failures
-Weddington Middle School administration has failed to take action despite multiple reports since 2023.
-
-4. Evidence & Documentation
-Multiple witness testimonies and documented incidents.
-
-5. Recommended Actions
-• Immediate suspension
-• Report to police and CPS
-• Independent Title IX investigation`
-            }];
+        // === MATRIX RAIN BACKGROUND ===
+        let canvas = document.getElementById('matrix');
+        let ctx = canvas.getContext('2d');
+        let chars = '01アイウエオカキクケコ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-=[]{}|;:,.<>?~ネオン';
+        let fontSize = 14;
+        let drops = [];
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            drops = Array(Math.floor(canvas.width / fontSize)).fill(1);
         }
-
-        function loadFiles() { files = seedFiles(); }
-
-        function renderFiles() {
-            const grid = document.getElementById('files-grid');
-            grid.innerHTML = '';
-            files.forEach(file => {
-                grid.innerHTML += `
-                <div onclick="showFile(${file.id})" class="bg-zinc-900 border border-cyan-400/30 rounded-3xl p-6 cursor-pointer hover:border-cyan-400">
-                    <div class="flex justify-between mb-4">
-                        <span class="font-mono text-xs text-cyan-300">${file.date}</span>
-                        <span class="bg-emerald-400 text-emerald-950 text-xs px-4 py-1 rounded-3xl font-bold">${file.status}</span>
-                    </div>
-                    <h4 class="text-2xl font-semibold mb-3">${file.title}</h4>
-                    <p class="text-zinc-400 line-clamp-4">${file.summary}</p>
-                </div>`;
-            });
-        }
-
-        function showFile(id) {
-            const file = files.find(f => f.id === id);
-            if (!file) return;
-            document.getElementById('modal-file-title').textContent = file.title;
-            document.getElementById('modal-file-content').innerHTML = file.content.replace(/\n/g, '<br><br>');
-            document.getElementById('file-modal').classList.remove('hidden');
-            document.getElementById('file-modal').classList.add('flex');
-        }
-
-        function hideFileModal() {
-            const m = document.getElementById('file-modal');
-            m.classList.add('hidden'); m.classList.remove('flex');
-        }
-
-        function navigateTo(view) {
-            document.getElementById('home-view').classList.add('hidden');
-            document.getElementById('files-view').classList.add('hidden');
-            if (view === 'home') document.getElementById('home-view').classList.remove('hidden');
-            else if (view === 'files') {
-                document.getElementById('files-view').classList.remove('hidden');
-                renderFiles();
-            }
-        }
-
-        function openOwnerRoom() {
-            const code = prompt("Enter Owner Access Code:");
-            if (code && code.toUpperCase() === "XY") {
-                document.getElementById('owner-room').classList.remove('hidden');
-                document.getElementById('owner-room').classList.add('flex');
-            } else {
-                alert("ACCESS DENIED");
-            }
-        }
-
-        function closeOwnerRoom() {
-            const room = document.getElementById('owner-room');
-            room.classList.add('hidden');
-            room.classList.remove('flex');
-        }
-
-        function exportArchive() {
-            const dataStr = JSON.stringify(files, null, 2);
-            const blob = new Blob([dataStr], { type: 'application/json' });
-            const link = document.createElement('a');
-            link.download = 'perong-full-archive.json';
-            link.href = URL.createObjectURL(blob);
-            link.click();
-            showToast('Archive exported');
-        }
-
-        function toggleSubjectStatus() {
-            showToast('Subject status updated → Enhanced Surveillance');
-        }
-
-        function viewSecretLog() {
-            showToast('2112 LOG: Activity confirmed near Weddington');
-        }
-
-        // Nuke Explosion Simulation
-        function selfDestructSimulation() {
-            if (!confirm("SIMULATE NUKE DETONATION?")) return;
-
-            const body = document.body;
-            body.style.transition = "all 0.3s";
-            body.style.backgroundColor = "#991b1b";
+        
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(10, 10, 31, 0.07)'; // faint trail
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            setTimeout(() => {
-                body.style.backgroundColor = "#450a0a";
-            }, 300);
-
-            setTimeout(() => {
-                body.style.backgroundColor = "#1e2937";
-                showToast('☢️ NUKE DETONATED • All traces erased (simulation)', 'error');
-            }, 800);
-        }
-
-        function verifyCode() {
-            if (document.getElementById('code-input').value.trim() === '2112') {
-                hideCodeModal();
-                showToast('NUKE PROTOCOL ACTIVATED');
-            } else {
-                showToast('ACCESS DENIED', 'error');
-                document.getElementById('code-input').value = '';
+            ctx.fillStyle = '#00f0ff'; // neon blue default
+            ctx.font = `${fontSize}px monospace`;
+            
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars[Math.floor(Math.random() * chars.length)];
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                // Random neon yellow flashes
+                if (Math.random() > 0.97) {
+                    ctx.fillStyle = '#fffc00';
+                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                    ctx.fillStyle = '#00f0ff';
+                }
+                
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
             }
         }
-
-        function openCodeModal() {
-            document.getElementById('code-modal').classList.remove('hidden');
-            document.getElementById('code-modal').classList.add('flex');
+        
+        // === PAGE CONTENT TEMPLATES ===
+        const pages = {
+            origin: {
+                title: "ORIGIN",
+                html: `
+                    <div class="content-panel">
+                        <div class="hero">
+                            <h1>WELCOME TO THE GRID</h1>
+                            <p>PERONG'S NEON LEGACY • LIVE GITHUB MIRROR<br>
+                            The files that power the underground. Neon blue pulses. Yellow sparks ignite.<br>
+                            <span style="color:#fffc00">42,337 commits • 1.2TB of pure digital fire</span></p>
+                            <div style="margin-top: 50px;">
+                                <button onclick="launchConfetti()" style="font-size:18px; padding:15px 40px;">IGNITE THE VAULT</button>
+                            </div>
+                            <div style="margin-top: 60px; display: flex; justify-content: center; gap: 60px; flex-wrap: wrap;">
+                                <div style="text-align:center">
+                                    <div style="font-size:48px; color:#fffc00;">∞</div>
+                                    <div style="color:#00f0ff; margin-top:10px;">FILES INDEXED</div>
+                                </div>
+                                <div style="text-align:center">
+                                    <div style="font-size:48px; color:#fffc00;">13</div>
+                                    <div style="color:#00f0ff; margin-top:10px;">NEON BRANCHES</div>
+                                </div>
+                                <div style="text-align:center">
+                                    <div style="font-size:48px; color:#fffc00;">★</div>
+                                    <div style="color:#00f0ff; margin-top:10px;">GITHUB STARS</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            },
+            vault: {
+                title: "VAULT",
+                html: `
+                    <div class="content-panel">
+                        <h1>NEON VAULT • PERONG FILES</h1>
+                        <p style="margin-bottom:20px; color:#fffc00;">Repo: <strong>perong/neon-vault</strong> • Last synced moments ago • Branch: main</p>
+                        <table id="files-table">
+                            <thead>
+                                <tr>
+                                    <th>FILE</th>
+                                    <th>TYPE</th>
+                                    <th>SIZE</th>
+                                    <th>LAST MODIFIED</th>
+                                    <th>ACTION</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="file-icon">📄</span>README.md</td>
+                                    <td>markdown</td>
+                                    <td>8.4 KB</td>
+                                    <td>2026-04-08 19:42</td>
+                                    <td><button onclick="viewOnGitHub('README.md')">VIEW RAW</button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="file-icon">📦</span>neon-core.js</td>
+                                    <td>javascript</td>
+                                    <td>247 KB</td>
+                                    <td>2026-04-07 03:11</td>
+                                    <td><button onclick="viewOnGitHub('neon-core.js')">VIEW RAW</button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="file-icon">🎨</span>styles.neon.css</td>
+                                    <td>css</td>
+                                    <td>89 KB</td>
+                                    <td>2026-04-06 14:22</td>
+                                    <td><button onclick="viewOnGitHub('styles.neon.css')">VIEW RAW</button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="file-icon">🔥</span>matrix-rain.frag</td>
+                                    <td>glsl</td>
+                                    <td>12.3 KB</td>
+                                    <td>2026-04-05 22:09</td>
+                                    <td><button onclick="viewOnGitHub('matrix-rain.frag')">VIEW RAW</button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="file-icon">📁</span>commands/</td>
+                                    <td>directory</td>
+                                    <td>—</td>
+                                    <td>2026-04-08 08:00</td>
+                                    <td><button onclick="viewOnGitHub('commands')">ENTER DIR</button></td>
+                                </tr>
+                                <tr>
+                                    <td><span class="file-icon">🧬</span>perong.bio</td>
+                                    <td>text</td>
+                                    <td>3.1 KB</td>
+                                    <td>2026-04-03 11:55</td>
+                                    <td><button onclick="viewOnGitHub('perong.bio')">VIEW RAW</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <p style="margin-top:30px; font-size:13px; opacity:0.7;">Total files: 87 • Storage: 2.4 GB • All files pulled from GitHub in real-time (demo mirror)</p>
+                    </div>
+                `
+            },
+            lore: {
+                title: "LORE",
+                html: `
+                    <div class="content-panel">
+                        <h1>HIDDEN LORE • EXTRA PROTOCOLS</h1>
+                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px;">
+                            <div>
+                                <h2 style="color:#fffc00; margin-bottom:15px;">WHO IS PERONG?</h2>
+                                <p>The ghost in the neon grid. A shadow coder who uploads pure electricity. Their files contain fragments of the original Matrix source, rewritten in glowing blue and yellow. Rumored to have once crashed the entire GitHub trending page with a single commit.</p>
+                                <br>
+                                <h2 style="color:#fffc00; margin-bottom:15px;">CONNECTION LOG</h2>
+                                <ul style="line-height:1.8; padding-left:20px;">
+                                    <li>→ Last commit: 11 minutes ago</li>
+                                    <li>→ Current latency: 9ms (neon optimal)</li>
+                                    <li>→ 14 forks running in parallel realities</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h2 style="color:#fffc00; margin-bottom:15px;">EXTRA INFO</h2>
+                                <p>Theme locked to Neon Blue + Neon Yellow. Terminal runs on Matrix protocol. All commands start with <strong>!</strong>. Type <strong>!help</strong> anywhere for the full command bible.</p>
+                                <div style="margin-top:40px; background:rgba(0,240,255,0.1); padding:20px; border:1px dashed var(--neon-blue);">
+                                    <strong>PRO TIP:</strong> The terminal works on every page. Try <strong>!go vault</strong>, <strong>!glitch</strong>, or <strong>!confetti</strong> right now.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `
+            }
+        };
+        
+        // === TERMINAL ENGINE ===
+        let terminalOutput = document.getElementById('terminal-output');
+        
+        function addTerminalLine(text, color = null) {
+            const line = document.createElement('div');
+            if (color) line.style.color = color;
+            line.textContent = text;
+            terminalOutput.appendChild(line);
+            terminalOutput.scrollTop = terminalOutput.scrollHeight;
         }
-
-        function hideCodeModal() {
-            const m = document.getElementById('code-modal');
-            m.classList.add('hidden'); m.classList.remove('flex');
+        
+        function clearTerminal() {
+            terminalOutput.innerHTML = '';
+            addTerminalLine('TERMINAL CLEARED. Grid reset.', '#fffc00');
         }
-
-        function showToast(msg, type = 'success') {
-            const t = document.getElementById('toast');
-            document.getElementById('toast-text').innerHTML = type === 'success' ? `✅ ${msg}` : `☢️ ${msg}`;
-            t.style.backgroundColor = type === 'success' ? '#10b981' : '#ef4444';
-            t.classList.remove('hidden');
-            setTimeout(() => t.classList.add('hidden'), 2800);
+        
+        // Command processor
+        function processCommand(rawInput) {
+            const input = rawInput.trim();
+            if (!input.startsWith('!')) {
+                addTerminalLine('Commands must begin with ! (type !help)', '#ff0000');
+                return;
+            }
+            
+            const parts = input.slice(1).split(' ');
+            const cmd = parts[0].toLowerCase();
+            const args = parts.slice(1).join(' ');
+            
+            addTerminalLine(`EXECUTING: ${input}`, '#fffc00');
+            
+            switch (cmd) {
+                case 'help':
+                    addTerminalLine('PERONG NEON TERMINAL COMMAND LIST:', '#fffc00');
+                    addTerminalLine('─ Core ─', '#00f0ff');
+                    addTerminalLine('!help              → This list');
+                    addTerminalLine('!search [query]    → Instant vault search');
+                    addTerminalLine('!go [page]         → Jump to ORIGIN / VAULT / LORE');
+                    addTerminalLine('!calc [math]       → Quick calculator');
+                    addTerminalLine('─ Fun ─', '#00f0ff');
+                    addTerminalLine('!fact              → Random neon fact');
+                    addTerminalLine('!shout [msg]       → Broadcast to the grid');
+                    addTerminalLine('!coinflip          → Heads or tails');
+                    addTerminalLine('!theme [neon|matrix|dark] → Switch visual protocol');
+                    addTerminalLine('─ Admin ─', '#00f0ff');
+                    addTerminalLine('!status            → Grid health check');
+                    addTerminalLine('!clear             → Wipe terminal');
+                    addTerminalLine('!inspect           → Highlight UI elements');
+                    addTerminalLine('!report [issue]    → Send feedback to Perong');
+                    addTerminalLine('─ Effects ─', '#00f0ff');
+                    addTerminalLine('!glitch            → Temporary visual distortion');
+                    addTerminalLine('!confetti          → Neon celebration');
+                    addTerminalLine('!tilt              → 3D grid tilt');
+                    break;
+                    
+                case 'search':
+                    if (!args) {
+                        addTerminalLine('Usage: !search [topic or filename]', '#ff0000');
+                        return;
+                    }
+                    addTerminalLine(`SCANNING VAULT FOR "${args.toUpperCase()}"...`, '#00f0ff');
+                    setTimeout(() => {
+                        const matches = [
+                            'neon-core.js', 'matrix-rain.frag', 'perong.bio', 'README.md'
+                        ].filter(f => f.toLowerCase().includes(args.toLowerCase()));
+                        if (matches.length) {
+                            addTerminalLine(`MATCHES FOUND (${matches.length}):`, '#fffc00');
+                            matches.forEach(m => addTerminalLine(`→ ${m} (VAULT)`, '#00f0ff'));
+                            addTerminalLine('Pro tip: !go vault to view full archive', '#fffc00');
+                        } else {
+                            addTerminalLine('NO MATCHES IN THE GRID.', '#ff0000');
+                        }
+                    }, 420);
+                    break;
+                    
+                case 'go':
+                    const target = args.toLowerCase();
+                    if (['origin', 'home', 'hub'].includes(target)) {
+                        loadPage('origin');
+                    } else if (['vault', 'files', 'repo'].includes(target)) {
+                        loadPage('vault');
+                    } else if (['lore', 'extra', 'info', 'about'].includes(target)) {
+                        loadPage('lore');
+                    } else {
+                        addTerminalLine(`UNKNOWN PAGE "${target}". Try: origin, vault, lore`, '#ff0000');
+                    }
+                    break;
+                    
+                case 'calc':
+                    if (!args) {
+                        addTerminalLine('Usage: !calc 42 * 13 or !calc 3.14159 * 2', '#ff0000');
+                        return;
+                    }
+                    try {
+                        const result = eval(args); // Safe in isolated demo context
+                        addTerminalLine(`${args} = ${result}`, '#fffc00');
+                    } catch (e) {
+                        addTerminalLine('MATH ERROR. Grid rejected expression.', '#ff0000');
+                    }
+                    break;
+                    
+                case 'fact':
+                    const facts = [
+                        "The original Matrix code was written in green... we upgraded it to neon blue + yellow.",
+                        "Perong once committed 666 files at 3:33 AM. Legend says the repo still glows.",
+                        "GitHub's neon theme was inspired by this exact vault.",
+                        "Neon blue wavelength = 472nm. Neon yellow = 570nm. Together they create pure energy.",
+                        "There are 13 hidden files in the vault that only !search can reveal.",
+                        "The terminal runs on real Matrix rain physics.",
+                        "Perong's first file was named 'hello-neon-world.js'. It still exists."
+                    ];
+                    addTerminalLine('NEON FACT #' + Math.floor(Math.random()*facts.length + 1) + ':', '#fffc00');
+                    addTerminalLine(facts[Math.floor(Math.random() * facts.length)], '#00f0ff');
+                    break;
+                    
+                case 'shout':
+                    if (!args) {
+                        addTerminalLine('Usage: !shout YOUR MESSAGE HERE', '#ff0000');
+                        return;
+                    }
+                    showShout(args);
+                    addTerminalLine('MESSAGE BROADCAST TO THE ENTIRE GRID!', '#fffc00');
+                    break;
+                    
+                case 'coinflip':
+                    const result = Math.random() > 0.5 ? 'HEADS 🪙' : 'TAILS 🪙';
+                    addTerminalLine(`COIN FLIP RESULT: ${result}`, '#fffc00');
+                    if (result.includes('HEADS')) launchConfetti(30);
+                    break;
+                    
+                case 'theme':
+                    const theme = args.toLowerCase();
+                    if (['neon', 'blue', 'default'].includes(theme)) {
+                        document.documentElement.style.setProperty('--neon-blue', '#00f0ff');
+                        document.documentElement.style.setProperty('--neon-yellow', '#fffc00');
+                        addTerminalLine('THEME RESTORED → FULL NEON BLUE + YELLOW', '#fffc00');
+                    } else if (theme === 'matrix') {
+                        document.documentElement.style.setProperty('--neon-blue', '#00ff41');
+                        document.documentElement.style.setProperty('--neon-yellow', '#00cc00');
+                        addTerminalLine('THEME SWITCHED → CLASSIC MATRIX GREEN PROTOCOL', '#00ff41');
+                    } else if (theme === 'dark') {
+                        document.documentElement.style.setProperty('--neon-blue', '#aaaaaa');
+                        document.documentElement.style.setProperty('--neon-yellow', '#666666');
+                        addTerminalLine('THEME SWITCHED → SHADOW MODE (minimal glow)', '#aaaaaa');
+                    } else {
+                        addTerminalLine('Valid themes: neon, matrix, dark', '#ff0000');
+                    }
+                    break;
+                    
+                case 'status':
+                    const latency = Math.floor(Math.random() * 23) + 7;
+                    addTerminalLine(`GRID STATUS → Latency: ${latency}ms | Health: 100% NEON | Uptime: ∞ | Connected to GitHub`, '#fffc00');
+                    break;
+                    
+                case 'clear':
+                    clearTerminal();
+                    return;
+                    
+                case 'inspect':
+                    addTerminalLine('INSPECT MODE ENABLED. Click any element to see its neon data.', '#fffc00');
+                    document.querySelectorAll('*').forEach(el => {
+                        el.style.cursor = 'crosshair';
+                        const originalClick = el.onclick;
+                        el.onclick = function(e) {
+                            e.stopImmediatePropagation();
+                            addTerminalLine(`INSPECTED → ${el.tagName} | Classes: ${el.className || 'none'} | Glow strength: MAX`, '#fffc00');
+                            el.style.boxShadow = '0 0 60px #fffc00';
+                            setTimeout(() => { el.style.boxShadow = ''; }, 800);
+                            return false;
+                        };
+                    });
+                    setTimeout(() => {
+                        addTerminalLine('Inspect mode auto-disabled.', '#fffc00');
+                    }, 8000);
+                    break;
+                    
+                case 'report':
+                    addTerminalLine(`BUG REPORT "${args}" SENT TO PERONG OVERLORDS. Thank you, citizen.`, '#fffc00');
+                    launchConfetti(15);
+                    break;
+                    
+                case 'glitch':
+                    triggerGlitch();
+                    addTerminalLine('GLITCH PROTOCOL ACTIVATED FOR 2 SECONDS...', '#ff0000');
+                    break;
+                    
+                case 'confetti':
+                    launchConfetti();
+                    addTerminalLine('CONFETTI RAIN DEPLOYED. CELEBRATE!', '#fffc00');
+                    break;
+                    
+                case 'tilt':
+                    triggerTilt();
+                    addTerminalLine('3D TILT ENGAGED. The grid is bending...', '#fffc00');
+                    break;
+                    
+                default:
+                    addTerminalLine(`UNKNOWN COMMAND "${cmd}". Type !help for the full list.`, '#ff0000');
+            }
         }
-
-        function copyAccessHint() {
-            navigator.clipboard.writeText('2112');
-            showToast('Code 2112 copied');
+        
+        // === EFFECTS ===
+        function showShout(message) {
+            const box = document.getElementById('shoutbox');
+            document.getElementById('shout-text').textContent = message.toUpperCase();
+            box.style.display = 'flex';
+            setTimeout(() => {
+                box.style.opacity = '0';
+                setTimeout(() => {
+                    box.style.display = 'none';
+                    box.style.opacity = '1';
+                }, 600);
+            }, 2800);
         }
-
-        function init() {
-            loadFiles();
-            navigateTo('home');
-            console.log('%cPERONG ARCHIVE LOADED • Neon blue background fixed • Owner code: XY', 'color:#22d3ee');
+        
+        function launchConfetti(count = 120) {
+            for (let i = 0; i < count; i++) {
+                const particle = document.createElement('div');
+                particle.textContent = ['🟦', '🟨', '◆', '⬡'][Math.floor(Math.random()*4)];
+                particle.style.position = 'fixed';
+                particle.style.left = Math.random() * 100 + 'vw';
+                particle.style.top = '-20px';
+                particle.style.fontSize = Math.random() * 24 + 16 + 'px';
+                particle.style.zIndex = '99999';
+                particle.style.pointerEvents = 'none';
+                document.body.appendChild(particle);
+                
+                const duration = Math.random() * 2800 + 2200;
+                const angle = Math.random() * 80 - 40;
+                
+                particle.animate([
+                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
+                    { transform: `translateY(${window.innerHeight + 100}px) rotate(${angle * 8}deg)`, opacity: 0 }
+                ], {
+                    duration: duration,
+                    easing: 'cubic-bezier(0.42, 0, 1, 1)'
+                });
+                
+                setTimeout(() => particle.remove(), duration + 200);
+            }
         }
-
-        window.onload = init;
+        
+        function triggerGlitch() {
+            const main = document.getElementById('main-content');
+            main.classList.add('glitch');
+            setTimeout(() => {
+                main.classList.remove('glitch');
+            }, 1800);
+        }
+        
+        function triggerTilt() {
+            const main = document.getElementById('main-content');
+            main.style.transition = 'transform 800ms cubic-bezier(0.68, -0.55, 0.27, 1.55)';
+            main.style.transform = 'perspective(1200px) rotateX(18deg) rotateY(12deg)';
+            setTimeout(() => {
+                main.style.transition = 'transform 1200ms ease';
+                main.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg)';
+            }, 1400);
+        }
+        
+        // === PAGE LOADER ===
+        function loadPage(pageKey) {
+            const main = document.getElementById('main-content');
+            if (!pages[pageKey]) return;
+            
+            main.innerHTML = pages[pageKey].html;
+            
+            // Update nav active state
+            document.querySelectorAll('nav a').forEach(a => {
+                a.classList.remove('nav-active');
+                if (a.id === `nav-${pageKey}`) a.classList.add('nav-active');
+            });
+            
+            // Special case: re-render table if vault
+            if (pageKey === 'vault' && document.getElementById('files-table')) {
+                // Already rendered in template
+            }
+        }
+        
+        function fakeGitHubSync() {
+            const btns = document.querySelectorAll('button');
+            btns.forEach(b => { if (b.textContent.includes('PULL')) b.textContent = 'SYNCING...'; });
+            setTimeout(() => {
+                btns.forEach(b => { if (b.textContent.includes('SYNCING')) b.textContent = 'PULL FROM GITHUB'; });
+                addTerminalLine('✅ GITHUB SYNC COMPLETE • 0 new commits', '#fffc00');
+                launchConfetti(40);
+            }, 1200);
+        }
+        
+        function viewOnGitHub(filename) {
+            addTerminalLine(`OPENING https://github.com/perong/neon-vault/blob/main/${filename} ...`, '#fffc00');
+            // Real GitHub would open here in production version
+            setTimeout(() => {
+                alert('🔗 This is a functional demo.\n\nIn the real deployed version this button would open the actual GitHub raw file.\n\nYou can now host this exact HTML on GitHub Pages or Vercel!');
+            }, 300);
+        }
+        
+        // === INITIALIZATION ===
+        function initialize() {
+            // Canvas setup
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            setInterval(drawMatrix, 35);
+            
+            // Load default page
+            loadPage('origin');
+            
+            // Terminal input handler
+            const inputField = document.getElementById('terminal-input');
+            inputField.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    const command = this.value;
+                    if (command.trim() !== '') {
+                        processCommand(command);
+                    }
+                    this.value = '';
+                }
+            });
+            
+            // Auto-focus terminal when clicking anywhere on it
+            document.querySelector('.terminal').addEventListener('click', () => {
+                inputField.focus();
+            });
+            
+            // Welcome message in terminal
+            setTimeout(() => {
+                addTerminalLine('PERONG NEON VAULT TERMINAL ONLINE', '#fffc00');
+                addTerminalLine('Matrix rain protocol initialized.', '#00f0ff');
+                addTerminalLine('Type !help to begin your journey.', '#fffc00');
+                addTerminalLine('─'.repeat(60), '#00f0ff');
+            }, 800);
+            
+            console.log('%c✅ PERONG NEON VAULT ready. All commands functional. Copy this file and host it anywhere!', 'color:#fffc00; font-family:monospace');
+        }
+        
+        // Start everything
+        window.onload = initialize;
     </script>
 </body>
 </html>
