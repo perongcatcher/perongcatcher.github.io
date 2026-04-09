@@ -102,6 +102,7 @@
             </div>
             
             <div class="hidden md:flex items-center gap-x-10 text-sm uppercase tracking-widest">
+                <a onclick="navigateToSection('home-section')" class="hover:text-[#fffc00] transition-colors cursor-pointer">HOME</a>
                 <a onclick="navigateToSection('files-section')" class="hover:text-[#fffc00] transition-colors cursor-pointer">ARCHIVES</a>
                 <a onclick="showStatus()" class="hover:text-[#fffc00] transition-colors cursor-pointer">SYSTEM</a>
                 <button onclick="showPasswordModal()" 
@@ -126,8 +127,8 @@
         </div>
     </nav>
 
-    <!-- HERO -->
-    <header class="min-h-screen flex items-center relative grid-bg pt-20">
+    <!-- HOME SECTION -->
+    <section id="home-section" class="min-h-screen flex items-center relative grid-bg pt-20">
         <div class="scanline"></div>
         
         <div class="max-w-screen-2xl mx-auto px-8 pt-20">
@@ -151,7 +152,7 @@
                     <button onclick="navigateToSection('files-section')" 
                             class="px-10 py-6 bg-white text-black font-semibold rounded-3xl text-lg flex items-center gap-x-3 hover:scale-105 transition-transform">
                         <i class="fa-solid fa-hard-drive"></i>
-                        VIEW ARCHIVE
+                        VIEW THE ARCHIVE
                     </button>
                     
                     <button onclick="showPasswordModal()" 
@@ -173,10 +174,10 @@
                 </div>
             </div>
         </div>
-    </header>
+    </section>
 
     <!-- SINGLE FILE SECTION -->
-    <section id="files-section" class="max-w-screen-2xl mx-auto px-8 py-24">
+    <section id="files-section" class="max-w-screen-2xl mx-auto px-8 py-24 bg-[#0a0a1f]">
         <div class="flex items-end justify-between mb-12">
             <div>
                 <div class="uppercase text-xs tracking-[4px] text-[#ff00aa]">SECURE STORAGE</div>
@@ -188,7 +189,7 @@
         </div>
         
         <div id="files-grid" class="max-w-2xl mx-auto">
-            <!-- Only the WM-2026-0407-MP file -->
+            <!-- Single file card -->
         </div>
     </section>
 
@@ -225,7 +226,7 @@
         </div>
     </div>
 
-    <!-- PASSWORD MODAL (No hints) -->
+    <!-- PASSWORD MODAL (Hidden) -->
     <div id="password-modal" onclick="if(event.target.id==='password-modal')hidePasswordModal()" 
          class="hidden fixed inset-0 bg-black/95 z-[300] flex items-center justify-center p-6">
         <div onclick="event.stopImmediatePropagation()" 
@@ -338,7 +339,7 @@
     </div>
 
     <script>
-        // The only file on the site - fully detailed WM-2026-0407-MP
+        // The only file with full details you provided
         const singleFile = {
             id: 1,
             icon: "fa-solid fa-file-lines",
