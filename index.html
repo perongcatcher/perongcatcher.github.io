@@ -151,7 +151,7 @@
                     <button onclick="navigateToSection('files-section')" 
                             class="px-10 py-6 bg-white text-black font-semibold rounded-3xl text-lg flex items-center gap-x-3 hover:scale-105 transition-transform">
                         <i class="fa-solid fa-hard-drive"></i>
-                        BROWSE ARCHIVES
+                        VIEW ARCHIVE
                     </button>
                     
                     <button onclick="showPasswordModal()" 
@@ -175,39 +175,33 @@
         </div>
     </header>
 
-    <!-- FILES SECTION -->
+    <!-- SINGLE FILE SECTION -->
     <section id="files-section" class="max-w-screen-2xl mx-auto px-8 py-24">
         <div class="flex items-end justify-between mb-12">
             <div>
                 <div class="uppercase text-xs tracking-[4px] text-[#ff00aa]">SECURE STORAGE</div>
-                <h2 class="title-font text-6xl tracking-tight neon-text">Active Files</h2>
+                <h2 class="title-font text-6xl tracking-tight neon-text">Active Archive</h2>
             </div>
-            <div class="text-right">
-                <div class="font-mono text-sm">12 ARCHIVED • 4 ACCESSED TODAY</div>
-                <div class="text-[#fffc00] text-xs">LAST SYNC: JUST NOW</div>
+            <div class="text-right font-mono text-sm">
+                1 FILE • CLASSIFIED
             </div>
         </div>
         
-        <div id="files-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            <!-- Populated by JS -->
+        <div id="files-grid" class="max-w-2xl mx-auto">
+            <!-- Only one file card -->
         </div>
     </section>
 
     <!-- STATUS BAR -->
     <div class="bg-black/70 py-4 border-t border-b border-[#00f0ff]/10">
         <div class="max-w-screen-2xl mx-auto px-8 font-mono text-xs flex flex-wrap justify-between items-center gap-y-3 text-[#00f0ff]/70">
-            <div class="flex items-center gap-x-6">
-                <div>UPTIME: <span class="text-[#fffc00]">2112 DAYS</span></div>
-                <div>CORE TEMP: <span class="text-emerald-400">STABLE</span></div>
+            <div>UPTIME: <span class="text-[#fffc00]">2112 DAYS</span></div>
+            <div>CORE TEMP: <span class="text-emerald-400">STABLE</span></div>
+            <div class="flex items-center gap-x-2">
+                <i class="fa-solid fa-shield-halved"></i>
+                <span>ENCRYPTION: QUANTUM-NEON</span>
             </div>
-            <div class="flex items-center gap-x-8">
-                <div class="flex items-center gap-x-2">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    <span>ENCRYPTION: QUANTUM-NEON</span>
-                </div>
-                <div>OWNER X + Y ONLINE</div>
-            </div>
-            <div class="text-right">GITHUB.IO DEPLOY • PERONG ARCHIVE</div>
+            <div class="text-right">GITHUB.IO • PERONG ARCHIVE</div>
         </div>
     </div>
 
@@ -275,7 +269,6 @@
             </div>
             
             <div class="p-10 grid lg:grid-cols-12 gap-10">
-                <!-- Terminal X -->
                 <div class="lg:col-span-7">
                     <div class="flex items-center gap-x-3 mb-6">
                         <i class="fa-solid fa-user-secret text-[#fffc00]"></i>
@@ -297,7 +290,6 @@
                     </div>
                 </div>
                 
-                <!-- Y Controls -->
                 <div class="lg:col-span-5 space-y-8">
                     <div>
                         <div class="flex items-center gap-x-3 mb-6">
@@ -346,96 +338,65 @@
     </div>
 
     <script>
-        const filesData = [
-            {
-                id: 1,
-                icon: "fa-solid fa-file-code",
-                name: "PERONG-CORE.perong",
-                date: "04.01.26",
-                badge: "SYSTEM",
-                summary: "Primary neon core directives and architecture.",
-                content: `<div class="space-y-6">
-                    <p>The central blueprint for all PERONG neon infrastructure. Contains quantum encryption keys and glow protocols.</p>
-                    <div class="font-mono text-xs bg-black/70 p-5 rounded-2xl border-l-4 border-[#fffc00]">VERSION 2.1 • STABLE</div>
-                </div>`
-            },
-            {
-                id: 2,
-                icon: "fa-solid fa-file-lines",
-                name: "WM-2026-0407-MP.perong",
-                date: "04.07.26",
-                badge: "CASE",
-                summary: "Scott Bradley Perong — Classified observation file.",
-                content: `<div class="space-y-6">
-                    <p>Subject exhibits exceptional physical resilience under neon conditioning protocols.</p>
-                    <div class="text-xs font-mono bg-red-950/30 border border-red-400/30 p-5 rounded-2xl">PRIORITY: OMEGA • OWNER ACCESS ONLY</div>
-                </div>`
-            },
-            {
-                id: 3,
-                icon: "fa-solid fa-file-shield",
-                name: "LOG-ENTRY-42.perong",
-                date: "04.03.26",
-                badge: "LOG",
-                summary: "Encrypted void transmission.",
-                content: `<div class="italic text-[#fffc00]/80">"The neon never dies. The archive remembers everything."</div>`
-            },
-            {
-                id: 4,
-                icon: "fa-solid fa-folder-tree",
-                name: "VAULT-INDEX.perong",
-                date: "04.08.26",
-                badge: "INDEX",
-                summary: "Master directory of all protected assets.",
-                content: `<p class="font-light">12 files indexed. Dual owner verification required for sensitive entries.</p>`
-            }
-        ]
+        // Only one file - the WM-2026-0407-MP case file
+        const singleFile = {
+            id: 1,
+            icon: "fa-solid fa-file-lines",
+            name: "WM-2026-0407-MP.perong",
+            date: "04.07.26",
+            badge: "CASE FILE",
+            summary: "Scott Bradley Perong — Physical Education Coach. Classified observation file.",
+            content: `<div class="space-y-8">
+                <div class="border-l-4 border-[#ff00aa] pl-6">
+                    <p class="text-lg">SUBJECT: Scott Bradley Perong</p>
+                    <p class="text-[#fffc00]">Physical Education Coach • Monroe, North Carolina</p>
+                </div>
+                
+                <p>Subject exhibits exceptional physical resilience under neon conditioning protocols. Training logs show anomalous performance metrics during night sessions.</p>
+                
+                <div class="bg-black/70 p-6 rounded-2xl border border-red-400/30 text-xs font-mono leading-relaxed">
+                    STATUS: UNDER OBSERVATION<br>
+                    PRIORITY: OMEGA<br>
+                    ACCESS: OWNER X &amp; Y ONLY<br><br>
+                    [REDACTED] — Subject has been exposed to experimental neon protocols. Further monitoring required.
+                </div>
+                
+                <p class="text-[#00f0ff]/70 text-sm">This file is strictly restricted. Do not distribute.</p>
+            </div>`
+        }
         
-        function renderFiles() {
+        function renderSingleFile() {
             const grid = document.getElementById('files-grid')
             grid.innerHTML = ''
             
-            filesData.forEach(file => {
-                const card = document.createElement('div')
-                card.className = `file-card border border-[#00f0ff]/20 rounded-3xl p-7 cursor-pointer group`
-                card.innerHTML = `
-                    <div class="flex justify-between items-start">
-                        <i class="${file.icon} text-5xl text-[#00f0ff]/80 group-hover:text-[#fffc00] transition-colors"></i>
-                        <span class="text-[10px] font-mono px-4 py-1 bg-[#fffc00]/10 text-[#fffc00] rounded-full">${file.badge}</span>
-                    </div>
-                    <div class="mt-10">
-                        <div class="text-[#fffc00] text-xl">${file.name}</div>
-                        <div class="text-xs text-[#00f0ff]/60 mt-1">${file.date}</div>
-                    </div>
-                    <p class="mt-6 text-sm text-[#e0f8ff]/70 line-clamp-3">${file.summary}</p>
-                    
-                    <div class="mt-8 pt-6 border-t border-[#00f0ff]/10 text-xs flex justify-between text-[#00f0ff]/50">
-                        <span>CLASSIFIED</span>
-                        <span><i class="fa-solid fa-lock"></i></span>
-                    </div>
-                `
-                card.onclick = () => openFile(file.id)
-                grid.appendChild(card)
-            })
-            
-            const placeholder = document.createElement('div')
-            placeholder.className = `border border-dashed border-[#00f0ff]/30 rounded-3xl p-7 flex flex-col items-center justify-center text-center h-full min-h-[280px] text-[#00f0ff]/40`
-            placeholder.innerHTML = `
-                <i class="fa-solid fa-plus text-6xl mb-6"></i>
-                <div class="text-sm">RESERVED SLOT<br>FOR FUTURE UPLOAD</div>
+            const card = document.createElement('div')
+            card.className = `file-card border border-[#00f0ff]/20 rounded-3xl p-8 cursor-pointer group max-w-2xl mx-auto`
+            card.innerHTML = `
+                <div class="flex justify-between items-start">
+                    <i class="${singleFile.icon} text-6xl text-[#00f0ff]/80 group-hover:text-[#fffc00] transition-colors"></i>
+                    <span class="text-xs font-mono px-5 py-2 bg-[#fffc00]/10 text-[#fffc00] rounded-full">${singleFile.badge}</span>
+                </div>
+                <div class="mt-10">
+                    <div class="text-[#fffc00] text-2xl">${singleFile.name}</div>
+                    <div class="text-xs text-[#00f0ff]/60 mt-1">${singleFile.date}</div>
+                </div>
+                <p class="mt-8 text-[#e0f8ff]/80">${singleFile.summary}</p>
+                
+                <div class="mt-10 pt-6 border-t border-[#00f0ff]/10 flex justify-between text-xs text-[#00f0ff]/50">
+                    <span>CLASSIFIED • LEVEL OMEGA</span>
+                    <span><i class="fa-solid fa-lock"></i></span>
+                </div>
             `
-            grid.appendChild(placeholder)
+            card.onclick = () => openFile()
+            grid.appendChild(card)
         }
         
-        function openFile(id) {
-            const file = filesData.find(f => f.id === id)
-            if (!file) return
-            
+        function openFile() {
             document.getElementById('modal-file-name').innerHTML = `
-                <i class="${file.icon}"></i>
-                <span>${file.name}</span>
+                <i class="${singleFile.icon}"></i>
+                <span>${singleFile.name}</span>
             `
-            document.getElementById('modal-content').innerHTML = file.content
+            document.getElementById('modal-content').innerHTML = singleFile.content
             document.getElementById('file-modal').classList.remove('hidden')
             document.getElementById('file-modal').classList.add('flex')
         }
@@ -446,7 +407,6 @@
             m.classList.remove('flex')
         }
         
-        // Password modal functions
         function showPasswordModal() {
             const m = document.getElementById('password-modal')
             m.classList.remove('hidden')
@@ -500,7 +460,6 @@
             output.innerHTML += `<div class="text-white">&gt; ${cmd}</div>`
             
             let reply = "Command acknowledged."
-            
             if (cmd === "help") reply = "Available: status, whoami, purge, shield, fact"
             else if (cmd === "status") reply = `<span class="text-emerald-400">VAULT INTEGRITY: 100%</span>`
             else if (cmd === "whoami") reply = "You are OWNER X • Dual control with Y active"
@@ -523,7 +482,7 @@
         
         function createToast(text, color) {
             const toast = document.createElement('div')
-            toast.style.cssText = `position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#12122b; color:${color}; padding:18px 32px; border-radius:9999px; border:1px solid ${color}; font-family:monospace; font-size:13px; box-shadow:0 0 40px ${color}; z-index:99999; white-space:nowrap;`
+            toast.style.cssText = `position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#12122b; color:${color}; padding:18px 32px; border-radius:9999px; border:1px solid ${color}; font-family:monospace; font-size:13px; box-shadow:0 0 40px ${color}; z-index:99999;`
             toast.textContent = text
             document.body.appendChild(toast)
             setTimeout(() => toast.style.opacity = '0', 1800)
@@ -535,7 +494,7 @@
         }
         
         function toggleMobileMenu() {
-            alert("Mobile menu would expand here in a full build.")
+            alert("Mobile menu would expand here.")
         }
         
         function navigateToSection(section) {
@@ -543,7 +502,7 @@
         }
         
         function init() {
-            renderFiles()
+            renderSingleFile()
             
             document.addEventListener('keydown', (e) => {
                 if (e.key === "Escape") {
@@ -559,8 +518,6 @@
                     }
                 }
             })
-            
-            console.log('%cPERONG Neon Archive — Password Protected (2112)', 'color:#00f0ff; font-family:monospace')
         }
         
         window.onload = init
