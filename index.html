@@ -104,7 +104,7 @@
             <div class="hidden md:flex items-center gap-x-10 text-sm uppercase tracking-widest">
                 <a onclick="navigateToSection('files-section')" class="hover:text-[#fffc00] transition-colors cursor-pointer">ARCHIVES</a>
                 <a onclick="showStatus()" class="hover:text-[#fffc00] transition-colors cursor-pointer">SYSTEM</a>
-                <button onclick="showOwnerRoom()" 
+                <button onclick="showPasswordModal()" 
                         class="px-6 py-2.5 border border-[#ff00aa]/50 hover:border-[#fffc00] rounded-3xl flex items-center gap-x-2 text-[#fffc00] hover:bg-[#fffc00]/10 transition-all">
                     <i class="fa-solid fa-lock"></i>
                     <span>OWNER ROOM</span>
@@ -154,7 +154,7 @@
                         BROWSE ARCHIVES
                     </button>
                     
-                    <button onclick="showOwnerRoom()" 
+                    <button onclick="showPasswordModal()" 
                             class="px-10 py-6 border-2 border-[#fffc00] text-[#fffc00] font-medium rounded-3xl text-lg flex items-center gap-x-3 hover:bg-[#fffc00]/10 transition-all">
                         <i class="fa-solid fa-key"></i>
                         ENTER OWNER ROOM
@@ -231,7 +231,36 @@
         </div>
     </div>
 
-    <!-- OWNER ROOM (No password required) -->
+    <!-- PASSWORD MODAL (Hidden - no hints) -->
+    <div id="password-modal" onclick="if(event.target.id==='password-modal')hidePasswordModal()" 
+         class="hidden fixed inset-0 bg-black/95 z-[300] flex items-center justify-center p-6">
+        <div onclick="event.stopImmediatePropagation()" 
+             class="w-full max-w-md bg-[#12122b] border border-[#ff00aa] rounded-3xl p-10">
+            <div class="text-center">
+                <div class="mx-auto w-20 h-20 rounded-2xl bg-gradient-to-br from-[#ff00aa] to-[#fffc00] flex items-center justify-center text-4xl mb-8">
+                    🔑
+                </div>
+                <h3 class="title-font text-3xl mb-2 neon-pink-text">OWNER ROOM</h3>
+                <p class="text-[#fffc00]/80 text-sm">Enter access code</p>
+            </div>
+            
+            <input id="code-input" maxlength="4" 
+                   onkeydown="if(event.key==='Enter')checkCode()"
+                   class="block w-full mt-10 bg-black border border-[#ff00aa]/50 focus:border-[#fffc00] text-center text-6xl tracking-widest font-mono text-[#fffc00] py-8 rounded-3xl outline-none"
+                   placeholder="••••">
+            
+            <div id="password-error" class="hidden text-red-400 text-center mt-6 text-sm"></div>
+            
+            <div class="grid grid-cols-2 gap-4 mt-12">
+                <button onclick="hidePasswordModal()" 
+                        class="py-6 text-[#00f0ff] border border-[#00f0ff]/30 rounded-3xl hover:bg-white/5">CANCEL</button>
+                <button onclick="checkCode()" 
+                        class="py-6 bg-gradient-to-r from-[#ff00aa] to-[#fffc00] text-black font-semibold rounded-3xl">UNLOCK</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- OWNER ROOM -->
     <div id="owner-modal" onclick="if(event.target.id==='owner-modal')hideOwnerModal()" 
          class="hidden fixed inset-0 bg-black/95 z-[400] flex items-center justify-center p-6">
         <div onclick="event.stopImmediatePropagation()" 
@@ -417,6 +446,35 @@
             m.classList.remove('flex')
         }
         
+        // Password modal functions
+        function showPasswordModal() {
+            const m = document.getElementById('password-modal')
+            m.classList.remove('hidden')
+            m.classList.add('flex')
+            setTimeout(() => document.getElementById('code-input').focus(), 100)
+        }
+        
+        function hidePasswordModal() {
+            const m = document.getElementById('password-modal')
+            m.classList.add('hidden')
+            m.classList.remove('flex')
+            document.getElementById('code-input').value = ''
+            document.getElementById('password-error').classList.add('hidden')
+        }
+        
+        function checkCode() {
+            const code = document.getElementById('code-input').value.trim()
+            const err = document.getElementById('password-error')
+            
+            if (code === "2112") {
+                hidePasswordModal()
+                setTimeout(showOwnerRoom, 300)
+            } else {
+                err.textContent = "ACCESS DENIED"
+                err.classList.remove('hidden')
+            }
+        }
+        
         function showOwnerRoom() {
             const m = document.getElementById('owner-modal')
             m.classList.remove('hidden')
@@ -489,11 +547,12 @@
             
             document.addEventListener('keydown', (e) => {
                 if (e.key === "Escape") {
-                    const modals = ['file-modal', 'owner-modal']
+                    const modals = ['file-modal', 'password-modal', 'owner-modal']
                     for (let id of modals) {
                         const m = document.getElementById(id)
                         if (!m.classList.contains('hidden')) {
                             if (id === 'file-modal') hideFileModal()
+                            else if (id === 'password-modal') hidePasswordModal()
                             else if (id === 'owner-modal') hideOwnerModal()
                             return
                         }
@@ -501,7 +560,7 @@
                 }
             })
             
-            console.log('%cPERONG Neon Archive — Clean Edition Ready', 'color:#00f0ff; font-family:monospace')
+            console.log('%cPERONG Neon Archive — Password Protected (2112)', 'color:#00f0ff; font-family:monospace')
         }
         
         window.onload = init
