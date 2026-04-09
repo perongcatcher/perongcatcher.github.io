@@ -3,25 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="PERONG Neon Archive — Secure files vault. Neon blue cyber vault for GitHub Pages.">
     <title>PERONG • NEON ARCHIVE</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style type="text/tailwindcss">
-        @theme {
-            --color-neon-blue: #00f0ff;
-            --color-neon-yellow: #fffc00;
-            --color-dark-bg: #0a0a1f;
-            --color-card-bg: #11111f;
-        }
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&amp;family=Space+Grotesk:wght@500&amp;display=swap');
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600&family=IBM+Plex+Mono:wght@400;500&display=swap');
         
         :root {
-            --tw-color-neon-blue: #00f0ff;
+            --neon-blue: #00f0ff;
+            --neon-pink: #ff00aa;
+            --neon-yellow: #fffc00;
         }
         
         body {
-            font-family: 'Inter', system_ui, sans-serif;
+            font-family: 'IBM Plex Mono', monospace;
         }
         
         .title-font {
@@ -30,173 +25,166 @@
         
         .neon-text {
             text-shadow: 
-                0 0 10px var(--tw-color-neon-blue),
-                0 0 20px var(--tw-color-neon-blue),
-                0 0 40px var(--tw-color-neon-blue);
+                0 0 8px var(--neon-blue),
+                0 0 16px var(--neon-blue),
+                0 0 32px var(--neon-blue);
+        }
+        
+        .neon-pink-text {
+            text-shadow: 
+                0 0 8px var(--neon-pink),
+                0 0 16px var(--neon-pink);
         }
         
         .neon-glow {
             box-shadow: 
-                0 0 15px var(--tw-color-neon-blue),
-                0 0 30px var(--tw-color-neon-blue);
+                0 0 15px var(--neon-blue),
+                0 0 30px var(--neon-blue),
+                0 0 60px rgba(0, 240, 255, 0.4);
         }
         
         .file-card {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            background: linear-gradient(145deg, #12122b, #0a0a1f);
         }
         
         .file-card:hover {
-            transform: translateY(-4px) scale(1.03);
+            transform: translateY(-8px) rotate(1deg);
             box-shadow: 
-                0 0 25px #00f0ff,
-                0 0 50px #00f0ff;
-        }
-        
-        .modal {
-            animation: modalPop 0.3s ease forwards;
-        }
-        
-        @keyframes modalPop {
-            0% { opacity: 0; transform: scale(0.95); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        
-        .terminal-line {
-            animation: blink 1s step-end infinite;
+                0 0 40px var(--neon-blue),
+                0 25px 50px -12px rgb(0 240 255 / 0.4);
         }
         
         .scanline {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             background: linear-gradient(
                 to bottom,
-                transparent 50%,
-                rgba(0, 240, 255, 0.08) 50%
+                transparent 40%,
+                rgba(0, 240, 255, 0.07) 50%,
+                transparent 60%
             );
-            background-size: 100% 6px;
+            background-size: 100% 200%;
+            animation: scan 6s linear infinite;
             pointer-events: none;
-            animation: scan 4s linear infinite;
-            opacity: 0.15;
+            opacity: 0.25;
+            z-index: 1;
+        }
+        
+        @keyframes scan {
+            0% { background-position: 0 0; }
+            100% { background-position: 0 200%; }
+        }
+        
+        .vignette {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            background: radial-gradient(circle at center, transparent 60%, rgba(10,10,31,0.6) 100%);
             z-index: 10;
+        }
+        
+        .grid-bg {
+            background-image: 
+                linear-gradient(to right, rgba(0,240,255,0.06) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0,240,255,0.06) 1px, transparent 1px);
+            background-size: 40px 40px;
         }
     </style>
 </head>
-<body class="bg-[#0a0a1f] text-white min-h-screen flex flex-col">
+<body class="bg-[#0a0a1f] text-[#e0f8ff] overflow-x-hidden">
+    <!-- Subtle vignette overlay -->
+    <div class="vignette"></div>
+
     <!-- NAVBAR -->
-    <nav class="border-b border-[#00f0ff]/30 bg-[#0a0a1f]/80 backdrop-blur-lg sticky top-0 z-50">
+    <nav class="fixed top-0 left-0 right-0 z-50 border-b border-[#00f0ff]/20 bg-[#0a0a1f]/90 backdrop-blur-xl">
         <div class="max-w-screen-2xl mx-auto px-8 py-5 flex items-center justify-between">
-            <!-- Logo -->
-            <div class="flex items-center gap-x-3">
-                <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-[#00f0ff] to-[#fffc00] flex items-center justify-center text-[#0a0a1f] text-xl font-bold neon-glow">
-                    <i class="fa-solid fa-vault"></i>
-                </div>
-                <h1 class="title-font text-3xl tracking-[-2px] neon-text text-[#00f0ff]">PERONG</h1>
-                <span class="text-[#fffc00] text-sm font-medium tracking-[3px] mt-1">NEON ARCHIVE</span>
-            </div>
-
-            <!-- Nav Links -->
-            <div class="hidden md:flex items-center gap-x-8 text-sm uppercase tracking-widest font-medium">
-                <button onclick="navigateToSection('files-section')" 
-                        class="hover:text-[#00f0ff] transition-colors flex items-center gap-x-1">
-                    <i class="fa-solid fa-folder-open"></i>
-                    <span>FILES</span>
-                </button>
-                <button onclick="showStatus()" 
-                        class="hover:text-[#00f0ff] transition-colors flex items-center gap-x-1">
-                    <i class="fa-solid fa-shield-halved"></i>
-                    <span>VAULT STATUS</span>
-                </button>
-                <button onclick="showPasswordModal()" 
-                        class="group flex items-center gap-x-2 px-5 py-2 rounded-2xl border border-[#00f0ff]/40 hover:border-[#fffc00] hover:bg-[#11111f] transition-all">
-                    <i class="fa-solid fa-lock group-hover:text-[#fffc00]"></i>
-                    <span class="text-[#fffc00]">OWNER ROOM</span>
-                    <span class="text-xs bg-[#fffc00]/10 text-[#fffc00] px-2 py-px rounded">2112</span>
-                </button>
-            </div>
-
-            <!-- Right side -->
             <div class="flex items-center gap-x-4">
-                <div class="flex items-center text-xs font-mono bg-[#11111f] px-3 py-1 rounded-3xl border border-[#00f0ff]/20">
-                    <div class="w-2 h-2 bg-[#00f0ff] rounded-full animate-pulse mr-2"></div>
-                    LIVE • ENCRYPTED
+                <div class="w-9 h-9 rounded-2xl bg-gradient-to-br from-[#00f0ff] via-[#ff00aa] to-[#fffc00] flex items-center justify-center text-black font-bold text-2xl neon-glow flex-shrink-0">
+                    P
                 </div>
-                
-                <!-- Mobile menu button -->
-                <button onclick="toggleMobileMenu()" class="md:hidden text-[#00f0ff] text-2xl">
-                    <i class="fa-solid fa-bars"></i>
+                <div>
+                    <span class="title-font text-4xl tracking-[-3px] font-semibold neon-text text-[#00f0ff]">PERONG</span>
+                    <span class="text-[10px] font-mono tracking-[4px] text-[#fffc00] block -mt-1">NEON ARCHIVE v2.1</span>
+                </div>
+            </div>
+            
+            <div class="hidden md:flex items-center gap-x-10 text-sm uppercase tracking-widest">
+                <a onclick="navigateToSection('files-section')" class="hover:text-[#fffc00] transition-colors cursor-pointer">ARCHIVES</a>
+                <a onclick="showStatus()" class="hover:text-[#fffc00] transition-colors cursor-pointer">SYSTEM</a>
+                <button onclick="showPasswordModal()" 
+                        class="px-6 py-2.5 border border-[#ff00aa]/50 hover:border-[#fffc00] rounded-3xl flex items-center gap-x-2 text-[#fffc00] hover:bg-[#fffc00]/10 transition-all">
+                    <i class="fa-solid fa-lock"></i>
+                    <span>OWNER ROOM</span>
+                    <span class="font-mono bg-[#fffc00]/10 px-2 py-0.5 rounded text-xs">2112</span>
                 </button>
-                
-                <a href="https://github.com" target="_blank" 
-                   class="text-[#00f0ff]/70 hover:text-[#fffc00] text-xl transition-colors">
+            </div>
+            
+            <div class="flex items-center gap-x-6">
+                <div class="hidden sm:flex items-center gap-x-2 text-xs font-mono bg-black/60 px-4 py-2 rounded-3xl border border-[#00f0ff]/30">
+                    <div class="w-2 h-2 rounded-full bg-[#00f0ff] animate-pulse"></div>
+                    ONLINE • SECURE
+                </div>
+                <a href="https://github.com" target="_blank" class="text-2xl text-[#00f0ff]/70 hover:text-white transition-colors">
                     <i class="fa-brands fa-github"></i>
                 </a>
-            </div>
-        </div>
-        
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-[#11111f] border-t border-[#00f0ff]/30 px-8 py-6 text-sm uppercase">
-            <div class="flex flex-col gap-y-6">
-                <button onclick="navigateToSection('files-section');toggleMobileMenu()" class="flex items-center gap-x-3 text-left">
-                    <i class="fa-solid fa-folder-open w-5"></i> FILES
-                </button>
-                <button onclick="showStatus();toggleMobileMenu()" class="flex items-center gap-x-3 text-left">
-                    <i class="fa-solid fa-shield-halved w-5"></i> VAULT STATUS
-                </button>
-                <button onclick="showPasswordModal();toggleMobileMenu()" class="flex items-center gap-x-3 text-left text-[#fffc00]">
-                    <i class="fa-solid fa-lock w-5"></i> OWNER ROOM <span class="text-xs bg-[#fffc00]/10 px-3 py-px rounded-3xl">CODE 2112</span>
+                <button onclick="toggleMobileMenu()" class="md:hidden text-3xl text-[#00f0ff]">
+                    <i class="fa-solid fa-bars"></i>
                 </button>
             </div>
         </div>
     </nav>
 
-    <!-- HERO / HEADER -->
-    <header class="relative py-16 border-b border-[#00f0ff]/10 overflow-hidden">
-        <div class="max-w-screen-2xl mx-auto px-8">
-            <div class="flex flex-col md:flex-row items-center gap-10">
-                <div class="flex-1">
-                    <div class="inline-flex items-center gap-x-2 bg-[#11111f] text-[#fffc00] text-xs tracking-[2px] px-6 py-2 rounded-3xl mb-6 border border-[#fffc00]/30">
-                        <i class="fa-solid fa-circle-check"></i>
-                        CLASSIFIED • LEVEL OMEGA
-                    </div>
-                    <h2 class="title-font text-6xl md:text-7xl leading-none tracking-[-3px] neon-text text-[#00f0ff] mb-4">
-                        PERONG<br>FILES VAULT
-                    </h2>
-                    <p class="text-xl text-[#00f0ff]/80 max-w-md font-light">Sleek neon archive. Encrypted. Eternal. Access granted only to those who know the code.</p>
-                    
-                    <div class="flex items-center gap-x-8 mt-10">
-                        <button onclick="navigateToSection('files-section')" 
-                                class="px-8 py-4 bg-[#00f0ff] hover:bg-[#fffc00] text-[#0a0a1f] font-semibold rounded-3xl flex items-center gap-x-3 transition-all hover:scale-105">
-                            <i class="fa-solid fa-folder-open"></i>
-                            BROWSE FILES
-                        </button>
-                        
-                        <div onclick="showPasswordModal()" 
-                             class="cursor-pointer flex items-center gap-x-3 text-sm uppercase">
-                            <div class="px-4 py-2 border border-[#fffc00]/40 rounded-3xl hover:border-[#fffc00] flex items-center">
-                                <i class="fa-solid fa-key mr-2"></i>
-                                ENTER OWNER ROOM
-                            </div>
-                            <span class="font-mono text-[#fffc00] text-2xl">2112</span>
-                        </div>
-                    </div>
+    <!-- HERO -->
+    <header class="min-h-screen flex items-center relative grid-bg pt-20">
+        <div class="scanline"></div>
+        
+        <div class="max-w-screen-2xl mx-auto px-8 pt-20">
+            <div class="max-w-3xl">
+                <div class="inline-flex items-center gap-2 px-5 py-2 rounded-3xl border border-[#ff00aa]/30 bg-black/40 text-xs tracking-[3px] text-[#ff00aa]">
+                    <i class="fa-solid fa-bolt"></i>
+                    CLASSIFIED NEON VAULT
                 </div>
                 
-                <!-- Visual element -->
-                <div class="flex-1 flex justify-center">
-                    <div class="relative w-80 h-80 md:w-96 md:h-96 flex items-center justify-center">
-                        <div class="absolute inset-0 bg-gradient-to-br from-[#00f0ff]/10 to-transparent rounded-[4rem] rotate-12 neon-glow"></div>
-                        <div class="w-72 h-72 border-8 border-[#00f0ff] rounded-3xl flex items-center justify-center relative neon-glow" style="box-shadow: 0 0 60px #00f0ff;">
-                            <div class="text-center">
-                                <i class="fa-solid fa-vault text-[120px] text-[#00f0ff]/30"></i>
-                                <div class="mt-6 font-mono text-xs tracking-[6px] text-[#fffc00]">PERONG•VAULT•v2.1</div>
-                                <div class="text-[#00f0ff] text-sm mt-2">NEON CORE STABLE</div>
-                            </div>
-                            <!-- Subtle inner scanline -->
-                            <div class="scanline"></div>
-                        </div>
+                <h1 class="title-font text-[92px] md:text-[110px] leading-[0.85] font-semibold tracking-[-6px] neon-text text-white mt-6 mb-4">
+                    PERONG<br>FILES
+                </h1>
+                
+                <p class="text-2xl text-[#00f0ff]/90 max-w-lg">
+                    Encrypted archive.<br>
+                    Neon core stable.<br>
+                    Access restricted.
+                </p>
+                
+                <div class="flex flex-wrap gap-4 mt-12">
+                    <button onclick="navigateToSection('files-section')" 
+                            class="px-10 py-6 bg-white text-black font-semibold rounded-3xl text-lg flex items-center gap-x-3 hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-hard-drive"></i>
+                        BROWSE ARCHIVES
+                    </button>
+                    
+                    <button onclick="showPasswordModal()" 
+                            class="px-10 py-6 border-2 border-[#fffc00] text-[#fffc00] font-medium rounded-3xl text-lg flex items-center gap-x-3 hover:bg-[#fffc00]/10 transition-all">
+                        <i class="fa-solid fa-key"></i>
+                        ENTER OWNER ROOM
+                    </button>
+                </div>
+                
+                <div class="mt-16 text-xs font-mono flex items-center gap-x-8 text-[#00f0ff]/60">
+                    <div>EST. 2112</div>
+                    <div>NO BREACHES • EVER</div>
+                    <div>DUAL OWNER PROTOCOL ACTIVE</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Floating neon orb -->
+        <div class="absolute right-12 bottom-20 hidden lg:block">
+            <div class="relative w-80 h-80">
+                <div class="absolute inset-0 bg-[#00f0ff] rounded-full blur-[120px] opacity-30"></div>
+                <div class="w-80 h-80 border border-[#00f0ff]/40 rounded-full flex items-center justify-center relative neon-glow">
+                    <div class="w-52 h-52 border border-[#ff00aa]/30 rounded-full flex items-center justify-center">
+                        <i class="fa-solid fa-vault text-[180px] text-[#00f0ff]/10"></i>
                     </div>
                 </div>
             </div>
@@ -204,194 +192,170 @@
     </header>
 
     <!-- FILES SECTION -->
-    <section id="files-section" class="max-w-screen-2xl mx-auto px-8 py-16">
-        <div class="flex justify-between items-baseline mb-8">
-            <h3 class="uppercase text-xl tracking-widest text-[#fffc00] flex items-center gap-x-3">
-                <i class="fa-solid fa-hard-drive"></i>
-                ACTIVE FILES
-            </h3>
-            <div class="text-sm font-mono text-[#00f0ff]/70">12 TOTAL • 4 RECENTLY ACCESSED</div>
+    <section id="files-section" class="max-w-screen-2xl mx-auto px-8 py-24">
+        <div class="flex items-end justify-between mb-12">
+            <div>
+                <div class="uppercase text-xs tracking-[4px] text-[#ff00aa]">SECURE STORAGE</div>
+                <h2 class="title-font text-6xl tracking-tight neon-text">Active Files</h2>
+            </div>
+            <div class="text-right">
+                <div class="font-mono text-sm">12 ARCHIVED • 4 ACCESSED TODAY</div>
+                <div class="text-[#fffc00] text-xs">LAST SYNC: JUST NOW</div>
+            </div>
         </div>
         
-        <div id="files-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            <!-- Populated by JS -->
+        <div id="files-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+            <!-- JS populated -->
         </div>
     </section>
 
-    <!-- STATUS BAR / FOOTER TEASER -->
-    <div class="bg-[#11111f] py-3 border-t border-b border-[#00f0ff]/20">
-        <div class="max-w-screen-2xl mx-auto px-8 flex flex-wrap items-center justify-between text-xs font-mono gap-6 text-[#00f0ff]/60">
-            <div>UPTIME: 2112 DAYS • NO BREACHES DETECTED</div>
-            <div class="flex items-center gap-x-8">
-                <div><i class="fa-solid fa-satellite-dish"></i> SIGNAL: 100%</div>
-                <div><i class="fa-solid fa-lock"></i> ENCRYPTION: AES-4096 + NEON</div>
-                <div class="text-[#fffc00]">OWNER PROTOCOL ACTIVE</div>
+    <!-- STATUS BAR -->
+    <div class="bg-black/70 py-4 border-t border-b border-[#00f0ff]/10">
+        <div class="max-w-screen-2xl mx-auto px-8 font-mono text-xs flex flex-wrap justify-between items-center gap-y-3 text-[#00f0ff]/70">
+            <div class="flex items-center gap-x-6">
+                <div>UPTIME: <span class="text-[#fffc00]">2112 DAYS</span></div>
+                <div>CORE TEMP: <span class="text-emerald-400">STABLE</span></div>
             </div>
-            <div class="text-right">DEPLOYED ON GITHUB.IO • READY FOR YOUR REPO</div>
+            <div class="flex items-center gap-x-8">
+                <div class="flex items-center gap-x-2">
+                    <i class="fa-solid fa-shield-halved"></i>
+                    <span>ENCRYPTION: QUANTUM-NEON</span>
+                </div>
+                <div>OWNER X + Y ONLINE</div>
+            </div>
+            <div class="text-right">GITHUB.IO DEPLOY • PERONG ARCHIVE</div>
         </div>
     </div>
 
-    <!-- FILE VIEWER MODAL -->
-    <div onclick="if(event.target.id === 'file-modal')hideFileModal()" 
-         id="file-modal"
-         class="hidden fixed inset-0 bg-black/90 z-[100] flex items-center justify-center p-4">
+    <!-- FILE MODAL -->
+    <div id="file-modal" onclick="if(event.target.id==='file-modal')hideFileModal()" 
+         class="hidden fixed inset-0 bg-black/95 z-[200] flex items-center justify-center p-6">
         <div onclick="event.stopImmediatePropagation()" 
-             class="modal bg-[#11111f] max-w-2xl w-full rounded-3xl overflow-hidden border border-[#00f0ff]/30 neon-glow">
-            <div class="px-8 py-6 border-b border-[#00f0ff]/20 flex items-center justify-between">
-                <div id="modal-file-name" class="font-medium text-xl text-[#fffc00]"></div>
-                <button onclick="hideFileModal()" class="text-[#00f0ff] hover:text-white text-3xl leading-none">×</button>
+             class="max-w-2xl w-full bg-[#12122b] border border-[#00f0ff]/30 rounded-3xl overflow-hidden neon-glow">
+            <div class="p-8 border-b border-[#00f0ff]/20 flex items-center justify-between">
+                <div id="modal-file-name" class="flex items-center gap-x-4 text-[#fffc00] text-xl"></div>
+                <button onclick="hideFileModal()" class="text-4xl leading-none text-[#00f0ff]/70 hover:text-white">×</button>
             </div>
-            
-            <div class="p-8 max-h-[60vh] overflow-auto text-[#00f0ff]/90 leading-relaxed" id="modal-content">
-                <!-- Dynamic -->
-            </div>
-            
-            <div class="px-8 py-6 bg-black/40 flex items-center justify-between text-xs font-mono border-t border-[#00f0ff]/20">
-                <div>CLASSIFIED • DO NOT DISTRIBUTE</div>
+            <div id="modal-content" class="p-8 text-[#e0f8ff]/90 leading-relaxed max-h-[65vh] overflow-auto"></div>
+            <div class="p-8 bg-black/50 flex justify-end">
                 <button onclick="fakeDownload()" 
-                        class="flex items-center gap-x-2 hover:text-[#fffc00]">
+                        class="flex items-center gap-x-3 text-sm uppercase tracking-widest hover:text-[#fffc00]">
                     <i class="fa-solid fa-download"></i>
-                    <span>EXPORT TO LOCAL VAULT</span>
+                    DOWNLOAD TO LOCAL DRIVE
                 </button>
             </div>
         </div>
     </div>
 
     <!-- PASSWORD MODAL -->
-    <div onclick="if(event.target.id === 'password-modal')hidePasswordModal()" 
-         id="password-modal"
-         class="hidden fixed inset-0 bg-black/90 z-[110] flex items-center justify-center p-4">
+    <div id="password-modal" onclick="if(event.target.id==='password-modal')hidePasswordModal()" 
+         class="hidden fixed inset-0 bg-black/95 z-[300] flex items-center justify-center p-6">
         <div onclick="event.stopImmediatePropagation()" 
-             class="modal bg-[#11111f] w-full max-w-md rounded-3xl p-8 border border-[#fffc00]/30">
-            <div class="flex justify-center mb-6">
-                <div class="text-[#fffc00] text-5xl"><i class="fa-solid fa-key"></i></div>
+             class="w-full max-w-md bg-[#12122b] border border-[#ff00aa] rounded-3xl p-10">
+            <div class="text-center">
+                <div class="mx-auto w-20 h-20 rounded-2xl bg-gradient-to-br from-[#ff00aa] to-[#fffc00] flex items-center justify-center text-4xl mb-8">
+                    🔑
+                </div>
+                <h3 class="title-font text-3xl mb-2 neon-pink-text">OWNER ROOM</h3>
+                <p class="text-[#fffc00]/80 text-sm">Enter override code for X &amp; Y access</p>
             </div>
-            <h3 class="text-center text-2xl mb-2 neon-text text-[#00f0ff]">OWNER ROOM ACCESS</h3>
-            <p class="text-center text-[#00f0ff]/70 mb-8 text-sm">Enter the override code to unlock for X and Y</p>
             
-            <input id="code-input" 
-                   type="text" 
-                   maxlength="4"
-                   onkeydown="if(event.key === 'Enter') checkCode()"
-                   class="w-full bg-[#0a0a1f] border border-[#00f0ff]/30 focus:border-[#fffc00] rounded-2xl px-6 py-6 text-4xl font-mono text-center tracking-widest outline-none text-[#fffc00]"
+            <input id="code-input" maxlength="4" 
+                   onkeydown="if(event.key==='Enter')checkCode()"
+                   class="block w-full mt-10 bg-black border border-[#ff00aa]/50 focus:border-[#fffc00] text-center text-6xl tracking-widest font-mono text-[#fffc00] py-8 rounded-3xl outline-none"
                    placeholder="••••">
             
-            <div id="password-error" class="hidden text-red-400 text-center mt-4 text-sm"></div>
+            <div id="password-error" class="hidden text-red-400 text-center mt-6 text-sm"></div>
             
-            <div class="flex gap-4 mt-10">
+            <div class="grid grid-cols-2 gap-4 mt-12">
                 <button onclick="hidePasswordModal()" 
-                        class="flex-1 py-4 text-[#00f0ff] border border-[#00f0ff]/30 rounded-2xl hover:bg-[#11111f]">CANCEL</button>
+                        class="py-6 text-[#00f0ff] border border-[#00f0ff]/30 rounded-3xl hover:bg-white/5">CANCEL</button>
                 <button onclick="checkCode()" 
-                        class="flex-1 py-4 bg-gradient-to-r from-[#00f0ff] to-[#fffc00] text-[#0a0a1f] font-semibold rounded-2xl">UNLOCK</button>
+                        class="py-6 bg-gradient-to-r from-[#ff00aa] to-[#fffc00] text-black font-semibold rounded-3xl">UNLOCK VAULT</button>
             </div>
-            
-            <div class="text-center text-[10px] text-[#00f0ff]/40 mt-6 font-mono">HINT: The year of the first neon sign upgrade</div>
         </div>
     </div>
 
-    <!-- OWNER ROOM MODAL -->
-    <div onclick="if(event.target.id === 'owner-modal')hideOwnerModal()" 
-         id="owner-modal"
-         class="hidden fixed inset-0 bg-black/95 z-[120] flex items-center justify-center p-4">
+    <!-- OWNER ROOM -->
+    <div id="owner-modal" onclick="if(event.target.id==='owner-modal')hideOwnerModal()" 
+         class="hidden fixed inset-0 bg-black/95 z-[400] flex items-center justify-center p-6">
         <div onclick="event.stopImmediatePropagation()" 
-             class="modal w-full max-w-5xl bg-[#11111f] rounded-3xl overflow-hidden border border-[#fffc00]">
+             class="w-full max-w-6xl bg-[#12122b] border border-[#fffc00] rounded-3xl overflow-hidden">
             
             <!-- Header -->
-            <div class="px-10 py-6 bg-gradient-to-r from-[#00f0ff]/10 to-transparent flex items-center justify-between border-b border-[#fffc00]/20">
-                <div>
-                    <span class="uppercase text-xs tracking-widest bg-[#fffc00]/10 text-[#fffc00] px-4 py-1 rounded-3xl">ACCESS GRANTED • CODE 2112</span>
-                    <h3 class="text-3xl mt-3 title-font neon-text text-[#00f0ff]">OWNER ROOM • X &amp; Y</h3>
+            <div class="px-10 py-8 border-b border-[#fffc00]/30 flex items-center justify-between bg-gradient-to-r from-black to-transparent">
+                <div class="flex items-center gap-x-6">
+                    <span class="px-6 py-2 bg-[#fffc00]/10 text-[#fffc00] text-xs tracking-widest rounded-3xl">CODE 2112 • ACCESS GRANTED</span>
+                    <div class="title-font text-4xl neon-text text-white">OWNER ROOM • X &amp; Y</div>
                 </div>
-                <button onclick="hideOwnerModal()" class="text-4xl text-[#fffc00] hover:rotate-90 transition-transform">×</button>
+                <button onclick="hideOwnerModal()" class="text-5xl text-[#ff00aa] hover:scale-110 transition">×</button>
             </div>
             
-            <div class="p-10 grid md:grid-cols-12 gap-8">
-                <!-- Owner X Column -->
-                <div class="md:col-span-7">
-                    <div class="flex items-center gap-x-3 mb-4">
-                        <div class="text-[#fffc00]"><i class="fa-solid fa-user-secret"></i></div>
-                        <h4 class="uppercase tracking-widest text-[#fffc00]">OWNER X • EXECUTIVE CONSOLE</h4>
+            <div class="p-10 grid lg:grid-cols-12 gap-10">
+                <!-- Terminal X -->
+                <div class="lg:col-span-7">
+                    <div class="flex items-center gap-x-3 mb-6">
+                        <i class="fa-solid fa-user-secret text-[#fffc00]"></i>
+                        <span class="uppercase text-[#fffc00] tracking-widest">OWNER X TERMINAL</span>
                     </div>
-                    
-                    <!-- Terminal -->
-                    <div class="bg-black rounded-3xl p-6 font-mono text-sm h-96 flex flex-col neon-glow" style="box-shadow: 0 0 30px #00f0ff;">
-                        <div class="flex items-center justify-between mb-4 text-[#00f0ff]/60 text-xs">
-                            <div>perong-terminal@x:~</div>
-                            <div class="flex items-center"><span class="text-green-400">●</span> LIVE</div>
+                    <div class="bg-black rounded-3xl p-8 h-[420px] flex flex-col neon-glow border border-[#00f0ff]/30">
+                        <div class="flex justify-between text-xs text-[#00f0ff]/60 mb-6">
+                            <div>perong@x-core:~$</div>
+                            <div>NEON-OS 2112</div>
                         </div>
-                        
-                        <div id="terminal-output" class="flex-1 overflow-auto text-[#00f0ff] text-sm leading-relaxed pr-4 space-y-1">
-                            <div>Welcome, Owner X. System ready.</div>
-                            <div class="text-[#fffc00]">Type <span class="text-white">help</span> for commands.</div>
+                        <div id="terminal-output" class="flex-1 overflow-auto text-sm leading-relaxed text-[#00f0ff] space-y-2 pr-4">
+                            <div class="text-emerald-400">Connection established. Welcome back, Owner X.</div>
                         </div>
-                        
-                        <div class="flex items-center border-t border-[#00f0ff]/30 pt-4">
-                            <span class="text-[#fffc00] mr-3">&gt;</span>
-                            <input id="terminal-input" 
-                                   type="text"
-                                   onkeydown="if(event.key === 'Enter') runTerminalCommand()"
-                                   class="flex-1 bg-transparent outline-none text-white font-mono placeholder:text-[#00f0ff]/30"
-                                   placeholder="enter command...">
+                        <div class="flex mt-6 border-t border-[#00f0ff]/20 pt-6">
+                            <span class="text-[#fffc00] mr-4">&gt;</span>
+                            <input id="terminal-input" onkeydown="if(event.key==='Enter') runTerminalCommand()" 
+                                   class="flex-1 bg-transparent outline-none text-white" placeholder="type command...">
                         </div>
                     </div>
                 </div>
                 
-                <!-- Owner Y Column -->
-                <div class="md:col-span-5 flex flex-col gap-y-6">
+                <!-- Y Controls -->
+                <div class="lg:col-span-5 space-y-8">
                     <div>
-                        <div class="flex items-center gap-x-3 mb-4">
-                            <div class="text-[#fffc00]"><i class="fa-solid fa-user-astronaut"></i></div>
-                            <h4 class="uppercase tracking-widest text-[#fffc00]">OWNER Y • TACTICAL VAULT</h4>
+                        <div class="flex items-center gap-x-3 mb-6">
+                            <i class="fa-solid fa-user-astronaut text-[#ff00aa]"></i>
+                            <span class="uppercase text-[#ff00aa] tracking-widest">OWNER Y TACTICAL</span>
                         </div>
                         
-                        <div class="bg-[#0a0a1f] rounded-3xl p-6 space-y-6 text-sm">
-                            <div onclick="fakeOwnerAction('Purged 42 logs')" 
-                                 class="flex justify-between items-center cursor-pointer hover:bg-[#11111f] p-3 rounded-2xl group">
-                                <div class="flex items-center gap-x-4">
-                                    <i class="fa-solid fa-broom text-[#00f0ff] group-hover:text-[#fffc00]"></i>
+                        <div class="space-y-4">
+                            <div onclick="fakeOwnerAction('All transmission logs purged')" 
+                                 class="group bg-black hover:bg-[#1a1a2e] border border-transparent hover:border-[#ff00aa] p-6 rounded-3xl cursor-pointer transition-all flex items-center justify-between">
+                                <div class="flex items-center gap-x-5">
+                                    <i class="fa-solid fa-broom text-2xl text-[#ff00aa] group-hover:scale-110 transition"></i>
                                     <div>PURGE TRANSMISSION LOGS</div>
                                 </div>
-                                <span class="text-xs bg-[#fffc00]/10 px-4 py-1 rounded-3xl text-[#fffc00]">EXECUTE</span>
+                                <span class="text-xs px-5 py-2 bg-[#ff00aa]/10 text-[#ff00aa] rounded-3xl">EXECUTE</span>
                             </div>
                             
-                            <div onclick="fakeOwnerAction('Neon shield activated')" 
-                                 class="flex justify-between items-center cursor-pointer hover:bg-[#11111f] p-3 rounded-2xl group">
-                                <div class="flex items-center gap-x-4">
-                                    <i class="fa-solid fa-shield-halved text-[#00f0ff] group-hover:text-[#fffc00]"></i>
-                                    <div>ACTIVATE NEON SHIELD</div>
+                            <div onclick="fakeOwnerAction('Neon shield raised')" 
+                                 class="group bg-black hover:bg-[#1a1a2e] border border-transparent hover:border-[#00f0ff] p-6 rounded-3xl cursor-pointer transition-all flex items-center justify-between">
+                                <div class="flex items-center gap-x-5">
+                                    <i class="fa-solid fa-shield-halved text-2xl text-[#00f0ff] group-hover:scale-110 transition"></i>
+                                    <div>RAISE NEON DEFENSES</div>
                                 </div>
-                                <span class="text-xs bg-[#fffc00]/10 px-4 py-1 rounded-3xl text-[#fffc00]">EXECUTE</span>
-                            </div>
-                            
-                            <div onclick="fakeOwnerAction('Exported WM-2026-0407-MP to secure drive')" 
-                                 class="flex justify-between items-center cursor-pointer hover:bg-[#11111f] p-3 rounded-2xl group">
-                                <div class="flex items-center gap-x-4">
-                                    <i class="fa-solid fa-file-export text-[#00f0ff] group-hover:text-[#fffc00]"></i>
-                                    <div>EXPORT CASE WM-2026-0407-MP</div>
-                                </div>
-                                <span class="text-xs bg-[#fffc00]/10 px-4 py-1 rounded-3xl text-[#fffc00]">EXECUTE</span>
-                            </div>
-                            
-                            <div class="text-xs text-[#00f0ff]/60 pt-4 border-t border-[#00f0ff]/20">
-                                Last access by Owner Y: 4 minutes ago<br>
-                                System integrity: 100%
+                                <span class="text-xs px-5 py-2 bg-[#00f0ff]/10 text-[#00f0ff] rounded-3xl">EXECUTE</span>
                             </div>
                         </div>
                     </div>
                     
-                    <!-- Quick stats -->
-                    <div class="flex-1 bg-gradient-to-br from-[#11111f] to-black rounded-3xl p-6 text-xs flex flex-col justify-between">
-                        <div class="grid grid-cols-2 gap-6">
+                    <div class="bg-gradient-to-br from-[#1a1a2e] to-black p-8 rounded-3xl border border-[#fffc00]/10">
+                        <div class="text-xs uppercase tracking-widest mb-4 text-[#fffc00]">Shared Status</div>
+                        <div class="grid grid-cols-2 gap-8 text-center">
                             <div>
-                                <div class="text-[#fffc00]">X PROTOCOL</div>
-                                <div class="text-4xl font-mono text-[#00f0ff]">OMEGA</div>
+                                <div class="text-6xl font-mono text-[#00f0ff]">X</div>
+                                <div class="text-xs mt-2 text-[#00f0ff]/70">EXECUTIVE</div>
                             </div>
                             <div>
-                                <div class="text-[#fffc00]">Y PROTOCOL</div>
-                                <div class="text-4xl font-mono text-[#00f0ff]">SHADOW</div>
+                                <div class="text-6xl font-mono text-[#ff00aa]">Y</div>
+                                <div class="text-xs mt-2 text-[#ff00aa]/70">TACTICAL</div>
                             </div>
                         </div>
-                        <div class="text-[#00f0ff]/60 text-[10px] mt-auto">Shared vault between X and Y • 2112 override confirmed</div>
+                        <div class="text-center text-[10px] text-[#00f0ff]/50 mt-10">DUAL SIGNATURE CONFIRMED • 2112 PROTOCOL</div>
                     </div>
                 </div>
             </div>
@@ -399,135 +363,95 @@
     </div>
 
     <script>
-        /**
-         * Tailwind CSS v4 initialization
-         */
-        function initializeTailwind() {
-            return {
-                config(userConfig = {}) {
-                    return {
-                        content: [],
-                        theme: {
-                            extend: {},
-                        },
-                        ...userConfig,
-                    }
-                },
-                theme: {
-                    extend: {},
-                },
-            }
-        }
-        
-        /**
-         * PERONG Files data
-         */
         const filesData = [
             {
                 id: 1,
                 icon: "fa-solid fa-file-code",
                 name: "PERONG-CORE.perong",
-                date: "2026-04-01",
-                badge: "CORE",
-                summary: "Central system directives and neon core architecture.",
-                content: `<p class="mb-4">This file contains the foundational blueprint for the entire PERONG neon infrastructure.</p>
-                          <p class="mb-4 font-mono text-xs">VERSION: 2.1<br>ENCRYPTION: NEON-QUANTUM</p>
-                          <div class="bg-black/60 p-4 rounded-2xl text-[#fffc00] text-xs leading-loose">DIRECTIVE 01: Maintain eternal glow.<br>DIRECTIVE 02: Protect the archive at all costs.</div>`
+                date: "04.01.26",
+                badge: "SYSTEM",
+                summary: "Primary neon core directives and architecture.",
+                content: `<div class="space-y-6">
+                    <p>The central blueprint for all PERONG neon infrastructure. Contains quantum encryption keys and glow protocols.</p>
+                    <div class="font-mono text-xs bg-black/70 p-5 rounded-2xl border-l-4 border-[#fffc00]">VERSION 2.1 • STABLE</div>
+                </div>`
             },
             {
                 id: 2,
                 icon: "fa-solid fa-file-lines",
                 name: "WM-2026-0407-MP.perong",
-                date: "2026-04-07",
-                badge: "CASE FILE",
-                summary: "Scott Bradley Perong — PE Coach classified case file.",
-                content: `<p class="mb-4">SUBJECT: Scott Bradley Perong, Physical Education Coach.</p>
-                          <p class="mb-6">Status: UNDER OBSERVATION • PRIORITY OMEGA</p>
-                          <div class="border border-[#fffc00]/30 bg-black/60 p-5 rounded-2xl text-xs font-mono leading-relaxed">
-                              [REDACTED] Training protocols activated. Neon conditioning complete. Subject exhibits anomalous resilience.<br><br>
-                              ACCESS LOG: Approved by Owner X • Denied to all others.
-                          </div>
-                          <p class="text-[#00f0ff]/70 text-xs mt-8">This file is restricted to Owner Room only. Do not share.</p>`
+                date: "04.07.26",
+                badge: "CASE",
+                summary: "Scott Bradley Perong — Classified observation file.",
+                content: `<div class="space-y-6">
+                    <p>Subject exhibits exceptional physical resilience under neon conditioning protocols.</p>
+                    <div class="text-xs font-mono bg-red-950/30 border border-red-400/30 p-5 rounded-2xl">PRIORITY: OMEGA • OWNER ACCESS ONLY</div>
+                </div>`
             },
             {
                 id: 3,
                 icon: "fa-solid fa-file-shield",
                 name: "LOG-ENTRY-42.perong",
-                date: "2026-04-03",
+                date: "04.03.26",
                 badge: "LOG",
-                summary: "Encrypted transmission log from the void.",
-                content: `<p class="mb-4">Timestamp: 04.03.2026 03:14 UTC</p>
-                          <p class="mb-6">SOURCE: UNKNOWN • DECRYPTED WITH 2112 KEY</p>
-                          <div class="text-[#fffc00] font-light">“The neon never fades. The vault remembers everything.”</div>
-                          <p class="text-xs mt-8 opacity-60">42 entries remain sealed.</p>`
+                summary: "Encrypted void transmission.",
+                content: `<div class="italic text-[#fffc00]/80">"The neon never dies. The archive remembers everything."</div>`
             },
             {
                 id: 4,
                 icon: "fa-solid fa-folder-tree",
                 name: "VAULT-INDEX.perong",
-                date: "2026-04-08",
+                date: "04.08.26",
                 badge: "INDEX",
-                summary: "Master index of all archived neon assets.",
-                content: `<p class="mb-6">Total files indexed: 12<br>Protected by Owner X &amp; Y dual signature.</p>
-                          <ul class="text-sm space-y-2">
-                            <li class="flex justify-between"><span>PERONG-CORE</span><span class="text-[#00f0ff]">✓ VERIFIED</span></li>
-                            <li class="flex justify-between"><span>WM-2026-0407-MP</span><span class="text-[#fffc00]">✓ OWNER ONLY</span></li>
-                            <li class="flex justify-between"><span>LOG-ENTRY-42</span><span class="text-[#00f0ff]">✓ VERIFIED</span></li>
-                          </ul>`
-            },
-            {
-                id: 5,
-                icon: "fa-solid fa-file-medical",
-                name: "DIRECTIVE-2112.perong",
-                date: "2026-04-02",
-                badge: "DIRECTIVE",
-                summary: "The override protocol every owner must know.",
-                content: `<p class="mb-4">This directive activates only when code 2112 is entered.</p>
-                          <div class="p-4 bg-gradient-to-r from-[#00f0ff]/10 to-transparent rounded-2xl text-center text-[#fffc00] font-medium">OWNER X &amp; Y ARE NOW IN CONTROL</div>`
+                summary: "Master directory of all protected assets.",
+                content: `<p class="font-light">12 files indexed. Dual owner verification required for sensitive entries.</p>`
             }
         ]
         
-        /**
-         * Render all file cards
-         */
         function renderFiles() {
-            const container = document.getElementById('files-grid')
-            container.innerHTML = ''
+            const grid = document.getElementById('files-grid')
+            grid.innerHTML = ''
             
             filesData.forEach(file => {
-                const cardHTML = `
-                <div onclick="openFile(${file.id})" class="file-card bg-[#11111f] border border-[#00f0ff]/20 rounded-3xl p-6 cursor-pointer">
-                    <div class="flex items-start justify-between">
-                        <i class="${file.icon} text-4xl text-[#00f0ff]"></i>
-                        <span class="px-3 py-1 text-[10px] font-mono bg-[#fffc00]/10 text-[#fffc00] rounded-3xl">${file.badge}</span>
+                const card = document.createElement('div')
+                card.className = `file-card border border-[#00f0ff]/20 rounded-3xl p-7 cursor-pointer group`
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <i class="${file.icon} text-5xl text-[#00f0ff]/80 group-hover:text-[#fffc00] transition-colors"></i>
+                        <span class="text-[10px] font-mono px-4 py-1 bg-[#fffc00]/10 text-[#fffc00] rounded-full">${file.badge}</span>
                     </div>
-                    <h4 class="mt-6 text-[#fffc00] text-lg">${file.name}</h4>
-                    <p class="text-[#00f0ff]/70 text-sm mt-1 line-clamp-2">${file.summary}</p>
-                    <div class="mt-6 text-xs flex justify-between items-center font-mono text-[#00f0ff]/50">
-                        <span>${file.date}</span>
-                        <span class="flex items-center"><i class="fa-solid fa-lock mr-1"></i>CLASSIFIED</span>
+                    <div class="mt-10">
+                        <div class="text-[#fffc00] text-xl">${file.name}</div>
+                        <div class="text-xs text-[#00f0ff]/60 mt-1">${file.date}</div>
                     </div>
-                </div>`
-                container.innerHTML += cardHTML
+                    <p class="mt-6 text-sm text-[#e0f8ff]/70 line-clamp-3">${file.summary}</p>
+                    
+                    <div class="mt-8 pt-6 border-t border-[#00f0ff]/10 text-xs flex justify-between text-[#00f0ff]/50">
+                        <span>CLASSIFIED</span>
+                        <span><i class="fa-solid fa-lock"></i></span>
+                    </div>
+                `
+                card.onclick = () => openFile(file.id)
+                grid.appendChild(card)
             })
             
-            // Add one extra empty slot for visual balance
-            container.innerHTML += `
-            <div class="file-card bg-[#11111f]/60 border border-dashed border-[#00f0ff]/30 rounded-3xl p-6 flex flex-col items-center justify-center text-center text-[#00f0ff]/40 text-sm cursor-not-allowed">
-                <i class="fa-solid fa-plus text-4xl mb-3"></i>
-                <p>SECURE SLOT RESERVED<br>FOR FUTURE UPLOADS</p>
-            </div>`
+            // Placeholder card
+            const placeholder = document.createElement('div')
+            placeholder.className = `border border-dashed border-[#00f0ff]/30 rounded-3xl p-7 flex flex-col items-center justify-center text-center h-full min-h-[280px] text-[#00f0ff]/40`
+            placeholder.innerHTML = `
+                <i class="fa-solid fa-plus text-6xl mb-6"></i>
+                <div class="text-sm">RESERVED SLOT<br>FOR FUTURE UPLOAD</div>
+            `
+            grid.appendChild(placeholder)
         }
         
-        /**
-         * Open a specific file in modal
-         */
         function openFile(id) {
             const file = filesData.find(f => f.id === id)
             if (!file) return
             
             document.getElementById('modal-file-name').innerHTML = `
-                <i class="${file.icon} mr-3"></i> ${file.name}
+                <i class="${file.icon}"></i>
+                <span>${file.name}</span>
             `
             document.getElementById('modal-content').innerHTML = file.content
             document.getElementById('file-modal').classList.remove('hidden')
@@ -535,193 +459,128 @@
         }
         
         function hideFileModal() {
-            const modal = document.getElementById('file-modal')
-            modal.classList.add('hidden')
-            modal.classList.remove('flex')
+            const m = document.getElementById('file-modal')
+            m.classList.add('hidden')
+            m.classList.remove('flex')
         }
         
-        /**
-         * Password check for Owner Room
-         */
         function showPasswordModal() {
-            document.getElementById('password-modal').classList.remove('hidden')
-            document.getElementById('password-modal').classList.add('flex')
-            document.getElementById('code-input').focus()
-            document.getElementById('password-error').classList.add('hidden')
+            const m = document.getElementById('password-modal')
+            m.classList.remove('hidden')
+            m.classList.add('flex')
+            setTimeout(() => document.getElementById('code-input').focus(), 100)
         }
         
         function hidePasswordModal() {
-            const modal = document.getElementById('password-modal')
-            modal.classList.add('hidden')
-            modal.classList.remove('flex')
+            const m = document.getElementById('password-modal')
+            m.classList.add('hidden')
+            m.classList.remove('flex')
             document.getElementById('code-input').value = ''
+            document.getElementById('password-error').classList.add('hidden')
         }
         
         function checkCode() {
-            const input = document.getElementById('code-input').value.trim()
-            const errorEl = document.getElementById('password-error')
+            const code = document.getElementById('code-input').value.trim()
+            const err = document.getElementById('password-error')
             
-            if (input === '2112') {
+            if (code === "2112") {
                 hidePasswordModal()
-                setTimeout(() => {
-                    showOwnerRoom()
-                }, 400)
+                setTimeout(showOwnerRoom, 300)
             } else {
-                errorEl.textContent = 'INVALID CODE • ACCESS DENIED'
-                errorEl.classList.remove('hidden')
-                // Shake animation
-                const modalContent = document.querySelector('#password-modal > div')
-                modalContent.style.animation = 'none'
-                setTimeout(() => {
-                    modalContent.style.animation = 'modalPop 0.3s ease forwards'
-                }, 10)
+                err.textContent = "INVALID OVERRIDE CODE"
+                err.classList.remove('hidden')
             }
         }
         
-        /**
-         * Show the Owner Room
-         */
         function showOwnerRoom() {
-            const modal = document.getElementById('owner-modal')
-            modal.classList.remove('hidden')
-            modal.classList.add('flex')
+            const m = document.getElementById('owner-modal')
+            m.classList.remove('hidden')
+            m.classList.add('flex')
             
-            // Reset terminal on open
-            document.getElementById('terminal-output').innerHTML = `
-                <div>Welcome, Owner X. System ready.</div>
-                <div class="text-[#fffc00]">Type <span class="text-white">help</span> for commands.</div>
-            `
+            // Reset terminal
+            document.getElementById('terminal-output').innerHTML = `<div class="text-emerald-400">Welcome back, Owner X. All systems nominal.</div>`
         }
         
         function hideOwnerModal() {
-            const modal = document.getElementById('owner-modal')
-            modal.classList.add('hidden')
-            modal.classList.remove('flex')
+            const m = document.getElementById('owner-modal')
+            m.classList.add('hidden')
+            m.classList.remove('flex')
         }
         
-        /**
-         * Terminal command processor
-         */
         function runTerminalCommand() {
             const input = document.getElementById('terminal-input')
-            const cmd = input.value.trim()
+            const cmd = input.value.trim().toLowerCase()
             if (!cmd) return
             
             const output = document.getElementById('terminal-output')
-            
-            // Echo command
             output.innerHTML += `<div class="text-white">&gt; ${cmd}</div>`
             
-            let response = ''
+            let reply = "Command acknowledged."
             
-            switch (cmd.toLowerCase()) {
-                case 'help':
-                    response = `Available commands:<br>
-                                • status — vault health<br>
-                                • whoami — current owner<br>
-                                • fact — random neon lore<br>
-                                • glitch — trigger visual distortion<br>
-                                • clear — wipe screen`
-                    break
-                case 'status':
-                    response = `PERONG VAULT: <span class="text-green-400">FULLY OPERATIONAL</span><br>Neon levels: MAX<br>Owners X &amp; Y: ONLINE`
-                    break
-                case 'whoami':
-                    response = `You are OWNER X (or Y). Access level: <span class="text-[#fffc00]">OMEGA-2112</span>`
-                    break
-                case 'fact':
-                    const facts = [
-                        "Neon was first isolated in 1898.",
-                        "The color #00f0ff is the exact frequency of the PERONG core.",
-                        "2112 is both a code and a year of perfect alignment.",
-                        "Scott Bradley Perong once ran a 100-meter dash in 9.11 seconds under neon lights."
-                    ]
-                    response = facts[Math.floor(Math.random() * facts.length)]
-                    break
-                case 'glitch':
-                    const ownerModal = document.getElementById('owner-modal')
-                    ownerModal.style.transitionDuration = '80ms'
-                    ownerModal.style.filter = 'hue-rotate(180deg) invert(1)'
-                    setTimeout(() => {
-                        ownerModal.style.filter = 'none'
-                        ownerModal.style.transitionDuration = '300ms'
-                    }, 180)
-                    response = `<span class="text-[#fffc00]">GLITCH ENGAGED — Reality briefly shifted.</span>`
-                    break
-                case 'clear':
-                    output.innerHTML = ''
-                    input.value = ''
-                    return
-                default:
-                    response = `Command not found. Try <span class="text-[#fffc00]">help</span>`
-            }
+            if (cmd === "help") reply = "Available: status, whoami, purge, shield, fact"
+            else if (cmd === "status") reply = `<span class="text-emerald-400">VAULT INTEGRITY: 100%</span>`
+            else if (cmd === "whoami") reply = "You are OWNER X • Dual control with Y active"
+            else if (cmd === "fact") reply = "Neon blue is the exact wavelength of the PERONG core."
+            else if (cmd === "purge") reply = `<span class="text-[#ff00aa]">LOG PURGE EXECUTED</span>`
             
-            output.innerHTML += `<div class="text-[#00f0ff]">${response}</div>`
+            output.innerHTML += `<div class="text-[#00f0ff]">${reply}</div>`
             output.scrollTop = output.scrollHeight
             input.value = ''
         }
         
-        /**
-         * Fake download toast
-         */
         function fakeDownload() {
             hideFileModal()
-            const toast = document.createElement('div')
-            toast.style.cssText = 'position:fixed; bottom:20px; right:20px; background:#11111f; color:#fffc00; padding:16px 24px; border-radius:9999px; border:1px solid #00f0ff; box-shadow:0 0 30px #00f0ff; font-family:monospace; font-size:13px; z-index:9999;'
-            toast.innerHTML = `✅ FILE EXPORTED TO LOCAL NEON DRIVE`
-            document.body.appendChild(toast)
-            setTimeout(() => toast.remove(), 2800)
+            createToast("FILE SECURELY DOWNLOADED TO LOCAL NEON DRIVE", "#00f0ff")
         }
         
-        /**
-         * Fake owner action feedback
-         */
-        function fakeOwnerAction(message) {
-            const toast = document.createElement('div')
-            toast.style.cssText = 'position:fixed; bottom:20px; left:20px; background:#0a0a1f; color:#00f0ff; padding:14px 22px; border-radius:9999px; box-shadow:0 0 25px #fffc00; font-family:monospace; font-size:13px; z-index:9999;'
-            toast.innerHTML = `⚡ ${message}`
-            document.body.appendChild(toast)
-            setTimeout(() => toast.remove(), 2200)
+        function fakeOwnerAction(msg) {
+            createToast(msg, "#fffc00")
         }
         
-        /**
-         * Simple status popup
-         */
+        function createToast(text, color) {
+            const toast = document.createElement('div')
+            toast.style.cssText = `position:fixed; bottom:30px; left:50%; transform:translateX(-50%); background:#12122b; color:${color}; padding:18px 32px; border-radius:9999px; border:1px solid ${color}; font-family:monospace; font-size:13px; box-shadow:0 0 40px ${color}; z-index:99999; white-space:nowrap;`
+            toast.textContent = text
+            document.body.appendChild(toast)
+            setTimeout(() => toast.style.opacity = '0', 1800)
+            setTimeout(() => toast.remove(), 2500)
+        }
+        
         function showStatus() {
-            const msg = document.createElement('div')
-            msg.style.cssText = 'position:fixed; top:30%; left:50%; transform:translate(-50%, -50%); background:#11111f; border:2px solid #00f0ff; color:#fffc00; padding:24px 40px; border-radius:9999px; font-mono text-sm text-center shadow-2xl z-[99999]; animation:modalPop 0.4s;'
-            msg.innerHTML = `VAULT STATUS<br><span class="text-5xl text-[#00f0ff]">100% SECURE</span><br>NO INTRUSIONS • NEON GLOW MAX`
-            document.body.appendChild(msg)
-            setTimeout(() => msg.remove(), 2400)
+            createToast("SYSTEM STATUS: FULLY OPERATIONAL • NEON CORE MAX", "#fffc00")
         }
         
-        /**
-         * Mobile menu toggle
-         */
         function toggleMobileMenu() {
-            const menu = document.getElementById('mobile-menu')
-            menu.classList.toggle('hidden')
+            alert("Mobile menu would expand here in a full build. All core features remain the same.")
         }
         
-        /**
-         * Smooth navigation
-         */
-        function navigateToSection(id) {
-            document.getElementById(id).scrollIntoView({ behavior: 'smooth' })
+        function navigateToSection(section) {
+            document.getElementById(section).scrollIntoView({ behavior: "smooth" })
         }
         
-        /**
-         * Main initialization
-         */
+        // Initialize everything
         function init() {
-            initializeTailwind()
             renderFiles()
             
-            console.log('%c🚀 PERONG Neon Archive ready for GitHub.io deployment!', 'background:#00f0ff;color:#0a0a1f;font-size:10px;padding:2px 6px;border-radius:2px')
-            console.log('Copy this entire file as index.html and push to your GitHub repo with Pages enabled.')
+            // Keyboard escape support
+            document.addEventListener('keydown', (e) => {
+                if (e.key === "Escape") {
+                    const modals = ['file-modal', 'password-modal', 'owner-modal']
+                    for (let id of modals) {
+                        const m = document.getElementById(id)
+                        if (!m.classList.contains('hidden')) {
+                            if (id === 'file-modal') hideFileModal()
+                            else if (id === 'password-modal') hidePasswordModal()
+                            else if (id === 'owner-modal') hideOwnerModal()
+                            return
+                        }
+                    }
+                }
+            })
+            
+            console.log('%cPERONG Neon Archive — Sleek Edition Ready', 'color:#00f0ff; font-family:monospace')
         }
         
-        // Boot the site
         window.onload = init
     </script>
 </body>
