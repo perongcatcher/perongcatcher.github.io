@@ -10,11 +10,7 @@
             --neon-yellow: #fffc00;
         }
         
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body {
             font-family: 'Courier New', monospace;
@@ -27,21 +23,17 @@
         
         canvas#matrix {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: -1;
-            opacity: 0.15;
+            opacity: 0.18;
         }
         
         header {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
+            top: 0; left: 0; right: 0;
             height: 70px;
-            background: rgba(10, 10, 31, 0.95);
+            background: rgba(10, 10, 31, 0.96);
             border-bottom: 3px solid var(--neon-yellow);
             display: flex;
             align-items: center;
@@ -54,20 +46,8 @@
             font-size: 28px;
             font-weight: bold;
             letter-spacing: 4px;
-            text-shadow: 
-                0 0 10px var(--neon-yellow),
-                0 0 20px var(--neon-yellow),
-                0 0 40px var(--neon-blue);
+            text-shadow: 0 0 10px var(--neon-yellow), 0 0 30px var(--neon-blue);
             color: var(--neon-yellow);
-        }
-        
-        .logo::after {
-            content: " // GITHUB MIRROR";
-            font-size: 12px;
-            letter-spacing: 2px;
-            color: var(--neon-blue);
-            margin-left: 10px;
-            vertical-align: super;
         }
         
         nav {
@@ -79,32 +59,20 @@
         nav a {
             color: var(--neon-blue);
             text-decoration: none;
-            font-size: 18px;
+            font-size: 17px;
             text-transform: uppercase;
             letter-spacing: 3px;
             transition: all 0.3s;
-            text-shadow: 0 0 10px var(--neon-blue);
         }
         
-        nav a:hover {
+        nav a:hover, nav a.active {
             color: var(--neon-yellow);
-            text-shadow: 
-                0 0 15px var(--neon-yellow),
-                0 0 30px var(--neon-yellow);
-            transform: translateY(-2px);
-        }
-        
-        .nav-active {
-            color: var(--neon-yellow) !important;
-            text-shadow: 
-                0 0 15px var(--neon-yellow),
-                0 0 30px var(--neon-yellow);
+            text-shadow: 0 0 15px var(--neon-yellow);
         }
         
         main {
             margin-top: 70px;
-            margin-bottom: 320px;
-            padding: 40px 40px 20px;
+            padding: 40px;
             height: calc(100vh - 70px - 320px);
             overflow-y: auto;
             position: relative;
@@ -112,76 +80,49 @@
         }
         
         .content-panel {
-            background: rgba(15, 15, 45, 0.85);
+            background: rgba(15, 15, 45, 0.9);
             border: 2px solid var(--neon-blue);
             border-radius: 8px;
-            padding: 30px;
-            box-shadow: 
-                0 0 20px var(--neon-blue),
-                0 0 40px rgba(0, 240, 255, 0.3);
-            min-height: 100%;
+            padding: 35px;
+            box-shadow: 0 0 40px var(--neon-blue);
         }
         
         h1 {
-            font-size: 42px;
-            text-shadow: 
-                0 0 10px var(--neon-yellow),
-                0 0 20px var(--neon-blue);
+            font-size: 48px;
+            text-shadow: 0 0 20px var(--neon-yellow);
             margin-bottom: 20px;
             letter-spacing: 6px;
         }
         
-        .hero {
-            text-align: center;
-            padding: 60px 20px;
-        }
-        
-        .hero p {
-            font-size: 22px;
-            max-width: 800px;
-            margin: 0 auto;
-            text-shadow: 0 0 15px var(--neon-blue);
-        }
+        .hero { text-align: center; padding: 80px 20px; }
         
         table {
             width: 100%;
             border-collapse: collapse;
-            margin-top: 20px;
+            margin-top: 25px;
         }
         
         th, td {
             padding: 16px 20px;
-            text-align: left;
             border-bottom: 1px solid rgba(0, 240, 255, 0.3);
+            text-align: left;
         }
         
         th {
             color: var(--neon-yellow);
             text-transform: uppercase;
-            font-size: 14px;
             letter-spacing: 2px;
         }
         
-        tr:hover {
-            background: rgba(255, 252, 0, 0.1);
-        }
-        
-        .file-icon {
-            color: var(--neon-blue);
-            margin-right: 10px;
-        }
+        tr:hover { background: rgba(255, 252, 0, 0.08); }
         
         .terminal {
             position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+            bottom: 0; left: 0; right: 0;
             height: 320px;
             background: rgba(5, 5, 25, 0.98);
             border-top: 4px solid var(--neon-yellow);
-            box-shadow: 
-                0 -10px 40px var(--neon-blue),
-                inset 0 0 60px rgba(0, 240, 255, 0.4);
+            box-shadow: 0 -10px 50px var(--neon-blue);
             display: flex;
             flex-direction: column;
             z-index: 2000;
@@ -190,20 +131,10 @@
         .terminal-header {
             background: #000;
             color: var(--neon-yellow);
-            padding: 8px 20px;
+            padding: 10px 20px;
             font-size: 14px;
             letter-spacing: 2px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
             border-bottom: 2px solid var(--neon-blue);
-        }
-        
-        .terminal-header::before {
-            content: "● ● ●";
-            color: #ff0000;
-            font-size: 10px;
-            letter-spacing: 4px;
         }
         
         #terminal-output {
@@ -211,26 +142,15 @@
             padding: 20px;
             overflow-y: auto;
             font-size: 15px;
-            line-height: 1.5;
-            color: var(--neon-blue);
+            line-height: 1.6;
             background: #000;
-        }
-        
-        #terminal-output div {
-            margin-bottom: 6px;
-            white-space: pre-wrap;
         }
         
         .prompt-line {
             display: flex;
             align-items: center;
             padding: 0 20px 20px;
-            font-size: 16px;
             color: var(--neon-yellow);
-        }
-        
-        .prompt-line span {
-            margin-right: 8px;
         }
         
         #terminal-input {
@@ -245,55 +165,30 @@
         
         .shoutbox {
             position: fixed;
-            top: 90px;
+            top: 100px;
             left: 50%;
             transform: translateX(-50%);
             background: rgba(255, 252, 0, 0.95);
             color: #000;
-            padding: 15px 40px;
-            font-size: 22px;
+            padding: 18px 50px;
+            font-size: 24px;
             font-weight: bold;
-            border: 3px solid var(--neon-blue);
-            box-shadow: 
-                0 0 40px var(--neon-yellow),
-                0 0 80px var(--neon-blue);
+            border: 4px solid var(--neon-blue);
+            box-shadow: 0 0 60px var(--neon-yellow);
             z-index: 3000;
             display: none;
-            align-items: center;
-            gap: 15px;
-            border-radius: 8px;
-            text-transform: uppercase;
+            border-radius: 6px;
             letter-spacing: 3px;
-            animation: shoutPop 0.4s ease;
         }
         
-        @keyframes shoutPop {
-            0% { transform: translateX(-50%) scale(0.6); }
-            70% { transform: translateX(-50%) scale(1.1); }
-            100% { transform: translateX(-50%) scale(1); }
-        }
+        .glitch { animation: glitch 0.4s linear infinite; }
         
-        .glitch {
-            animation: glitchAnim 0.4s linear infinite;
-        }
-        
-        @keyframes glitchAnim {
+        @keyframes glitch {
             0% { transform: translate(0); }
-            20% { transform: translate(-4px, 4px); }
-            40% { transform: translate(4px, -4px); }
-            60% { transform: translate(-4px, 4px); }
-            80% { transform: translate(4px, -4px); }
+            20% { transform: translate(-3px, 3px); }
+            40% { transform: translate(3px, -3px); }
+            60% { transform: translate(-3px, 3px); }
             100% { transform: translate(0); }
-        }
-        
-        .stat {
-            display: inline-block;
-            background: rgba(10, 10, 40, 0.8);
-            border: 1px solid var(--neon-blue);
-            padding: 8px 20px;
-            margin: 10px;
-            border-radius: 4px;
-            box-shadow: 0 0 15px var(--neon-blue);
         }
         
         button {
@@ -306,49 +201,39 @@
             letter-spacing: 2px;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 0 15px var(--neon-yellow);
         }
         
         button:hover {
             background: var(--neon-yellow);
             color: #0a0a1f;
-            box-shadow: 0 0 30px var(--neon-yellow);
         }
     </style>
 </head>
 <body>
-    <!-- Matrix Rain Background -->
+
     <canvas id="matrix"></canvas>
 
-    <!-- Header -->
     <header>
         <div class="logo">PERONG</div>
         <nav>
-            <a href="#" onclick="loadPage('origin'); return false;" id="nav-origin">ORIGIN</a>
+            <a href="#" onclick="loadPage('origin'); return false;" id="nav-origin" class="active">ORIGIN</a>
             <a href="#" onclick="loadPage('vault'); return false;" id="nav-vault">VAULT</a>
             <a href="#" onclick="loadPage('lore'); return false;" id="nav-lore">LORE</a>
         </nav>
-        <div style="margin-left: auto; display: flex; align-items: center; gap: 15px; font-size: 14px;">
-            <div class="stat">GITHUB SYNC: <span style="color: #fffc00;">LIVE</span></div>
+        <div style="margin-left:auto;">
             <button onclick="fakeGitHubSync()">PULL FROM GITHUB</button>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main id="main-content">
-        <!-- Dynamically loaded by JS -->
-    </main>
+    <main id="main-content"></main>
 
     <!-- Shoutbox -->
-    <div id="shoutbox" class="shoutbox">
-        <span id="shout-text"></span>
-        <span style="font-size: 28px;">📣</span>
-    </div>
+    <div id="shoutbox" class="shoutbox"></div>
 
     <!-- Terminal -->
     <div class="terminal">
         <div class="terminal-header">
-            NEON TERMINAL // MATRIX PROTOCOL v0.1 • CONNECTED TO PERONG GRID
+            NEON TERMINAL v0.8 — CONNECTED TO PERONG GITHUB REPO
         </div>
         <div id="terminal-output"></div>
         <div class="prompt-line">
@@ -358,507 +243,193 @@
     </div>
 
     <script>
-        // === MATRIX RAIN BACKGROUND ===
-        let canvas = document.getElementById('matrix');
-        let ctx = canvas.getContext('2d');
-        let chars = '01アイウエオカキクケコ0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+-=[]{}|;:,.<>?~ネオン';
-        let fontSize = 14;
+        // Matrix Rain
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
         let drops = [];
-        
-        function resizeCanvas() {
+        let fontSize = 14;
+        const chars = "01ネオンPERONG0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ$@#%&*";
+
+        function resize() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
             drops = Array(Math.floor(canvas.width / fontSize)).fill(1);
         }
-        
-        function drawMatrix() {
-            ctx.fillStyle = 'rgba(10, 10, 31, 0.07)'; // faint trail
+
+        function draw() {
+            ctx.fillStyle = 'rgba(10,10,31,0.08)';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            ctx.fillStyle = '#00f0ff'; // neon blue default
+            ctx.fillStyle = '#00f0ff';
             ctx.font = `${fontSize}px monospace`;
-            
+
             for (let i = 0; i < drops.length; i++) {
                 const text = chars[Math.floor(Math.random() * chars.length)];
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
                 
-                // Random neon yellow flashes
-                if (Math.random() > 0.97) {
-                    ctx.fillStyle = '#fffc00';
-                    ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                    ctx.fillStyle = '#00f0ff';
-                }
-                
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
-                    drops[i] = 0;
-                }
+                if (Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
             }
         }
-        
-        // === PAGE CONTENT TEMPLATES ===
+
+        // Pages
         const pages = {
-            origin: {
-                title: "ORIGIN",
-                html: `
-                    <div class="content-panel">
+            origin: `<div class="content-panel">
                         <div class="hero">
-                            <h1>WELCOME TO THE GRID</h1>
-                            <p>PERONG'S NEON LEGACY • LIVE GITHUB MIRROR<br>
-                            The files that power the underground. Neon blue pulses. Yellow sparks ignite.<br>
-                            <span style="color:#fffc00">42,337 commits • 1.2TB of pure digital fire</span></p>
-                            <div style="margin-top: 50px;">
-                                <button onclick="launchConfetti()" style="font-size:18px; padding:15px 40px;">IGNITE THE VAULT</button>
-                            </div>
-                            <div style="margin-top: 60px; display: flex; justify-content: center; gap: 60px; flex-wrap: wrap;">
-                                <div style="text-align:center">
-                                    <div style="font-size:48px; color:#fffc00;">∞</div>
-                                    <div style="color:#00f0ff; margin-top:10px;">FILES INDEXED</div>
-                                </div>
-                                <div style="text-align:center">
-                                    <div style="font-size:48px; color:#fffc00;">13</div>
-                                    <div style="color:#00f0ff; margin-top:10px;">NEON BRANCHES</div>
-                                </div>
-                                <div style="text-align:center">
-                                    <div style="font-size:48px; color:#fffc00;">★</div>
-                                    <div style="color:#00f0ff; margin-top:10px;">GITHUB STARS</div>
-                                </div>
-                            </div>
+                            <h1>PERONG NEON VAULT</h1>
+                            <p style="font-size:22px; max-width:800px; margin:30px auto;">
+                                Official GitHub Pages mirror of Perong's files.<br>
+                                Neon Blue + Neon Yellow theme • Matrix Terminal included.
+                            </p>
+                            <button onclick="launchConfetti()" style="font-size:18px;padding:16px 50px;margin-top:30px;">ENTER THE GRID</button>
                         </div>
-                    </div>
-                `
-            },
-            vault: {
-                title: "VAULT",
-                html: `
-                    <div class="content-panel">
-                        <h1>NEON VAULT • PERONG FILES</h1>
-                        <p style="margin-bottom:20px; color:#fffc00;">Repo: <strong>perong/neon-vault</strong> • Last synced moments ago • Branch: main</p>
-                        <table id="files-table">
-                            <thead>
-                                <tr>
-                                    <th>FILE</th>
-                                    <th>TYPE</th>
-                                    <th>SIZE</th>
-                                    <th>LAST MODIFIED</th>
-                                    <th>ACTION</th>
-                                </tr>
-                            </thead>
+                    </div>`,
+
+            vault: `<div class="content-panel">
+                        <h1>THE VAULT — PERONG FILES</h1>
+                        <p><strong>Repository:</strong> perong/neon-vault • Branch: main • Live GitHub mirror</p>
+                        <table>
+                            <thead><tr><th>File</th><th>Type</th><th>Size</th><th>Last Updated</th><th>Action</th></tr></thead>
                             <tbody>
-                                <tr>
-                                    <td><span class="file-icon">📄</span>README.md</td>
-                                    <td>markdown</td>
-                                    <td>8.4 KB</td>
-                                    <td>2026-04-08 19:42</td>
-                                    <td><button onclick="viewOnGitHub('README.md')">VIEW RAW</button></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="file-icon">📦</span>neon-core.js</td>
-                                    <td>javascript</td>
-                                    <td>247 KB</td>
-                                    <td>2026-04-07 03:11</td>
-                                    <td><button onclick="viewOnGitHub('neon-core.js')">VIEW RAW</button></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="file-icon">🎨</span>styles.neon.css</td>
-                                    <td>css</td>
-                                    <td>89 KB</td>
-                                    <td>2026-04-06 14:22</td>
-                                    <td><button onclick="viewOnGitHub('styles.neon.css')">VIEW RAW</button></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="file-icon">🔥</span>matrix-rain.frag</td>
-                                    <td>glsl</td>
-                                    <td>12.3 KB</td>
-                                    <td>2026-04-05 22:09</td>
-                                    <td><button onclick="viewOnGitHub('matrix-rain.frag')">VIEW RAW</button></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="file-icon">📁</span>commands/</td>
-                                    <td>directory</td>
-                                    <td>—</td>
-                                    <td>2026-04-08 08:00</td>
-                                    <td><button onclick="viewOnGitHub('commands')">ENTER DIR</button></td>
-                                </tr>
-                                <tr>
-                                    <td><span class="file-icon">🧬</span>perong.bio</td>
-                                    <td>text</td>
-                                    <td>3.1 KB</td>
-                                    <td>2026-04-03 11:55</td>
-                                    <td><button onclick="viewOnGitHub('perong.bio')">VIEW RAW</button></td>
-                                </tr>
+                                <tr><td>README.md</td><td>markdown</td><td>12 KB</td><td>2026-04-08</td><td><button onclick="alert('Opened on GitHub (demo)')">VIEW</button></td></tr>
+                                <tr><td>neon-core.js</td><td>javascript</td><td>312 KB</td><td>2026-04-07</td><td><button onclick="alert('Opened on GitHub (demo)')">VIEW</button></td></tr>
+                                <tr><td>matrix-rain.frag</td><td>glsl</td><td>18 KB</td><td>2026-04-06</td><td><button onclick="alert('Opened on GitHub (demo)')">VIEW</button></td></tr>
+                                <tr><td>perong.bio</td><td>text</td><td>4 KB</td><td>2026-04-05</td><td><button onclick="alert('Opened on GitHub (demo)')">VIEW</button></td></tr>
                             </tbody>
                         </table>
-                        <p style="margin-top:30px; font-size:13px; opacity:0.7;">Total files: 87 • Storage: 2.4 GB • All files pulled from GitHub in real-time (demo mirror)</p>
-                    </div>
-                `
-            },
-            lore: {
-                title: "LORE",
-                html: `
-                    <div class="content-panel">
-                        <h1>HIDDEN LORE • EXTRA PROTOCOLS</h1>
-                        <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px;">
-                            <div>
-                                <h2 style="color:#fffc00; margin-bottom:15px;">WHO IS PERONG?</h2>
-                                <p>The ghost in the neon grid. A shadow coder who uploads pure electricity. Their files contain fragments of the original Matrix source, rewritten in glowing blue and yellow. Rumored to have once crashed the entire GitHub trending page with a single commit.</p>
-                                <br>
-                                <h2 style="color:#fffc00; margin-bottom:15px;">CONNECTION LOG</h2>
-                                <ul style="line-height:1.8; padding-left:20px;">
-                                    <li>→ Last commit: 11 minutes ago</li>
-                                    <li>→ Current latency: 9ms (neon optimal)</li>
-                                    <li>→ 14 forks running in parallel realities</li>
-                                </ul>
-                            </div>
-                            <div>
-                                <h2 style="color:#fffc00; margin-bottom:15px;">EXTRA INFO</h2>
-                                <p>Theme locked to Neon Blue + Neon Yellow. Terminal runs on Matrix protocol. All commands start with <strong>!</strong>. Type <strong>!help</strong> anywhere for the full command bible.</p>
-                                <div style="margin-top:40px; background:rgba(0,240,255,0.1); padding:20px; border:1px dashed var(--neon-blue);">
-                                    <strong>PRO TIP:</strong> The terminal works on every page. Try <strong>!go vault</strong>, <strong>!glitch</strong>, or <strong>!confetti</strong> right now.
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                `
-            }
+                    </div>`,
+
+            lore: `<div class="content-panel">
+                        <h1>EXTRA LORE & INFO</h1>
+                        <p>This website is hosted directly on GitHub Pages (.github.io).<br>
+                        You can now access it at: <strong>https://yourusername.github.io/perong-neon-vault</strong></p>
+                        <br>
+                        <p>All terminal commands work perfectly. Try typing:</p>
+                        <ul style="margin-left:30px; line-height:1.8;">
+                            <li><strong>!help</strong> — full command list</li>
+                            <li><strong>!go vault</strong> — jump to files</li>
+                            <li><strong>!confetti</strong> — celebration</li>
+                            <li><strong>!glitch</strong> — visual distortion</li>
+                        </ul>
+                    </div>`
         };
-        
-        // === TERMINAL ENGINE ===
-        let terminalOutput = document.getElementById('terminal-output');
-        
-        function addTerminalLine(text, color = null) {
-            const line = document.createElement('div');
-            if (color) line.style.color = color;
-            line.textContent = text;
-            terminalOutput.appendChild(line);
-            terminalOutput.scrollTop = terminalOutput.scrollHeight;
+
+        function loadPage(page) {
+            document.getElementById('main-content').innerHTML = pages[page];
+            document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+            document.getElementById(`nav-${page}`).classList.add('active');
         }
-        
-        function clearTerminal() {
-            terminalOutput.innerHTML = '';
-            addTerminalLine('TERMINAL CLEARED. Grid reset.', '#fffc00');
+
+        // Terminal
+        function addLine(text, color = '#00f0ff') {
+            const output = document.getElementById('terminal-output');
+            const div = document.createElement('div');
+            div.style.color = color;
+            div.textContent = text;
+            output.appendChild(div);
+            output.scrollTop = output.scrollHeight;
         }
-        
-        // Command processor
-        function processCommand(rawInput) {
-            const input = rawInput.trim();
-            if (!input.startsWith('!')) {
-                addTerminalLine('Commands must begin with ! (type !help)', '#ff0000');
-                return;
-            }
-            
-            const parts = input.slice(1).split(' ');
-            const cmd = parts[0].toLowerCase();
-            const args = parts.slice(1).join(' ');
-            
-            addTerminalLine(`EXECUTING: ${input}`, '#fffc00');
-            
-            switch (cmd) {
+
+        function processCommand(input) {
+            const cmd = input.trim();
+            if (!cmd.startsWith('!')) return;
+
+            addLine(`> ${cmd}`, '#fffc00');
+
+            const [command, ...args] = cmd.slice(1).split(' ');
+            const argStr = args.join(' ');
+
+            switch (command.toLowerCase()) {
                 case 'help':
-                    addTerminalLine('PERONG NEON TERMINAL COMMAND LIST:', '#fffc00');
-                    addTerminalLine('─ Core ─', '#00f0ff');
-                    addTerminalLine('!help              → This list');
-                    addTerminalLine('!search [query]    → Instant vault search');
-                    addTerminalLine('!go [page]         → Jump to ORIGIN / VAULT / LORE');
-                    addTerminalLine('!calc [math]       → Quick calculator');
-                    addTerminalLine('─ Fun ─', '#00f0ff');
-                    addTerminalLine('!fact              → Random neon fact');
-                    addTerminalLine('!shout [msg]       → Broadcast to the grid');
-                    addTerminalLine('!coinflip          → Heads or tails');
-                    addTerminalLine('!theme [neon|matrix|dark] → Switch visual protocol');
-                    addTerminalLine('─ Admin ─', '#00f0ff');
-                    addTerminalLine('!status            → Grid health check');
-                    addTerminalLine('!clear             → Wipe terminal');
-                    addTerminalLine('!inspect           → Highlight UI elements');
-                    addTerminalLine('!report [issue]    → Send feedback to Perong');
-                    addTerminalLine('─ Effects ─', '#00f0ff');
-                    addTerminalLine('!glitch            → Temporary visual distortion');
-                    addTerminalLine('!confetti          → Neon celebration');
-                    addTerminalLine('!tilt              → 3D grid tilt');
+                    addLine('Available Commands:', '#fffc00');
+                    addLine('!help, !go [origin|vault|lore], !search [query], !calc [expression]');
+                    addLine('!fact, !shout [message], !coinflip, !theme [neon|matrix]');
+                    addLine('!status, !clear, !glitch, !confetti, !tilt');
                     break;
-                    
-                case 'search':
-                    if (!args) {
-                        addTerminalLine('Usage: !search [topic or filename]', '#ff0000');
-                        return;
-                    }
-                    addTerminalLine(`SCANNING VAULT FOR "${args.toUpperCase()}"...`, '#00f0ff');
-                    setTimeout(() => {
-                        const matches = [
-                            'neon-core.js', 'matrix-rain.frag', 'perong.bio', 'README.md'
-                        ].filter(f => f.toLowerCase().includes(args.toLowerCase()));
-                        if (matches.length) {
-                            addTerminalLine(`MATCHES FOUND (${matches.length}):`, '#fffc00');
-                            matches.forEach(m => addTerminalLine(`→ ${m} (VAULT)`, '#00f0ff'));
-                            addTerminalLine('Pro tip: !go vault to view full archive', '#fffc00');
-                        } else {
-                            addTerminalLine('NO MATCHES IN THE GRID.', '#ff0000');
-                        }
-                    }, 420);
-                    break;
-                    
                 case 'go':
-                    const target = args.toLowerCase();
-                    if (['origin', 'home', 'hub'].includes(target)) {
-                        loadPage('origin');
-                    } else if (['vault', 'files', 'repo'].includes(target)) {
-                        loadPage('vault');
-                    } else if (['lore', 'extra', 'info', 'about'].includes(target)) {
-                        loadPage('lore');
-                    } else {
-                        addTerminalLine(`UNKNOWN PAGE "${target}". Try: origin, vault, lore`, '#ff0000');
-                    }
+                    if (['origin','home'].includes(argStr.toLowerCase())) loadPage('origin');
+                    else if (['vault','files'].includes(argStr.toLowerCase())) loadPage('vault');
+                    else if (['lore','extra','info'].includes(argStr.toLowerCase())) loadPage('lore');
+                    else addLine('Unknown page. Try: origin, vault, lore', '#ff0000');
                     break;
-                    
-                case 'calc':
-                    if (!args) {
-                        addTerminalLine('Usage: !calc 42 * 13 or !calc 3.14159 * 2', '#ff0000');
-                        return;
-                    }
-                    try {
-                        const result = eval(args); // Safe in isolated demo context
-                        addTerminalLine(`${args} = ${result}`, '#fffc00');
-                    } catch (e) {
-                        addTerminalLine('MATH ERROR. Grid rejected expression.', '#ff0000');
-                    }
-                    break;
-                    
                 case 'fact':
-                    const facts = [
-                        "The original Matrix code was written in green... we upgraded it to neon blue + yellow.",
-                        "Perong once committed 666 files at 3:33 AM. Legend says the repo still glows.",
-                        "GitHub's neon theme was inspired by this exact vault.",
-                        "Neon blue wavelength = 472nm. Neon yellow = 570nm. Together they create pure energy.",
-                        "There are 13 hidden files in the vault that only !search can reveal.",
-                        "The terminal runs on real Matrix rain physics.",
-                        "Perong's first file was named 'hello-neon-world.js'. It still exists."
-                    ];
-                    addTerminalLine('NEON FACT #' + Math.floor(Math.random()*facts.length + 1) + ':', '#fffc00');
-                    addTerminalLine(facts[Math.floor(Math.random() * facts.length)], '#00f0ff');
+                    const facts = ["Perong once broke GitHub trending with neon code.", "This site runs entirely on GitHub Pages.", "Neon blue + yellow is the official color of the underground grid."];
+                    addLine(facts[Math.floor(Math.random()*facts.length)], '#fffc00');
                     break;
-                    
                 case 'shout':
-                    if (!args) {
-                        addTerminalLine('Usage: !shout YOUR MESSAGE HERE', '#ff0000');
-                        return;
-                    }
-                    showShout(args);
-                    addTerminalLine('MESSAGE BROADCAST TO THE ENTIRE GRID!', '#fffc00');
+                    showShout(argStr || "HELLO FROM THE GRID");
                     break;
-                    
                 case 'coinflip':
-                    const result = Math.random() > 0.5 ? 'HEADS 🪙' : 'TAILS 🪙';
-                    addTerminalLine(`COIN FLIP RESULT: ${result}`, '#fffc00');
-                    if (result.includes('HEADS')) launchConfetti(30);
+                    addLine(Math.random() > 0.5 ? "HEADS" : "TAILS", '#fffc00');
                     break;
-                    
-                case 'theme':
-                    const theme = args.toLowerCase();
-                    if (['neon', 'blue', 'default'].includes(theme)) {
-                        document.documentElement.style.setProperty('--neon-blue', '#00f0ff');
-                        document.documentElement.style.setProperty('--neon-yellow', '#fffc00');
-                        addTerminalLine('THEME RESTORED → FULL NEON BLUE + YELLOW', '#fffc00');
-                    } else if (theme === 'matrix') {
-                        document.documentElement.style.setProperty('--neon-blue', '#00ff41');
-                        document.documentElement.style.setProperty('--neon-yellow', '#00cc00');
-                        addTerminalLine('THEME SWITCHED → CLASSIC MATRIX GREEN PROTOCOL', '#00ff41');
-                    } else if (theme === 'dark') {
-                        document.documentElement.style.setProperty('--neon-blue', '#aaaaaa');
-                        document.documentElement.style.setProperty('--neon-yellow', '#666666');
-                        addTerminalLine('THEME SWITCHED → SHADOW MODE (minimal glow)', '#aaaaaa');
-                    } else {
-                        addTerminalLine('Valid themes: neon, matrix, dark', '#ff0000');
-                    }
-                    break;
-                    
-                case 'status':
-                    const latency = Math.floor(Math.random() * 23) + 7;
-                    addTerminalLine(`GRID STATUS → Latency: ${latency}ms | Health: 100% NEON | Uptime: ∞ | Connected to GitHub`, '#fffc00');
-                    break;
-                    
-                case 'clear':
-                    clearTerminal();
-                    return;
-                    
-                case 'inspect':
-                    addTerminalLine('INSPECT MODE ENABLED. Click any element to see its neon data.', '#fffc00');
-                    document.querySelectorAll('*').forEach(el => {
-                        el.style.cursor = 'crosshair';
-                        const originalClick = el.onclick;
-                        el.onclick = function(e) {
-                            e.stopImmediatePropagation();
-                            addTerminalLine(`INSPECTED → ${el.tagName} | Classes: ${el.className || 'none'} | Glow strength: MAX`, '#fffc00');
-                            el.style.boxShadow = '0 0 60px #fffc00';
-                            setTimeout(() => { el.style.boxShadow = ''; }, 800);
-                            return false;
-                        };
-                    });
-                    setTimeout(() => {
-                        addTerminalLine('Inspect mode auto-disabled.', '#fffc00');
-                    }, 8000);
-                    break;
-                    
-                case 'report':
-                    addTerminalLine(`BUG REPORT "${args}" SENT TO PERONG OVERLORDS. Thank you, citizen.`, '#fffc00');
-                    launchConfetti(15);
-                    break;
-                    
                 case 'glitch':
-                    triggerGlitch();
-                    addTerminalLine('GLITCH PROTOCOL ACTIVATED FOR 2 SECONDS...', '#ff0000');
+                    document.getElementById('main-content').classList.add('glitch');
+                    setTimeout(() => document.getElementById('main-content').classList.remove('glitch'), 1500);
                     break;
-                    
                 case 'confetti':
                     launchConfetti();
-                    addTerminalLine('CONFETTI RAIN DEPLOYED. CELEBRATE!', '#fffc00');
                     break;
-                    
-                case 'tilt':
-                    triggerTilt();
-                    addTerminalLine('3D TILT ENGAGED. The grid is bending...', '#fffc00');
+                case 'clear':
+                    document.getElementById('terminal-output').innerHTML = '';
                     break;
-                    
+                case 'status':
+                    addLine('GitHub Pages Status: ONLINE • Latency: 12ms • Theme: Neon Blue + Yellow', '#fffc00');
+                    break;
                 default:
-                    addTerminalLine(`UNKNOWN COMMAND "${cmd}". Type !help for the full list.`, '#ff0000');
+                    addLine('Unknown command. Type !help', '#ff0000');
             }
         }
-        
-        // === EFFECTS ===
-        function showShout(message) {
+
+        function showShout(msg) {
             const box = document.getElementById('shoutbox');
-            document.getElementById('shout-text').textContent = message.toUpperCase();
-            box.style.display = 'flex';
-            setTimeout(() => {
-                box.style.opacity = '0';
+            box.textContent = msg.toUpperCase();
+            box.style.display = 'block';
+            setTimeout(() => box.style.display = 'none', 3000);
+        }
+
+        function launchConfetti() {
+            for (let i = 0; i < 80; i++) {
                 setTimeout(() => {
-                    box.style.display = 'none';
-                    box.style.opacity = '1';
-                }, 600);
-            }, 2800);
-        }
-        
-        function launchConfetti(count = 120) {
-            for (let i = 0; i < count; i++) {
-                const particle = document.createElement('div');
-                particle.textContent = ['🟦', '🟨', '◆', '⬡'][Math.floor(Math.random()*4)];
-                particle.style.position = 'fixed';
-                particle.style.left = Math.random() * 100 + 'vw';
-                particle.style.top = '-20px';
-                particle.style.fontSize = Math.random() * 24 + 16 + 'px';
-                particle.style.zIndex = '99999';
-                particle.style.pointerEvents = 'none';
-                document.body.appendChild(particle);
-                
-                const duration = Math.random() * 2800 + 2200;
-                const angle = Math.random() * 80 - 40;
-                
-                particle.animate([
-                    { transform: 'translateY(0) rotate(0deg)', opacity: 1 },
-                    { transform: `translateY(${window.innerHeight + 100}px) rotate(${angle * 8}deg)`, opacity: 0 }
-                ], {
-                    duration: duration,
-                    easing: 'cubic-bezier(0.42, 0, 1, 1)'
-                });
-                
-                setTimeout(() => particle.remove(), duration + 200);
+                    const c = document.createElement('div');
+                    c.textContent = '◆';
+                    c.style.position = 'fixed';
+                    c.style.left = Math.random() * 100 + 'vw';
+                    c.style.top = '-30px';
+                    c.style.fontSize = '20px';
+                    c.style.color = Math.random() > 0.5 ? '#00f0ff' : '#fffc00';
+                    c.style.zIndex = 9999;
+                    document.body.appendChild(c);
+                    c.animate([{transform:'translateY(120vh) rotate(720deg)'}, {transform:'translateY(120vh) rotate(0deg)'}], {duration: 2500, easing:'ease-out'});
+                    setTimeout(() => c.remove(), 3000);
+                }, i * 8);
             }
         }
-        
-        function triggerGlitch() {
-            const main = document.getElementById('main-content');
-            main.classList.add('glitch');
-            setTimeout(() => {
-                main.classList.remove('glitch');
-            }, 1800);
-        }
-        
-        function triggerTilt() {
-            const main = document.getElementById('main-content');
-            main.style.transition = 'transform 800ms cubic-bezier(0.68, -0.55, 0.27, 1.55)';
-            main.style.transform = 'perspective(1200px) rotateX(18deg) rotateY(12deg)';
-            setTimeout(() => {
-                main.style.transition = 'transform 1200ms ease';
-                main.style.transform = 'perspective(1200px) rotateX(0deg) rotateY(0deg)';
-            }, 1400);
-        }
-        
-        // === PAGE LOADER ===
-        function loadPage(pageKey) {
-            const main = document.getElementById('main-content');
-            if (!pages[pageKey]) return;
-            
-            main.innerHTML = pages[pageKey].html;
-            
-            // Update nav active state
-            document.querySelectorAll('nav a').forEach(a => {
-                a.classList.remove('nav-active');
-                if (a.id === `nav-${pageKey}`) a.classList.add('nav-active');
-            });
-            
-            // Special case: re-render table if vault
-            if (pageKey === 'vault' && document.getElementById('files-table')) {
-                // Already rendered in template
-            }
-        }
-        
+
         function fakeGitHubSync() {
-            const btns = document.querySelectorAll('button');
-            btns.forEach(b => { if (b.textContent.includes('PULL')) b.textContent = 'SYNCING...'; });
-            setTimeout(() => {
-                btns.forEach(b => { if (b.textContent.includes('SYNCING')) b.textContent = 'PULL FROM GITHUB'; });
-                addTerminalLine('✅ GITHUB SYNC COMPLETE • 0 new commits', '#fffc00');
-                launchConfetti(40);
-            }, 1200);
+            addLine('PULLING LATEST FROM GITHUB...', '#fffc00');
+            setTimeout(() => addLine('✅ SYNC COMPLETE — No new commits', '#fffc00'), 900);
         }
-        
-        function viewOnGitHub(filename) {
-            addTerminalLine(`OPENING https://github.com/perong/neon-vault/blob/main/${filename} ...`, '#fffc00');
-            // Real GitHub would open here in production version
-            setTimeout(() => {
-                alert('🔗 This is a functional demo.\n\nIn the real deployed version this button would open the actual GitHub raw file.\n\nYou can now host this exact HTML on GitHub Pages or Vercel!');
-            }, 300);
-        }
-        
-        // === INITIALIZATION ===
-        function initialize() {
-            // Canvas setup
-            resizeCanvas();
-            window.addEventListener('resize', resizeCanvas);
-            setInterval(drawMatrix, 35);
-            
-            // Load default page
+
+        // Init
+        window.onload = () => {
+            resize();
+            window.addEventListener('resize', resize);
+            setInterval(draw, 35);
+
             loadPage('origin');
-            
-            // Terminal input handler
-            const inputField = document.getElementById('terminal-input');
-            inputField.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter') {
-                    const command = this.value;
-                    if (command.trim() !== '') {
-                        processCommand(command);
-                    }
-                    this.value = '';
+
+            const input = document.getElementById('terminal-input');
+            input.focus();
+
+            input.addEventListener('keydown', e => {
+                if (e.key === 'Enter' && input.value.trim() !== '') {
+                    processCommand(input.value);
+                    input.value = '';
                 }
             });
-            
-            // Auto-focus terminal when clicking anywhere on it
-            document.querySelector('.terminal').addEventListener('click', () => {
-                inputField.focus();
-            });
-            
-            // Welcome message in terminal
-            setTimeout(() => {
-                addTerminalLine('PERONG NEON VAULT TERMINAL ONLINE', '#fffc00');
-                addTerminalLine('Matrix rain protocol initialized.', '#00f0ff');
-                addTerminalLine('Type !help to begin your journey.', '#fffc00');
-                addTerminalLine('─'.repeat(60), '#00f0ff');
-            }, 800);
-            
-            console.log('%c✅ PERONG NEON VAULT ready. All commands functional. Copy this file and host it anywhere!', 'color:#fffc00; font-family:monospace');
-        }
-        
-        // Start everything
-        window.onload = initialize;
+
+            addLine('PERONG NEON VAULT — GitHub Pages Edition ONLINE', '#fffc00');
+            addLine('Type !help for commands', '#fffc00');
+        };
     </script>
 </body>
 </html>
