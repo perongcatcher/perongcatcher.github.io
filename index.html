@@ -176,20 +176,20 @@
         </div>
     </section>
 
-    <!-- SINGLE FILE SECTION -->
+    <!-- FILES SECTION -->
     <section id="files-section" class="max-w-screen-2xl mx-auto px-8 py-24 bg-[#0a0a1f]">
         <div class="flex items-end justify-between mb-12">
             <div>
                 <div class="uppercase text-xs tracking-[4px] text-[#ff00aa]">SECURE STORAGE</div>
-                <h2 class="title-font text-6xl tracking-tight neon-text">CLASSIFIED FILE</h2>
+                <h2 class="title-font text-6xl tracking-tight neon-text">CLASSIFIED FILES</h2>
             </div>
             <div class="text-right font-mono text-sm text-[#fffc00]">
-                1 FILE • OMEGA CLEARANCE
+                2 FILES • OMEGA CLEARANCE
             </div>
         </div>
         
-        <div id="files-grid" class="max-w-2xl mx-auto">
-            <!-- Single file card -->
+        <div id="files-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <!-- Files populated by JS -->
         </div>
     </section>
 
@@ -226,7 +226,7 @@
         </div>
     </div>
 
-    <!-- PASSWORD MODAL (Hidden) -->
+    <!-- PASSWORD MODAL -->
     <div id="password-modal" onclick="if(event.target.id==='password-modal')hidePasswordModal()" 
          class="hidden fixed inset-0 bg-black/95 z-[300] flex items-center justify-center p-6">
         <div onclick="event.stopImmediatePropagation()" 
@@ -339,88 +339,128 @@
     </div>
 
     <script>
-        // The only file with your updated content
-        const singleFile = {
-            id: 1,
-            icon: "fa-solid fa-file-lines",
-            name: "WM-2026-0407-MP.perong",
-            date: "04.07.26",
-            badge: "CASE FILE",
-            summary: "Scott Bradley Perong — Physical Education Coach. Classified observation file.",
-            content: `<div class="space-y-8">
-                <div>
-                    <h3 class="text-[#fffc00] text-2xl mb-1">WM-2026-0407-MP</h3>
-                    <p class="text-sm text-[#00f0ff]/70">SUBJECT: Scott Bradley Perong</p>
-                    <p class="text-sm text-[#fffc00]">Physical Education Coach • Monroe, North Carolina</p>
-                </div>
+        const filesData = [
+            {
+                id: 1,
+                icon: "fa-solid fa-file-lines",
+                name: "WM-2026-0407-MP.perong",
+                date: "04.07.26",
+                badge: "CASE FILE",
+                summary: "Scott Bradley Perong — Physical Education Coach. Classified observation file.",
+                content: `<div class="space-y-8">
+                    <div>
+                        <h3 class="text-[#fffc00] text-2xl mb-1">WM-2026-0407-MP</h3>
+                        <p class="text-sm text-[#00f0ff]/70">SUBJECT: Scott Bradley Perong</p>
+                        <p class="text-sm text-[#fffc00]">Physical Education Coach • Monroe, North Carolina</p>
+                    </div>
 
-                <div class="bg-black/70 p-6 rounded-2xl border-l-4 border-red-400">
-                    <h4 class="text-[#fffc00] font-semibold mb-4">Summary of Allegations</h4>
-                    
-                    <ul class="space-y-6 text-sm">
-                        <li><strong>Misconduct Pattern:</strong> Multiple reports indicate a pattern of sexual harassment and inappropriate behavior towards students, often hidden under the guise of "training" or "safety".</li>
-                        
-                        <li><strong>Grooming Tactics:</strong> Concerns have been raised regarding grooming behaviors, including inappropriate proximity and communication with middle school-aged children.</li>
-                        
-                        <li><strong>Alleged Inaction:</strong> Despite numerous reports to school officials, the administration at Weddington Middle School has failed to investigate or take disciplinary action against Mr. Perong.</li>
-                        
-                        <li><strong>Impact:</strong> Students have reported feeling unsafe in the gym environment, experiencing significant emotional distress, and facing retaliation for reporting, as indicated in similar cases of alleged school misconduct.</li>
-                    </ul>
-                </div>
+                    <div class="bg-black/70 p-6 rounded-2xl border-l-4 border-red-400">
+                        <h4 class="text-[#fffc00] font-semibold mb-4">Summary of Allegations</h4>
+                        <ul class="space-y-6 text-sm">
+                            <li><strong>Misconduct Pattern:</strong> Multiple reports indicate a pattern of sexual harassment and inappropriate behavior towards students, often hidden under the guise of "training" or "safety".</li>
+                            <li><strong>Grooming Tactics:</strong> Concerns have been raised regarding grooming behaviors, including inappropriate proximity and communication with middle school-aged children.</li>
+                            <li><strong>Alleged Inaction:</strong> Despite numerous reports to school officials, the administration at Weddington Middle School has failed to investigate or take disciplinary action against Mr. Perong.</li>
+                            <li><strong>Impact:</strong> Students have reported feeling unsafe in the gym environment, experiencing significant emotional distress, and facing retaliation for reporting.</li>
+                        </ul>
+                    </div>
 
-                <div class="bg-black/70 p-6 rounded-2xl border-l-4 border-[#fffc00]">
-                    <h4 class="text-[#fffc00] font-semibold mb-4">Recommended Actions for Investigation</h4>
-                    <ol class="list-decimal list-inside space-y-4 text-sm">
-                        <li><strong>Immediate Suspension:</strong> Remove Mr. Perong from contact with students pending a thorough investigation.</li>
-                        <li><strong>External Investigation:</strong> Engage law enforcement and child protective services to ensure impartiality, as local administrative inquiries may have already been ignored.</li>
-                        <li><strong>Title IX Review:</strong> Initiate a formal investigation into the school administration’s failure to act on reported sexual misconduct, as outlined in protocols for handling Title IX violations.</li>
-                        <li><strong>Victim Support:</strong> Provide counseling services to students who have come forward.</li>
-                    </ol>
-                </div>
+                    <div class="bg-black/70 p-6 rounded-2xl border-l-4 border-[#fffc00]">
+                        <h4 class="text-[#fffc00] font-semibold mb-4">Recommended Actions for Investigation</h4>
+                        <ol class="list-decimal list-inside space-y-4 text-sm">
+                            <li><strong>Immediate Suspension:</strong> Remove Mr. Perong from contact with students pending a thorough investigation.</li>
+                            <li><strong>External Investigation:</strong> Engage law enforcement and child protective services to ensure impartiality.</li>
+                            <li><strong>Title IX Review:</strong> Initiate a formal investigation into the school administration’s failure to act.</li>
+                            <li><strong>Victim Support:</strong> Provide counseling services to students who have come forward.</li>
+                        </ol>
+                    </div>
 
-                <div class="italic text-[#fffc00]/80 border-l-2 border-[#fffc00] pl-5">
-                    “The neon never fades. The vault remembers everything.”
-                </div>
+                    <div class="italic text-[#fffc00]/80 border-l-2 border-[#fffc00] pl-5">
+                        “The neon never fades. The vault remembers everything.”
+                    </div>
+                </div>`
+            },
+            {
+                id: 2,
+                icon: "fa-solid fa-file-lines",
+                name: "WM-2026-0410-MP.perong",
+                date: "04.10.26",
+                badge: "CASE FILE",
+                summary: "Additional reports from unknown source regarding inappropriate physical contact and messages.",
+                content: `<div class="space-y-8">
+                    <div>
+                        <h3 class="text-[#fffc00] text-2xl mb-1">WM-2026-0410-MP</h3>
+                        <p class="text-sm text-[#00f0ff]/70">SUBJECT: Scott Bradley Perong</p>
+                        <p class="text-sm text-[#fffc00]">Physical Education Coach • Monroe, North Carolina</p>
+                    </div>
 
-                <p class="text-[#00f0ff]/70 text-sm pt-4 border-t border-[#00f0ff]/20">
-                    This file is strictly restricted to Owner Room clearance. 
-                    Any unauthorized distribution will trigger neon purge protocol.
-                </p>
-            </div>`
-        }
+                    <div class="bg-black/70 p-6 rounded-2xl border-l-4 border-red-400">
+                        <h4 class="text-[#fffc00] font-semibold mb-4">Additional Reports from Unknown Source</h4>
+                        <div class="space-y-6 text-sm">
+                            <p>We have been given information from an unknown source detailing further incidents involving Mr. Perong.</p>
+                            
+                            <p><strong>Inappropriate Physical Contact:</strong> With certain girls, he would randomly touch them while saying “cheese touch” and repeatedly go back and forth touching them in weird and uncomfortable ways. These incidents appear to target the same group of students repeatedly. He has also touched students in areas where he should not have.</p>
+                            
+                            <p><strong>Inappropriate Messages:</strong> Mr. Perong reportedly sent text messages stating that he liked “big ####” and set one student’s contact name as “itty bitty big ####”. These messages demonstrate highly inappropriate and sexualized language directed toward minors.</p>
+                            
+                            <p>These behaviors suggest a continuing pattern of boundary violations, grooming-like conduct, and sexual harassment that goes beyond what was previously documented.</p>
+                        </div>
+                    </div>
+
+                    <div class="bg-black/70 p-6 rounded-2xl border-l-4 border-[#fffc00]">
+                        <h4 class="text-[#fffc00] font-semibold mb-4">Recommended Actions</h4>
+                        <ul class="space-y-4 text-sm">
+                            <li><strong>Immediate Suspension:</strong> Mr. Perong must be removed from all contact with students immediately while a full investigation is conducted.</li>
+                            <li><strong>Criminal Investigation:</strong> Law enforcement and child protective services should be notified due to the nature of the physical contact and messages involving minors.</li>
+                            <li><strong>Digital Forensics:</strong> All school-issued devices and personal phones used for student communication should be examined.</li>
+                            <li><strong>Victim Support &amp; Safety:</strong> Affected students must receive counseling and be protected from any retaliation.</li>
+                            <li><strong>Termination Recommendation:</strong> Given the repeated and escalating nature of the allegations, permanent removal from his position as a coach and educator is strongly recommended to protect students.</li>
+                        </ul>
+                    </div>
+
+                    <div class="italic text-[#fffc00]/80 border-l-2 border-[#fffc00] pl-5">
+                        “The neon never fades. The vault remembers everything.”
+                    </div>
+                </div>`
+            }
+        ]
         
-        function renderSingleFile() {
+        function renderFiles() {
             const grid = document.getElementById('files-grid')
             grid.innerHTML = ''
             
-            const card = document.createElement('div')
-            card.className = `file-card border border-[#00f0ff]/20 rounded-3xl p-8 cursor-pointer group`
-            card.innerHTML = `
-                <div class="flex justify-between items-start">
-                    <i class="${singleFile.icon} text-6xl text-[#00f0ff]/80 group-hover:text-[#fffc00] transition-colors"></i>
-                    <span class="text-xs font-mono px-5 py-2 bg-[#fffc00]/10 text-[#fffc00] rounded-full">${singleFile.badge}</span>
-                </div>
-                <div class="mt-10">
-                    <div class="text-[#fffc00] text-2xl">${singleFile.name}</div>
-                    <div class="text-xs text-[#00f0ff]/60 mt-1">${singleFile.date}</div>
-                </div>
-                <p class="mt-8 text-[#e0f8ff]/80">${singleFile.summary}</p>
-                
-                <div class="mt-10 pt-6 border-t border-[#00f0ff]/10 flex justify-between text-xs text-[#00f0ff]/50">
-                    <span>CLASSIFIED • LEVEL OMEGA</span>
-                    <span><i class="fa-solid fa-lock"></i></span>
-                </div>
-            `
-            card.onclick = () => openFile()
-            grid.appendChild(card)
+            filesData.forEach(file => {
+                const card = document.createElement('div')
+                card.className = `file-card border border-[#00f0ff]/20 rounded-3xl p-8 cursor-pointer group`
+                card.innerHTML = `
+                    <div class="flex justify-between items-start">
+                        <i class="${file.icon} text-5xl text-[#00f0ff]/80 group-hover:text-[#fffc00] transition-colors"></i>
+                        <span class="text-xs font-mono px-5 py-2 bg-[#fffc00]/10 text-[#fffc00] rounded-full">${file.badge}</span>
+                    </div>
+                    <div class="mt-8">
+                        <div class="text-[#fffc00] text-xl">${file.name}</div>
+                        <div class="text-xs text-[#00f0ff]/60 mt-1">${file.date}</div>
+                    </div>
+                    <p class="mt-6 text-[#e0f8ff]/80 line-clamp-3">${file.summary}</p>
+                    
+                    <div class="mt-8 pt-6 border-t border-[#00f0ff]/10 flex justify-between text-xs text-[#00f0ff]/50">
+                        <span>CLASSIFIED • LEVEL OMEGA</span>
+                        <span><i class="fa-solid fa-lock"></i></span>
+                    </div>
+                `
+                card.onclick = () => openFile(file.id)
+                grid.appendChild(card)
+            })
         }
         
-        function openFile() {
+        function openFile(id) {
+            const file = filesData.find(f => f.id === id)
+            if (!file) return
+            
             document.getElementById('modal-file-name').innerHTML = `
-                <i class="${singleFile.icon}"></i>
-                <span>${singleFile.name}</span>
+                <i class="${file.icon}"></i>
+                <span>${file.name}</span>
             `
-            document.getElementById('modal-content').innerHTML = singleFile.content
+            document.getElementById('modal-content').innerHTML = file.content
             document.getElementById('file-modal').classList.remove('hidden')
             document.getElementById('file-modal').classList.add('flex')
         }
@@ -526,7 +566,7 @@
         }
         
         function init() {
-            renderSingleFile()
+            renderFiles()
             
             document.addEventListener('keydown', (e) => {
                 if (e.key === "Escape") {
